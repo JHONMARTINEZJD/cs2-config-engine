@@ -78,7 +78,8 @@ if (-not (Test-Path -LiteralPath $engineScript)) {
 }
 
 if (-not $SkipDependencyInstall) {
-    Ensure-Dependencies -AllowInstall $true | Out-Null
+    # Almacenamos explícitamente en una variable descartable para evitar fugas al pipeline
+    $null = Ensure-Dependencies -AllowInstall $true
 }
 
 if ($RunTests) {
@@ -93,4 +94,15 @@ if ($RunTests) {
 }
 
 Write-Host 'Ejecutando CS2ConfigEngine...' -ForegroundColor Cyan
-& $engineScript -SteamPath $SteamPath -SteamId $SteamId -OutputPath $OutputPath -MaxHistory $MaxHistory -Formats $Formats -LogLevel $LogLevel
+
+# --- INVOCACIÓN SEGURA CON TABLA HASH PARA EVITAR PARÁMETROS POSICIONALES ---
+$engineArgs = @{
+    SteamPath = $SteamPath
+    SteamId   = $SteamId
+    OutputPath = $OutputPath
+    MaxHistory = $MaxHistory
+    Formats    = $Formats
+    LogLevel   = $LogLevel
+}
+
+& $engineScript @engineArgs
