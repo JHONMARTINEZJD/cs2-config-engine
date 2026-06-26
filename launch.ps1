@@ -88,17 +88,18 @@ New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
 Write-Host "Ejecutando CS2 Config Engine desde $($repoInfo.RootPath)" -ForegroundColor Green
 Write-Host "La salida se generará en $OutputPath" -ForegroundColor Green
 
-$invokeArgs = @{
+# --- SECCIÓN CORREGIDA CON SPLATTING SEGURO ---
+$splatArgs = @{
     OutputPath = $OutputPath
 }
-if ($RunTests) {
-    $invokeArgs.RunTests = $true
-}
-if ($SkipDependencyInstall) {
-    $invokeArgs.SkipDependencyInstall = $true
-}
 
-& $runScript @invokeArgs
+# Pasamos explícitamente el estado booleano ($true/$false) de los switches
+$splatArgs['RunTests'] = [bool]$RunTests
+$splatArgs['SkipDependencyInstall'] = [bool]$SkipDependencyInstall
+
+# Invocación segura expandiendo la tabla hash
+& $runScript @splatArgs
+# ----------------------------------------------
 
 $autoexecPath = Join-Path $OutputPath 'autoexec.latest.cfg'
 $backupPath = Join-Path $OutputPath 'backups'

@@ -96,8 +96,6 @@ pwsh ./CS2ConfigEngine.ps1
 
 ### Ejecución remota desde GitHub
 
-Si quieres que alguien lo ejecute sin descargar el repositorio previamente, puede hacerlo así:
-
 ```powershell
 iex "& { $(irm https://raw.githubusercontent.com/JHONMARTINEZJD/cs2-config-engine/master/launch.ps1) } -RepoUrl 'https://github.com/JHONMARTINEZJD/cs2-config-engine' -Branch 'master'"
 ```
