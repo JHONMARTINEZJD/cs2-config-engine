@@ -5,7 +5,7 @@ param(
     [string] $RepoUrl = '',
 
     [Parameter()]
-    [string] $Branch = 'main',
+    [string] $Branch = 'master',
 
     [Parameter()]
     [string] $OutputPath = '',

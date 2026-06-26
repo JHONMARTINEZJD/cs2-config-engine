@@ -64,6 +64,13 @@ Cada `Setting` lleva su `Type` (Bool/Integer/Float/String/Alias/Bind/AnalogBind/
 
 ## Uso
 
+### Clonar el repositorio
+
+```powershell
+git clone https://github.com/JHONMARTINEZJD/cs2-config-engine.git
+cd .\cs2-config-engine
+```
+
 ### Desde Windows con un solo comando
 
 Desde la carpeta del proyecto, en una terminal de Windows:
@@ -92,14 +99,10 @@ pwsh ./CS2ConfigEngine.ps1
 Si quieres que alguien lo ejecute sin descargar el repositorio previamente, puede hacerlo así:
 
 ```powershell
-iex "& { $(irm https://raw.githubusercontent.com/<usuario>/<repo>/<rama>/launch.ps1) } -RepoUrl 'https://github.com/<usuario>/<repo>' -Branch '<rama>'"
+iex "& { $(irm https://raw.githubusercontent.com/JHONMARTINEZJD/cs2-config-engine/master/launch.ps1) } -RepoUrl 'https://github.com/JHONMARTINEZJD/cs2-config-engine' -Branch 'master'"
 ```
 
-Ejemplo:
-
-```powershell
-iex "& { $(irm https://raw.githubusercontent.com/tu-usuario/cs2-config-engine/main/launch.ps1) } -RepoUrl 'https://github.com/tu-usuario/cs2-config-engine' -Branch 'main'"
-```
+Si tu rama por defecto cambia en el futuro, sustituye `master` por la rama correcta del repositorio.
 
 Esto descarga el proyecto, lo ejecuta localmente y deja el backup y el nuevo autoexec en la carpeta de salida indicada o, si no se indica, en `~/Downloads/CS2ConfigEngine`.
 
