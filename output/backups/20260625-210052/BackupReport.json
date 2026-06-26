@@ -1,0 +1,481 @@
+{
+  "snapshotId": "20260625-210052",
+  "timestamp": "2026-06-25T21:00:53.0616165-05:00",
+  "hash": "561d68a1766b45146aa4984acab9392f24dd854f729bcc53dfd25907317e3981",
+  "statistics": {
+    "total": 128,
+    "byCategory": {
+      "P09": 1,
+      "P10": 46,
+      "P11": 1,
+      "P14": 2,
+      "P15": 8,
+      "P16": 2,
+      "P17": 2,
+      "P18": 30,
+      "P19": 8,
+      "P20": 2,
+      "P24": 6,
+      "P26": 2,
+      "P29": 2,
+      "P31": 4,
+      "P32": 6,
+      "P33": 3,
+      "P34": 1,
+      "P35": 1,
+      "P41": 1
+    },
+    "byType": {
+      "Bool": 0,
+      "Integer": 0,
+      "Float": 0,
+      "String": 0,
+      "Alias": 0,
+      "Bind": 106,
+      "AnalogBind": 4,
+      "List": 0,
+      "Block": 0,
+      "Unknown": 18
+    },
+    "byState": {
+      "Synced": 57,
+      "FallbackApplied": 18,
+      "Duplicated": 53,
+      "Invalid": 0,
+      "Obsolete": 0,
+      "Unknown": 0
+    },
+    "issues": {
+      "Info": 0,
+      "Warning": 53,
+      "Error": 0
+    },
+    "sourceFiles": 32
+  },
+  "validation": [
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 68
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 69
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 10
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 11
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 6
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 23
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 63
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 26
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 5
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 54
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 44
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 45
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 46
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 47
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 48
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 30
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 31
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 61
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 43
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 35
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 8
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 22
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 25
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 34
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 38
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 9
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 42
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 12
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 13
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 14
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 15
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 16
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 17
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 18
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 19
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 20
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 21
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 29
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 57
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 58
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 32
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 39
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 27
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 28
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 59
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 60
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 33
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 36
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 40
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 24
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 37
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 41
+    },
+    {
+      "severity": "Warning",
+      "code": "DUPLICATE",
+      "target": "bind",
+      "message": "Comando duplicado; prevalece el de la configuracion viva de mayor prioridad.",
+      "file": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+      "line": 62
+    }
+  ]
+}

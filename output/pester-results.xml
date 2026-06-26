@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="21" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-06-25" time="21:13:34">
+  <environment clr-version="10.0.8" machine-name="JHONMARTINEZ" cwd="C:\Users\JHONMARTINEZ\Downloads\cs2-config-engine" user="JHONMARTINEZ" user-domain="JHONMARTINEZ" platform="Microsoft Windows 11 IoT Enterprise LTSC|C:\WINDOWS|\Device\Harddisk0\Partition3" nunit-version="2.5.8.0" os-version="10.0.26100" />
+  <culture-info current-culture="es-CO" current-uiculture="es-MX" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="2.0038" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Users\JHONMARTINEZ\Downloads\cs2-config-engine\tests\Engine.Tests.ps1" executed="True" result="Success" success="True" time="1.4809" asserts="0" description="C:\Users\JHONMARTINEZ\Downloads\cs2-config-engine\tests\Engine.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Classifier" executed="True" result="Success" success="True" time="0.286" asserts="0" description="Classifier">
+            <results>
+              <test-case description="clasifica convars de mira en P24" name="Classifier.clasifica convars de mira en P24" time="0.1607" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="clasifica sensibilidad en P14" name="Classifier.clasifica sensibilidad en P14" time="0.0056" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="enruta un bind por su comando objetivo" name="Classifier.enruta un bind por su comando objetivo" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="envia convars desconocidas pero validas a P49 (futuro)" name="Classifier.envia convars desconocidas pero validas a P49 (futuro)" time="0.0119" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="nunca descarta un comando totalmente desconocido" name="Classifier.nunca descarta un comando totalmente desconocido" time="0.0111" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="SyncEngine" executed="True" result="Success" success="True" time="0.5648" asserts="0" description="SyncEngine">
+            <results>
+              <test-case description="la configuracion viva tiene prioridad: duplicados se marcan, no se pierden" name="SyncEngine.la configuracion viva tiene prioridad: duplicados se marcan, no se pierden" time="0.1394" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="aplica fallback solo a variables ausentes" name="SyncEngine.aplica fallback solo a variables ausentes" time="0.0372" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="marca convars obsoletas sin eliminarlas" name="SyncEngine.marca convars obsoletas sin eliminarlas" time="0.0201" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="es determinista: misma entrada produce misma salida" name="SyncEngine.es determinista: misma entrada produce misma salida" time="0.0433" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="AutoexecExporter" executed="True" result="Success" success="True" time="0.652" asserts="0" description="AutoexecExporter">
+            <results>
+              <test-case description="exporta un autoexec limpio sin bloque de metadatos extensos" name="AutoexecExporter.exporta un autoexec limpio sin bloque de metadatos extensos" time="0.0776" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="CategoryMap" executed="True" result="Success" success="True" time="0.7099" asserts="0" description="CategoryMap">
+            <results>
+              <test-case description="asigna nombre y orden a un codigo conocido" name="CategoryMap.asigna nombre y orden a un codigo conocido" time="0.0258" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="es tolerante con codigos desconocidos" name="CategoryMap.es tolerante con codigos desconocidos" time="0.0262" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\JHONMARTINEZ\Downloads\cs2-config-engine\tests\Parsing.Tests.ps1" executed="True" result="Success" success="True" time="0.5229" asserts="0" description="C:\Users\JHONMARTINEZ\Downloads\cs2-config-engine\tests\Parsing.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Tokenizer" executed="True" result="Success" success="True" time="0.1023" asserts="0" description="Tokenizer">
+            <results>
+              <test-case description="tokeniza cadenas entrecomilladas conservando espacios internos" name="Tokenizer.tokeniza cadenas entrecomilladas conservando espacios internos" time="0.0478" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="ignora comentarios de linea y de bloque" name="Tokenizer.ignora comentarios de linea y de bloque" time="0.0243" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="procesa escapes dentro de cadenas" name="Tokenizer.procesa escapes dentro de cadenas" time="0.016" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="reconoce llaves de bloque" name="Tokenizer.reconoce llaves de bloque" time="0.0095" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="VdfParser + VcfgParser" executed="True" result="Success" success="True" time="0.2656" asserts="0" description="VdfParser + VcfgParser">
+            <results>
+              <test-case description="extrae convars de un .vcfg anidado" name="VdfParser + VcfgParser.extrae convars de un .vcfg anidado" time="0.1125" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="interpreta nodos dentro de contexto bind como Bind" name="VdfParser + VcfgParser.interpreta nodos dentro de contexto bind como Bind" time="0.0258" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="no falla con un archivo malformado (tolerancia)" name="VdfParser + VcfgParser.no falla con un archivo malformado (tolerancia)" time="0.0194" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="CfgParser" executed="True" result="Success" success="True" time="0.3463" asserts="0" description="CfgParser">
+            <results>
+              <test-case description="distingue convars, binds y alias" name="CfgParser.distingue convars, binds y alias" time="0.0555" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="infiere tipos numericos y booleanos" name="CfgParser.infiere tipos numericos y booleanos" time="0.0211" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

@@ -1,0 +1,2626 @@
+{
+  "total": 128,
+  "categories": [
+    {
+      "code": "P09",
+      "name": "Frame Pacing",
+      "count": 1,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "fps_max",
+          "rawLine": "",
+          "description": "Limite maximo de FPS (0 = ilimitado).",
+          "sourceFile": "(fallback catalog)",
+          "hash": "27682bccb20e960ab71ae55487f9e32dc3a6a42d467a4b0f84cb40bf111f57e8",
+          "default": "0",
+          "category": "P09",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0895890Z",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "code": "P10",
+      "name": "Input",
+      "count": 46,
+      "settings": [
+        {
+          "sourceLine": 68,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "yaw",
+            "Context": "config/analogbindings",
+            "Key": "MOUSE_X"
+          },
+          "type": "AnalogBind",
+          "name": "bind",
+          "rawLine": "\"MOUSE_X\"  \"yaw\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "504a8384b1305c6904d89bac93f8c78b34483794c714ccd1596edb64068560ec",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0172747Z",
+          "value": "yaw"
+        },
+        {
+          "sourceLine": 61,
+          "state": "Synced",
+          "extra": {
+            "Command": "yaw",
+            "Context": "config/analogbindings",
+            "Key": "MOUSE_X"
+          },
+          "type": "AnalogBind",
+          "name": "bind",
+          "rawLine": "\"MOUSE_X\"  \"yaw\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "504a8384b1305c6904d89bac93f8c78b34483794c714ccd1596edb64068560ec",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9883065Z",
+          "value": "yaw"
+        },
+        {
+          "sourceLine": 69,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "pitch",
+            "Context": "config/analogbindings",
+            "Key": "MOUSE_Y"
+          },
+          "type": "AnalogBind",
+          "name": "bind",
+          "rawLine": "\"MOUSE_Y\"  \"pitch\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "559fc04da5beec4a3481063ef065fd26fbc08659487b9d4331ceb7caaab5775e",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0174467Z",
+          "value": "pitch"
+        },
+        {
+          "sourceLine": 62,
+          "state": "Synced",
+          "extra": {
+            "Command": "pitch",
+            "Context": "config/analogbindings",
+            "Key": "MOUSE_Y"
+          },
+          "type": "AnalogBind",
+          "name": "bind",
+          "rawLine": "\"MOUSE_Y\"  \"pitch\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "559fc04da5beec4a3481063ef065fd26fbc08659487b9d4331ceb7caaab5775e",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9885100Z",
+          "value": "pitch"
+        },
+        {
+          "sourceLine": 10,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "buyammo1",
+            "Context": "config/bindings",
+            "Key": ","
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\",\"  \"buyammo1\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "7c56099b58fa1dd6e777c2404014fa5a538779aeadee5726ef30ec0579fd9a82",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0075202Z",
+          "value": "buyammo1"
+        },
+        {
+          "sourceLine": 10,
+          "state": "Synced",
+          "extra": {
+            "Command": "buyammo1",
+            "Context": "config/bindings",
+            "Key": ","
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\",\"  \"buyammo1\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "7c56099b58fa1dd6e777c2404014fa5a538779aeadee5726ef30ec0579fd9a82",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9787910Z",
+          "value": "buyammo1"
+        },
+        {
+          "sourceLine": 11,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "buyammo2",
+            "Context": "config/bindings",
+            "Key": "."
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\".\"  \"buyammo2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "8e2282f723b9b29e1861754c4f4d7e78f5e50ac949c1f6c12f39a30edfb5441c",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0076792Z",
+          "value": "buyammo2"
+        },
+        {
+          "sourceLine": 11,
+          "state": "Synced",
+          "extra": {
+            "Command": "buyammo2",
+            "Context": "config/bindings",
+            "Key": "."
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\".\"  \"buyammo2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "8e2282f723b9b29e1861754c4f4d7e78f5e50ac949c1f6c12f39a30edfb5441c",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9789815Z",
+          "value": "buyammo2"
+        },
+        {
+          "sourceLine": 6,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "toggleconsole",
+            "Context": "config/bindings",
+            "Key": "`"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"`\"  \"toggleconsole\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "24dde6dc897852fa74fb41c486a64308c107462605b564cac23f8efa6d2932d7",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0070183Z",
+          "value": "toggleconsole"
+        },
+        {
+          "sourceLine": 6,
+          "state": "Synced",
+          "extra": {
+            "Command": "toggleconsole",
+            "Context": "config/bindings",
+            "Key": "`"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"`\"  \"toggleconsole\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "24dde6dc897852fa74fb41c486a64308c107462605b564cac23f8efa6d2932d7",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9780986Z",
+          "value": "toggleconsole"
+        },
+        {
+          "sourceLine": 23,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "buymenu",
+            "Context": "config/bindings",
+            "Key": "b"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"b\"  \"buymenu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "b531deda38ef13b3eadadfbcf27f4439bee3ac7afb586e813846e437e0b68542",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0102089Z",
+          "value": "buymenu"
+        },
+        {
+          "sourceLine": 23,
+          "state": "Synced",
+          "extra": {
+            "Command": "buymenu",
+            "Context": "config/bindings",
+            "Key": "b"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"b\"  \"buymenu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "b531deda38ef13b3eadadfbcf27f4439bee3ac7afb586e813846e437e0b68542",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9812054Z",
+          "value": "buymenu"
+        },
+        {
+          "sourceLine": 63,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "sellbackall",
+            "Context": "config/bindings",
+            "Key": "DEL"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"DEL\"  \"sellbackall\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "98c5edf02401bfbb6f97565c1e358ae3eda46651a130918b007dc6d2e34a09fc",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0170021Z",
+          "value": "sellbackall"
+        },
+        {
+          "sourceLine": 56,
+          "state": "Synced",
+          "extra": {
+            "Command": "sellbackall",
+            "Context": "config/bindings",
+            "Key": "DEL"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"DEL\"  \"sellbackall\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "98c5edf02401bfbb6f97565c1e358ae3eda46651a130918b007dc6d2e34a09fc",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9880719Z",
+          "value": "sellbackall"
+        },
+        {
+          "sourceLine": 26,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+use",
+            "Context": "config/bindings",
+            "Key": "e"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"e\"  \"+use\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "613d0fd8f5cb1cbee0bcf6fc468426198ce9b89507a0de008ade86cc232765cf",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0106890Z",
+          "value": "+use"
+        },
+        {
+          "sourceLine": 26,
+          "state": "Synced",
+          "extra": {
+            "Command": "+use",
+            "Context": "config/bindings",
+            "Key": "e"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"e\"  \"+use\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "613d0fd8f5cb1cbee0bcf6fc468426198ce9b89507a0de008ade86cc232765cf",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9817449Z",
+          "value": "+use"
+        },
+        {
+          "sourceLine": 5,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "cancelselect",
+            "Context": "config/bindings",
+            "Key": "ESCAPE"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"ESCAPE\"  \"cancelselect\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "cf3a612dc7abf838237266c31e151a9ef0c9b68d8d8d471bdf1bf6fbb0ab707a",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0066703Z",
+          "value": "cancelselect"
+        },
+        {
+          "sourceLine": 5,
+          "state": "Synced",
+          "extra": {
+            "Command": "cancelselect",
+            "Context": "config/bindings",
+            "Key": "ESCAPE"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"ESCAPE\"  \"cancelselect\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "cf3a612dc7abf838237266c31e151a9ef0c9b68d8d8d471bdf1bf6fbb0ab707a",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9770679Z",
+          "value": "cancelselect"
+        },
+        {
+          "sourceLine": 49,
+          "state": "Synced",
+          "extra": {
+            "Command": "cs_quit_prompt",
+            "Context": "config/bindings",
+            "Key": "F10"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F10\"  \"cs_quit_prompt\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "90cd1dbe96107e31de5dcdd5030870316f24fcd57b86f6303923c3ea05c643be",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9868017Z",
+          "value": "cs_quit_prompt"
+        },
+        {
+          "sourceLine": 54,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "debugoverlay_cycle_state",
+            "Context": "config/bindings",
+            "Key": "F10"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F10\"  \"debugoverlay_cycle_state\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4cc7eeadb8b710ba410616a23ebfe403db059aab8ff6a1595afc74e91be66f15",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0147133Z",
+          "value": "debugoverlay_cycle_state"
+        },
+        {
+          "sourceLine": 55,
+          "state": "Synced",
+          "extra": {
+            "Command": "debugoverlay_cycle_domain",
+            "Context": "config/bindings",
+            "Key": "F10+shift"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F10+shift\"  \"debugoverlay_cycle_domain\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "a589912c0f0e44d11178888a6ed3dd4c640844a5a16ebbfd1f46f35b63806d0d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0148655Z",
+          "value": "debugoverlay_cycle_domain"
+        },
+        {
+          "sourceLine": 44,
+          "state": "Synced",
+          "extra": {
+            "Command": "autobuy",
+            "Context": "config/bindings",
+            "Key": "F3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F3\"  \"autobuy\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ca146972cf4cb483e2519f3907ad446155be3c34df8c06ce8ce67c1fc19b6640",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9858984Z",
+          "value": "autobuy"
+        },
+        {
+          "sourceLine": 44,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "autobuy",
+            "Context": "config/bindings",
+            "Key": "F3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F3\"  \"autobuy\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ca146972cf4cb483e2519f3907ad446155be3c34df8c06ce8ce67c1fc19b6640",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0134741Z",
+          "value": "autobuy"
+        },
+        {
+          "sourceLine": 45,
+          "state": "Synced",
+          "extra": {
+            "Command": "rebuy",
+            "Context": "config/bindings",
+            "Key": "F4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F4\"  \"rebuy\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "5a37a5dd616daf21ee5d48b8f6f3db0dddc83a0ba157d3832bbbbb0fec4f1a6e",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9860751Z",
+          "value": "rebuy"
+        },
+        {
+          "sourceLine": 45,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "rebuy",
+            "Context": "config/bindings",
+            "Key": "F4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F4\"  \"rebuy\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "5a37a5dd616daf21ee5d48b8f6f3db0dddc83a0ba157d3832bbbbb0fec4f1a6e",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0136258Z",
+          "value": "rebuy"
+        },
+        {
+          "sourceLine": 46,
+          "state": "Synced",
+          "extra": {
+            "Command": "jpeg",
+            "Context": "config/bindings",
+            "Key": "F5"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F5\"  \"jpeg\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ebf75fa8ed63003dc1fdf5e92b96dd77e449319b5527f62d3183b1540d21e2a2",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9862497Z",
+          "value": "jpeg"
+        },
+        {
+          "sourceLine": 46,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "jpeg",
+            "Context": "config/bindings",
+            "Key": "F5"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F5\"  \"jpeg\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ebf75fa8ed63003dc1fdf5e92b96dd77e449319b5527f62d3183b1540d21e2a2",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0137763Z",
+          "value": "jpeg"
+        },
+        {
+          "sourceLine": 47,
+          "state": "Synced",
+          "extra": {
+            "Command": "save quick",
+            "Context": "config/bindings",
+            "Key": "F6"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F6\"  \"save quick\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "01a0a0bcbb5b21cd2b5dab8cdee4bef2e6a33ab25408d3bba157deb04520768d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9864328Z",
+          "value": "save quick"
+        },
+        {
+          "sourceLine": 47,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "save quick",
+            "Context": "config/bindings",
+            "Key": "F6"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F6\"  \"save quick\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "01a0a0bcbb5b21cd2b5dab8cdee4bef2e6a33ab25408d3bba157deb04520768d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0139286Z",
+          "value": "save quick"
+        },
+        {
+          "sourceLine": 48,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "load quick",
+            "Context": "config/bindings",
+            "Key": "F7"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F7\"  \"load quick\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e963260274e809c2a2c99e7ecda25431f00f12964be9d9f7df804cf36087743f",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0140870Z",
+          "value": "load quick"
+        },
+        {
+          "sourceLine": 48,
+          "state": "Synced",
+          "extra": {
+            "Command": "load quick",
+            "Context": "config/bindings",
+            "Key": "F7"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F7\"  \"load quick\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e963260274e809c2a2c99e7ecda25431f00f12964be9d9f7df804cf36087743f",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9866245Z",
+          "value": "load quick"
+        },
+        {
+          "sourceLine": 50,
+          "state": "Synced",
+          "extra": {
+            "Command": "telemetry_server MEM_CAPTURE; telemetry_level 3",
+            "Context": "config/bindings",
+            "Key": "F8"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F8\"  \"telemetry_server MEM_CAPTURE; telemetry_level 3\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "80be7d5bce463571cf742120d88072e7871ddd4930a34eaa7d58c893ffb6ec5c",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0142394Z",
+          "value": "telemetry_server MEM_CAPTURE; telemetry_level 3"
+        },
+        {
+          "sourceLine": 51,
+          "state": "Synced",
+          "extra": {
+            "Command": "telemetry_level 0",
+            "Context": "config/bindings",
+            "Key": "F8+alt"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F8+alt\"  \"telemetry_level 0\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e93db24bec713d65a1c8e5368e0fcd1847cfffe3ce6981463e3247dfe45cf016",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0143962Z",
+          "value": "telemetry_level 0"
+        },
+        {
+          "sourceLine": 52,
+          "state": "Synced",
+          "extra": {
+            "Command": "telemetry_memcapture_save",
+            "Context": "config/bindings",
+            "Key": "F9"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"F9\"  \"telemetry_memcapture_save\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "b436e5e67bd340d9f09c07c1a8d4ef2189dbb7082b0c2adb546a394b497a4ad5",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0145546Z",
+          "value": "telemetry_memcapture_save"
+        },
+        {
+          "sourceLine": 30,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "show_loadout_toggle",
+            "Context": "config/bindings",
+            "Key": "i"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"i\"  \"show_loadout_toggle\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e90f59d1a600ff079e158928abbf4a9498deed88d4d236b4d6af3ac14ec5400d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0113091Z",
+          "value": "show_loadout_toggle"
+        },
+        {
+          "sourceLine": 30,
+          "state": "Synced",
+          "extra": {
+            "Command": "show_loadout_toggle",
+            "Context": "config/bindings",
+            "Key": "i"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"i\"  \"show_loadout_toggle\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e90f59d1a600ff079e158928abbf4a9498deed88d4d236b4d6af3ac14ec5400d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9824710Z",
+          "value": "show_loadout_toggle"
+        },
+        {
+          "sourceLine": 31,
+          "state": "Synced",
+          "extra": {
+            "Command": "teammenu",
+            "Context": "config/bindings",
+            "Key": "m"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"m\"  \"teammenu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "f8ceb10e5815f678db72a00d8acc859691a6c2197eb4d4a9363f7881f306924d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9826473Z",
+          "value": "teammenu"
+        },
+        {
+          "sourceLine": 31,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "teammenu",
+            "Context": "config/bindings",
+            "Key": "m"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"m\"  \"teammenu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "f8ceb10e5815f678db72a00d8acc859691a6c2197eb4d4a9363f7881f306924d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0114696Z",
+          "value": "teammenu"
+        },
+        {
+          "sourceLine": 54,
+          "state": "Synced",
+          "extra": {
+            "Command": "player_ping",
+            "Context": "config/bindings",
+            "Key": "MOUSE3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE3\"  \"player_ping\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "a332cb48e12e91879b8a53fad2d5b85b17a89644984cf08c0fb1fd91bfa2d6f5",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9876966Z",
+          "value": "player_ping"
+        },
+        {
+          "sourceLine": 61,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "player_ping",
+            "Context": "config/bindings",
+            "Key": "MOUSE3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE3\"  \"player_ping\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "a332cb48e12e91879b8a53fad2d5b85b17a89644984cf08c0fb1fd91bfa2d6f5",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0166849Z",
+          "value": "player_ping"
+        },
+        {
+          "sourceLine": 43,
+          "state": "Synced",
+          "extra": {
+            "Command": "+sprint",
+            "Context": "config/bindings",
+            "Key": "SHIFT"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"SHIFT\"  \"+sprint\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "4d5101fada03f679471d3aadc4b402df97c55e9cf88a0907d748ec1c44159c7d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9857221Z",
+          "value": "+sprint"
+        },
+        {
+          "sourceLine": 43,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+sprint",
+            "Context": "config/bindings",
+            "Key": "SHIFT"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"SHIFT\"  \"+sprint\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4d5101fada03f679471d3aadc4b402df97c55e9cf88a0907d748ec1c44159c7d",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0133222Z",
+          "value": "+sprint"
+        },
+        {
+          "sourceLine": 35,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+spray_menu",
+            "Context": "config/bindings",
+            "Key": "t"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"t\"  \"+spray_menu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "81e5ddbe5dbaae14bc336fb64c7c9c01e54ed04436f15ec2f7567bbdb62704a6",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0120894Z",
+          "value": "+spray_menu"
+        },
+        {
+          "sourceLine": 35,
+          "state": "Synced",
+          "extra": {
+            "Command": "+spray_menu",
+            "Context": "config/bindings",
+            "Key": "t"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"t\"  \"+spray_menu\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "81e5ddbe5dbaae14bc336fb64c7c9c01e54ed04436f15ec2f7567bbdb62704a6",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9833459Z",
+          "value": "+spray_menu"
+        },
+        {
+          "sourceLine": 8,
+          "state": "Synced",
+          "extra": {
+            "Command": "+showscores",
+            "Context": "config/bindings",
+            "Key": "TAB"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"TAB\"  \"+showscores\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ea2e5e11c331878aa3f57e26ab2d417ac9b2ceac4aa54a07d3714b695a824f11",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9783766Z",
+          "value": "+showscores"
+        },
+        {
+          "sourceLine": 8,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+showscores",
+            "Context": "config/bindings",
+            "Key": "TAB"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"TAB\"  \"+showscores\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ea2e5e11c331878aa3f57e26ab2d417ac9b2ceac4aa54a07d3714b695a824f11",
+          "default": "",
+          "category": "P10",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0072032Z",
+          "value": "+showscores"
+        }
+      ]
+    },
+    {
+      "code": "P11",
+      "name": "Mouse",
+      "count": 1,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "m_rawinput",
+          "rawLine": "",
+          "description": "Usa entrada de raton sin procesar por el SO.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "c8808a79f2f1e8f9f533ac0108f67b2fda2011ec67e984b0ebec54b165f4e32a",
+          "default": "1",
+          "category": "P11",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0889686Z",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "code": "P14",
+      "name": "Sensitivity",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "sensitivity",
+          "rawLine": "",
+          "description": "Sensibilidad general del raton.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "18a028a0a9a4d934d7833153c12c6de98a2a51be9824a6b699fe7e44c942be9b",
+          "default": "2.5",
+          "category": "P14",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0898064Z",
+          "value": "2.5"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "zoom_sensitivity_ratio",
+          "rawLine": "",
+          "description": "Ratio de sensibilidad al apuntar con zoom.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "a8cf915b0ecba32d9bfde6406b830fdda0f91b84fc909c007d3fff32c9c3b569",
+          "default": "1",
+          "category": "P14",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0918408Z",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "code": "P15",
+      "name": "Movement",
+      "count": 8,
+      "settings": [
+        {
+          "sourceLine": 22,
+          "state": "Synced",
+          "extra": {
+            "Command": "+left",
+            "Context": "config/bindings",
+            "Key": "a"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"a\"  \"+left\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "afe27ef25b1884b1556b872404365d373f6e21d22a9ccfa300bc8d6e310db7e3",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9810267Z",
+          "value": "+left"
+        },
+        {
+          "sourceLine": 22,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+left",
+            "Context": "config/bindings",
+            "Key": "a"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"a\"  \"+left\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "afe27ef25b1884b1556b872404365d373f6e21d22a9ccfa300bc8d6e310db7e3",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0100213Z",
+          "value": "+left"
+        },
+        {
+          "sourceLine": 25,
+          "state": "Synced",
+          "extra": {
+            "Command": "+right",
+            "Context": "config/bindings",
+            "Key": "d"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"d\"  \"+right\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "547094333d0226b38fcafb64a587718cbeb2f93820cf54a6a0f2b8a257be3e22",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9815686Z",
+          "value": "+right"
+        },
+        {
+          "sourceLine": 25,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+right",
+            "Context": "config/bindings",
+            "Key": "d"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"d\"  \"+right\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "547094333d0226b38fcafb64a587718cbeb2f93820cf54a6a0f2b8a257be3e22",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0105318Z",
+          "value": "+right"
+        },
+        {
+          "sourceLine": 34,
+          "state": "Synced",
+          "extra": {
+            "Command": "+back",
+            "Context": "config/bindings",
+            "Key": "s"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"s\"  \"+back\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "4d05f1ab64b81d140f7cb461c1c5bc9bb37d331706895a66adccf62a4efd9e02",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9831724Z",
+          "value": "+back"
+        },
+        {
+          "sourceLine": 34,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+back",
+            "Context": "config/bindings",
+            "Key": "s"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"s\"  \"+back\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4d05f1ab64b81d140f7cb461c1c5bc9bb37d331706895a66adccf62a4efd9e02",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0119238Z",
+          "value": "+back"
+        },
+        {
+          "sourceLine": 38,
+          "state": "Synced",
+          "extra": {
+            "Command": "+forward",
+            "Context": "config/bindings",
+            "Key": "w"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"w\"  \"+forward\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ccb41bbab86c8776611353f23a960a74f9ee05ed5a0f732b6fde29a6e8b5faed",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9847905Z",
+          "value": "+forward"
+        },
+        {
+          "sourceLine": 38,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+forward",
+            "Context": "config/bindings",
+            "Key": "w"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"w\"  \"+forward\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ccb41bbab86c8776611353f23a960a74f9ee05ed5a0f732b6fde29a6e8b5faed",
+          "default": "",
+          "category": "P15",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0125660Z",
+          "value": "+forward"
+        }
+      ]
+    },
+    {
+      "code": "P16",
+      "name": "Jump",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": 9,
+          "state": "Synced",
+          "extra": {
+            "Command": "+jump",
+            "Context": "config/bindings",
+            "Key": "SPACE"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"SPACE\"  \"+jump\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "c0e16e8f17aff2feaa56db28da39cff3b33e0f08d549e94357b922606d076c87",
+          "default": "",
+          "category": "P16",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9785932Z",
+          "value": "+jump"
+        },
+        {
+          "sourceLine": 9,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+jump",
+            "Context": "config/bindings",
+            "Key": "SPACE"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"SPACE\"  \"+jump\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "c0e16e8f17aff2feaa56db28da39cff3b33e0f08d549e94357b922606d076c87",
+          "default": "",
+          "category": "P16",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0073653Z",
+          "value": "+jump"
+        }
+      ]
+    },
+    {
+      "code": "P17",
+      "name": "Crouch",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": 42,
+          "state": "Synced",
+          "extra": {
+            "Command": "+duck",
+            "Context": "config/bindings",
+            "Key": "CTRL"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"CTRL\"  \"+duck\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ec829b5a832396e14751f585c0816abd20d971c0c6780e2b90a94cdb831d03ee",
+          "default": "",
+          "category": "P17",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9855389Z",
+          "value": "+duck"
+        },
+        {
+          "sourceLine": 42,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+duck",
+            "Context": "config/bindings",
+            "Key": "CTRL"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"CTRL\"  \"+duck\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ec829b5a832396e14751f585c0816abd20d971c0c6780e2b90a94cdb831d03ee",
+          "default": "",
+          "category": "P17",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0131683Z",
+          "value": "+duck"
+        }
+      ]
+    },
+    {
+      "code": "P18",
+      "name": "Weapon Switching",
+      "count": 30,
+      "settings": [
+        {
+          "sourceLine": 12,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot10",
+            "Context": "config/bindings",
+            "Key": "0"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"0\"  \"slot10\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "4457a395a3b5e7dc4ac31ceab4614b521ea65b231856ad6816c276d552de714b",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9791680Z",
+          "value": "slot10"
+        },
+        {
+          "sourceLine": 12,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot10",
+            "Context": "config/bindings",
+            "Key": "0"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"0\"  \"slot10\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4457a395a3b5e7dc4ac31ceab4614b521ea65b231856ad6816c276d552de714b",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0078321Z",
+          "value": "slot10"
+        },
+        {
+          "sourceLine": 13,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot1",
+            "Context": "config/bindings",
+            "Key": "1"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"1\"  \"slot1\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "ebc24a05e7884483bfdf35785b4d09027c1abf12600e6f39a8cc00b7a657bf04",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9793492Z",
+          "value": "slot1"
+        },
+        {
+          "sourceLine": 13,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot1",
+            "Context": "config/bindings",
+            "Key": "1"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"1\"  \"slot1\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "ebc24a05e7884483bfdf35785b4d09027c1abf12600e6f39a8cc00b7a657bf04",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0080897Z",
+          "value": "slot1"
+        },
+        {
+          "sourceLine": 14,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot2",
+            "Context": "config/bindings",
+            "Key": "2"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"2\"  \"slot2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "20cf7ed7d13733703134f165f9b3b7f26c1a5740f042f0c375069a7ccece1fc9",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9795341Z",
+          "value": "slot2"
+        },
+        {
+          "sourceLine": 14,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot2",
+            "Context": "config/bindings",
+            "Key": "2"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"2\"  \"slot2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "20cf7ed7d13733703134f165f9b3b7f26c1a5740f042f0c375069a7ccece1fc9",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0082818Z",
+          "value": "slot2"
+        },
+        {
+          "sourceLine": 15,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot3",
+            "Context": "config/bindings",
+            "Key": "3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"3\"  \"slot3\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e7c594e68d467c36e8c651a951af31adf1f4847fb53c223506ec5ed2df157ea9",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9797157Z",
+          "value": "slot3"
+        },
+        {
+          "sourceLine": 15,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot3",
+            "Context": "config/bindings",
+            "Key": "3"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"3\"  \"slot3\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e7c594e68d467c36e8c651a951af31adf1f4847fb53c223506ec5ed2df157ea9",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0084570Z",
+          "value": "slot3"
+        },
+        {
+          "sourceLine": 16,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot4",
+            "Context": "config/bindings",
+            "Key": "4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"4\"  \"slot4\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "f428b5cdc3f6c826658fe1e6cdbae0320869d210719899742a7612c85aeddd89",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9798951Z",
+          "value": "slot4"
+        },
+        {
+          "sourceLine": 16,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot4",
+            "Context": "config/bindings",
+            "Key": "4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"4\"  \"slot4\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "f428b5cdc3f6c826658fe1e6cdbae0320869d210719899742a7612c85aeddd89",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0086586Z",
+          "value": "slot4"
+        },
+        {
+          "sourceLine": 17,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot5",
+            "Context": "config/bindings",
+            "Key": "5"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"5\"  \"slot5\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "24cf4c5f8d8fdbc3f9cd25bc60b225d44ca47c805e69d886ef4d1fa61d041dc6",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9800812Z",
+          "value": "slot5"
+        },
+        {
+          "sourceLine": 17,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot5",
+            "Context": "config/bindings",
+            "Key": "5"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"5\"  \"slot5\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "24cf4c5f8d8fdbc3f9cd25bc60b225d44ca47c805e69d886ef4d1fa61d041dc6",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0088629Z",
+          "value": "slot5"
+        },
+        {
+          "sourceLine": 18,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot6",
+            "Context": "config/bindings",
+            "Key": "6"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"6\"  \"slot6\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "67ecf7e223cf53b750355a9927653556b2f1c9fba0c018c0a5cb97d6fe7b8c72",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9802721Z",
+          "value": "slot6"
+        },
+        {
+          "sourceLine": 18,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot6",
+            "Context": "config/bindings",
+            "Key": "6"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"6\"  \"slot6\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "67ecf7e223cf53b750355a9927653556b2f1c9fba0c018c0a5cb97d6fe7b8c72",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0090477Z",
+          "value": "slot6"
+        },
+        {
+          "sourceLine": 19,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot7",
+            "Context": "config/bindings",
+            "Key": "7"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"7\"  \"slot7\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "add52fb0d67f48065668275ed68505affaacd5ff1da0b8d3f06be9f7e067eeda",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9804818Z",
+          "value": "slot7"
+        },
+        {
+          "sourceLine": 19,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot7",
+            "Context": "config/bindings",
+            "Key": "7"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"7\"  \"slot7\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "add52fb0d67f48065668275ed68505affaacd5ff1da0b8d3f06be9f7e067eeda",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0093737Z",
+          "value": "slot7"
+        },
+        {
+          "sourceLine": 20,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot8",
+            "Context": "config/bindings",
+            "Key": "8"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"8\"  \"slot8\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "00be3433e2b15ee2adbe83ce4b4bfaef130a76d06045a192bfc4a7c37956285c",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0096613Z",
+          "value": "slot8"
+        },
+        {
+          "sourceLine": 20,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot8",
+            "Context": "config/bindings",
+            "Key": "8"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"8\"  \"slot8\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "00be3433e2b15ee2adbe83ce4b4bfaef130a76d06045a192bfc4a7c37956285c",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9806632Z",
+          "value": "slot8"
+        },
+        {
+          "sourceLine": 21,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot9",
+            "Context": "config/bindings",
+            "Key": "9"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"9\"  \"slot9\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e57282939ca8df8267f66162cf587c6a09b416843b7b22580f60280c5be99c79",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0098350Z",
+          "value": "slot9"
+        },
+        {
+          "sourceLine": 21,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot9",
+            "Context": "config/bindings",
+            "Key": "9"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"9\"  \"slot9\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e57282939ca8df8267f66162cf587c6a09b416843b7b22580f60280c5be99c79",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9808468Z",
+          "value": "slot9"
+        },
+        {
+          "sourceLine": 29,
+          "state": "Synced",
+          "extra": {
+            "Command": "switchhands",
+            "Context": "config/bindings",
+            "Key": "h"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"h\"  \"switchhands\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "30f1a653381d9c19a9799d8ea1c266ef4f8f00a77df7af29bd4d89a4b5e1f59c",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9822882Z",
+          "value": "switchhands"
+        },
+        {
+          "sourceLine": 29,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "switchhands",
+            "Context": "config/bindings",
+            "Key": "h"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"h\"  \"switchhands\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "30f1a653381d9c19a9799d8ea1c266ef4f8f00a77df7af29bd4d89a4b5e1f59c",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0111535Z",
+          "value": "switchhands"
+        },
+        {
+          "sourceLine": 50,
+          "state": "Synced",
+          "extra": {
+            "Command": "invnext",
+            "Context": "config/bindings",
+            "Key": "MWHEELDOWN"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MWHEELDOWN\"  \"invnext\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e80d97205b3676fd56ab6a450bd6a6f561c7ec8ff8f20835d55a19d4d55cdd0f",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9869877Z",
+          "value": "invnext"
+        },
+        {
+          "sourceLine": 57,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "invnext",
+            "Context": "config/bindings",
+            "Key": "MWHEELDOWN"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MWHEELDOWN\"  \"invnext\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e80d97205b3676fd56ab6a450bd6a6f561c7ec8ff8f20835d55a19d4d55cdd0f",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0159605Z",
+          "value": "invnext"
+        },
+        {
+          "sourceLine": 51,
+          "state": "Synced",
+          "extra": {
+            "Command": "invprev",
+            "Context": "config/bindings",
+            "Key": "MWHEELUP"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MWHEELUP\"  \"invprev\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "4474f8a73f6c4321f4545fd67f1a57e8bee46e4fb5130ff06e461681462a31ca",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9871632Z",
+          "value": "invprev"
+        },
+        {
+          "sourceLine": 58,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "invprev",
+            "Context": "config/bindings",
+            "Key": "MWHEELUP"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MWHEELUP\"  \"invprev\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4474f8a73f6c4321f4545fd67f1a57e8bee46e4fb5130ff06e461681462a31ca",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0161832Z",
+          "value": "invprev"
+        },
+        {
+          "sourceLine": 32,
+          "state": "Synced",
+          "extra": {
+            "Command": "lastinv",
+            "Context": "config/bindings",
+            "Key": "q"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"q\"  \"lastinv\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "31b0a79bc7d2410ee0aaf073a69cbc5fc336e8e5774cfdcac3a9ae88b8801abd",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9828226Z",
+          "value": "lastinv"
+        },
+        {
+          "sourceLine": 32,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "lastinv",
+            "Context": "config/bindings",
+            "Key": "q"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"q\"  \"lastinv\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "31b0a79bc7d2410ee0aaf073a69cbc5fc336e8e5774cfdcac3a9ae88b8801abd",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0116200Z",
+          "value": "lastinv"
+        },
+        {
+          "sourceLine": 39,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "slot12",
+            "Context": "config/bindings",
+            "Key": "x"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"x\"  \"slot12\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "1a35ec5b149d371b56d1162d9a0b18a4d4b4ca1ef5c344b942e12c36ddd58e9b",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0127209Z",
+          "value": "slot12"
+        },
+        {
+          "sourceLine": 39,
+          "state": "Synced",
+          "extra": {
+            "Command": "slot12",
+            "Context": "config/bindings",
+            "Key": "x"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"x\"  \"slot12\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "1a35ec5b149d371b56d1162d9a0b18a4d4b4ca1ef5c344b942e12c36ddd58e9b",
+          "default": "",
+          "category": "P18",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9849815Z",
+          "value": "slot12"
+        }
+      ]
+    },
+    {
+      "code": "P19",
+      "name": "Weapon Actions",
+      "count": 8,
+      "settings": [
+        {
+          "sourceLine": 27,
+          "state": "Synced",
+          "extra": {
+            "Command": "+lookatweapon",
+            "Context": "config/bindings",
+            "Key": "f"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"f\"  \"+lookatweapon\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "41a85986afef6b845158ba9aad08fd0ccc2f6d830800cf69389fdde8f4b66233",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9819293Z",
+          "value": "+lookatweapon"
+        },
+        {
+          "sourceLine": 27,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+lookatweapon",
+            "Context": "config/bindings",
+            "Key": "f"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"f\"  \"+lookatweapon\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "41a85986afef6b845158ba9aad08fd0ccc2f6d830800cf69389fdde8f4b66233",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0108459Z",
+          "value": "+lookatweapon"
+        },
+        {
+          "sourceLine": 28,
+          "state": "Synced",
+          "extra": {
+            "Command": "drop",
+            "Context": "config/bindings",
+            "Key": "g"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"g\"  \"drop\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "4bc6e1edd8f9f7ea05f8b0bb45b1d19fde7b1785d3d58e70125e31cc0b3dba4d",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9821079Z",
+          "value": "drop"
+        },
+        {
+          "sourceLine": 28,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "drop",
+            "Context": "config/bindings",
+            "Key": "g"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"g\"  \"drop\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "4bc6e1edd8f9f7ea05f8b0bb45b1d19fde7b1785d3d58e70125e31cc0b3dba4d",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0110005Z",
+          "value": "drop"
+        },
+        {
+          "sourceLine": 52,
+          "state": "Synced",
+          "extra": {
+            "Command": "+attack",
+            "Context": "config/bindings",
+            "Key": "MOUSE1"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE1\"  \"+attack\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "b0942594f9edfde6a5e127505c64c1ca2dbe744b9d914c5f630184e31a572e42",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9873442Z",
+          "value": "+attack"
+        },
+        {
+          "sourceLine": 59,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+attack",
+            "Context": "config/bindings",
+            "Key": "MOUSE1"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE1\"  \"+attack\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "b0942594f9edfde6a5e127505c64c1ca2dbe744b9d914c5f630184e31a572e42",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0163510Z",
+          "value": "+attack"
+        },
+        {
+          "sourceLine": 53,
+          "state": "Synced",
+          "extra": {
+            "Command": "+attack2",
+            "Context": "config/bindings",
+            "Key": "MOUSE2"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE2\"  \"+attack2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "9fb00a752dec82a2bfd034abe6e7c876346c813a888a57fc8f9664216a1540ef",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9875200Z",
+          "value": "+attack2"
+        },
+        {
+          "sourceLine": 60,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+attack2",
+            "Context": "config/bindings",
+            "Key": "MOUSE2"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE2\"  \"+attack2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "9fb00a752dec82a2bfd034abe6e7c876346c813a888a57fc8f9664216a1540ef",
+          "default": "",
+          "category": "P19",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0165156Z",
+          "value": "+attack2"
+        }
+      ]
+    },
+    {
+      "code": "P20",
+      "name": "Reload",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": 33,
+          "state": "Synced",
+          "extra": {
+            "Command": "+reload",
+            "Context": "config/bindings",
+            "Key": "r"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"r\"  \"+reload\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "98900a4e7fadec3e9b20e142ca570956caa1f88a27fffb082c57eb9b504d8fc9",
+          "default": "",
+          "category": "P20",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9829970Z",
+          "value": "+reload"
+        },
+        {
+          "sourceLine": 33,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+reload",
+            "Context": "config/bindings",
+            "Key": "r"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"r\"  \"+reload\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "98900a4e7fadec3e9b20e142ca570956caa1f88a27fffb082c57eb9b504d8fc9",
+          "default": "",
+          "category": "P20",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0117715Z",
+          "value": "+reload"
+        }
+      ]
+    },
+    {
+      "code": "P24",
+      "name": "Crosshair",
+      "count": 6,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshaircolor",
+          "rawLine": "",
+          "description": "Define el color base de la mira.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "49da24d3a8b1592299c442bc0536b8fe1c8a5a8ee379e12d4f3cf9f14da3ca09",
+          "default": "1",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0882764Z",
+          "value": "1"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshairdot",
+          "rawLine": "",
+          "description": "Muestra un punto central en la mira.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "680abcf1f0e67d2c167e9307a640d3822c78ca0a461a2d01e8cc330ab0736bf0",
+          "default": "0",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0893802Z",
+          "value": "0"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshairgap",
+          "rawLine": "",
+          "description": "Separacion central entre brazos de la mira.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "5eaf09f11c85987bb8997507cd49e4c3504912570943cfa656c8f00e89a1541e",
+          "default": "1",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0900146Z",
+          "value": "1"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshairsize",
+          "rawLine": "",
+          "description": "Tamano de los brazos de la mira.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "34e4f2ba215b9c656f826d7d34e735765ad312efa9f2aa072f886ed931c67d0f",
+          "default": "5",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0908236Z",
+          "value": "5"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshairstyle",
+          "rawLine": "",
+          "description": "Estilo de la mira (estatica/dinamica).",
+          "sourceFile": "(fallback catalog)",
+          "hash": "90cddecda9e9fcf7524e95438bfc45e23f8aea8c574a6a9f4f90f3cab631e139",
+          "default": "2",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0887297Z",
+          "value": "2"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_crosshairthickness",
+          "rawLine": "",
+          "description": "Grosor de los brazos de la mira.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "463d1e11a69c190148c01d54ea1ebe5ba57260a60a2507e336d82be3aa68c687",
+          "default": "0.5",
+          "category": "P24",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0902077Z",
+          "value": "0.5"
+        }
+      ]
+    },
+    {
+      "code": "P26",
+      "name": "Viewmodel",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "viewmodel_fov",
+          "rawLine": "",
+          "description": "Campo de vision del modelo de armas en primera persona.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "20f08702ab3955c4946e2422d7bfa013310aa0ce1e996c883a9e685b4c11ffe4",
+          "default": "60",
+          "category": "P26",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0921015Z",
+          "value": "60"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "viewmodel_offset_x",
+          "rawLine": "",
+          "description": "Desplazamiento horizontal del viewmodel.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "016d1a1c94314ca3431ac383a8ce2736c8d5af505c46b1da01bcf4472ee25584",
+          "default": "0",
+          "category": "P26",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0924405Z",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "code": "P29",
+      "name": "Radar",
+      "count": 2,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_radar_always_centered",
+          "rawLine": "",
+          "description": "Mantiene el radar centrado en el jugador.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "8834cc3d269dd459e03c4017352676d6828a03fcd5482379386b9147ccd2f717",
+          "default": "1",
+          "category": "P29",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0906152Z",
+          "value": "1"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "cl_radar_scale",
+          "rawLine": "",
+          "description": "Escala del radar.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "a55f3d49ba84100a7363ac0c03a65e4359ab7aebf427fc518a767f5dc064a066",
+          "default": "0.7",
+          "category": "P29",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0910863Z",
+          "value": "0.7"
+        }
+      ]
+    },
+    {
+      "code": "P31",
+      "name": "Chat",
+      "count": 4,
+      "settings": [
+        {
+          "sourceLine": 36,
+          "state": "Synced",
+          "extra": {
+            "Command": "messagemode2",
+            "Context": "config/bindings",
+            "Key": "u"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"u\"  \"messagemode2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "5e2ff1b7bf8e508c27e15bad3204646d82b8b65563db6b2dee96badad8600457",
+          "default": "",
+          "category": "P31",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9843088Z",
+          "value": "messagemode2"
+        },
+        {
+          "sourceLine": 36,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "messagemode2",
+            "Context": "config/bindings",
+            "Key": "u"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"u\"  \"messagemode2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "5e2ff1b7bf8e508c27e15bad3204646d82b8b65563db6b2dee96badad8600457",
+          "default": "",
+          "category": "P31",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0122457Z",
+          "value": "messagemode2"
+        },
+        {
+          "sourceLine": 40,
+          "state": "Synced",
+          "extra": {
+            "Command": "messagemode",
+            "Context": "config/bindings",
+            "Key": "y"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"y\"  \"messagemode\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "493168d27e5f1e584ac2a55310919179aafba3c08b2e375b38d52be613847f83",
+          "default": "",
+          "category": "P31",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9851656Z",
+          "value": "messagemode"
+        },
+        {
+          "sourceLine": 40,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "messagemode",
+            "Context": "config/bindings",
+            "Key": "y"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"y\"  \"messagemode\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "493168d27e5f1e584ac2a55310919179aafba3c08b2e375b38d52be613847f83",
+          "default": "",
+          "category": "P31",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0128703Z",
+          "value": "messagemode"
+        }
+      ]
+    },
+    {
+      "code": "P32",
+      "name": "Radio",
+      "count": 6,
+      "settings": [
+        {
+          "sourceLine": 24,
+          "state": "Synced",
+          "extra": {
+            "Command": "+radialradio",
+            "Context": "config/bindings",
+            "Key": "c"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"c\"  \"+radialradio\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "0564649dc8f04eea8cfb6ac796c5153c3c634f0edadbc1ea68f36e3fa83716ce",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9813890Z",
+          "value": "+radialradio"
+        },
+        {
+          "sourceLine": 24,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+radialradio",
+            "Context": "config/bindings",
+            "Key": "c"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"c\"  \"+radialradio\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "0564649dc8f04eea8cfb6ac796c5153c3c634f0edadbc1ea68f36e3fa83716ce",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0103629Z",
+          "value": "+radialradio"
+        },
+        {
+          "sourceLine": 37,
+          "state": "Synced",
+          "extra": {
+            "Command": "+radialradio2",
+            "Context": "config/bindings",
+            "Key": "v"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"v\"  \"+radialradio2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "e6c7f93422c16b5135b92dcf870521a32e11f3d4c804e2110193cb8801c9c0bd",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9845885Z",
+          "value": "+radialradio2"
+        },
+        {
+          "sourceLine": 37,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+radialradio2",
+            "Context": "config/bindings",
+            "Key": "v"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"v\"  \"+radialradio2\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "e6c7f93422c16b5135b92dcf870521a32e11f3d4c804e2110193cb8801c9c0bd",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0124059Z",
+          "value": "+radialradio2"
+        },
+        {
+          "sourceLine": 41,
+          "state": "Synced",
+          "extra": {
+            "Command": "radio",
+            "Context": "config/bindings",
+            "Key": "z"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"z\"  \"radio\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "1a17baec786a4bc26c36a01fa45d167ae4c5fde7f6976ba2772ed7f5979f171c",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9853475Z",
+          "value": "radio"
+        },
+        {
+          "sourceLine": 41,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "radio",
+            "Context": "config/bindings",
+            "Key": "z"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"z\"  \"radio\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "1a17baec786a4bc26c36a01fa45d167ae4c5fde7f6976ba2772ed7f5979f171c",
+          "default": "",
+          "category": "P32",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0130203Z",
+          "value": "radio"
+        }
+      ]
+    },
+    {
+      "code": "P33",
+      "name": "Voice",
+      "count": 3,
+      "settings": [
+        {
+          "sourceLine": 55,
+          "state": "Synced",
+          "extra": {
+            "Command": "+voicerecord",
+            "Context": "config/bindings",
+            "Key": "MOUSE4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE4\"  \"+voicerecord\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_default.vcfg",
+          "hash": "9ba344c3c0ea3632922d163c642adbd9b56083044f5e31c584f9e5c55c6f75a1",
+          "default": "",
+          "category": "P33",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:15.9878761Z",
+          "value": "+voicerecord"
+        },
+        {
+          "sourceLine": 62,
+          "state": "Duplicated",
+          "extra": {
+            "Command": "+voicerecord",
+            "Context": "config/bindings",
+            "Key": "MOUSE4"
+          },
+          "type": "Bind",
+          "name": "bind",
+          "rawLine": "\"MOUSE4\"  \"+voicerecord\"",
+          "description": "",
+          "sourceFile": "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\user_keys_dev_default.vcfg",
+          "hash": "9ba344c3c0ea3632922d163c642adbd9b56083044f5e31c584f9e5c55c6f75a1",
+          "default": "",
+          "category": "P33",
+          "priority": "LiveConfig",
+          "capturedAt": "2026-06-26T02:02:16.0168453Z",
+          "value": "+voicerecord"
+        },
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "voice_enable",
+          "rawLine": "",
+          "description": "Habilita el chat de voz.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "ecdea569e661ed96511310d2cf0651d7f07a60fc623ad45c067d5006669c3ecd",
+          "default": "1",
+          "category": "P33",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0915411Z",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "code": "P34",
+      "name": "Audio",
+      "count": 1,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "volume",
+          "rawLine": "",
+          "description": "Volumen maestro del juego.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "56a60f6133f2524f3cb3dceac70075c95965e3b0a4c979e6cbe89fca2615503b",
+          "default": "1",
+          "category": "P34",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0904037Z",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "code": "P35",
+      "name": "Music",
+      "count": 1,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "snd_musicvolume",
+          "rawLine": "",
+          "description": "Volumen de la musica del juego.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "636ac124acbee976273a57e170c1d4322fd8ae6e2dc7f342a5b95768db44a675",
+          "default": "0",
+          "category": "P35",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0891596Z",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "code": "P41",
+      "name": "Network",
+      "count": 1,
+      "settings": [
+        {
+          "sourceLine": -1,
+          "state": "FallbackApplied",
+          "extra": {},
+          "type": "Unknown",
+          "name": "rate",
+          "rawLine": "",
+          "description": "Tasa maxima de bytes/seg que el cliente acepta del servidor.",
+          "sourceFile": "(fallback catalog)",
+          "hash": "96a06970494efe83fefaf212c8507748f818459dd831ed8e01387f9572a74181",
+          "default": "786432",
+          "category": "P41",
+          "priority": "Fallback",
+          "capturedAt": "2026-06-26T02:02:16.0913238Z",
+          "value": "786432"
+        }
+      ]
+    }
+  ]
+}

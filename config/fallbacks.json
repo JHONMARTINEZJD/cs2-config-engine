@@ -1,0 +1,30 @@
+{
+  "$schema": "internal://cs2-config-engine/fallbacks",
+  "description": "Valores por defecto y descripciones de referencia. SOLO se aplican cuando la variable NO existe en la configuracion viva. Nunca sobrescriben un valor existente. Catalogo ampliable sin tocar el codigo.",
+  "convars": {
+    "cl_crosshaircolor":        { "default": "1", "type": "Integer", "description": "Define el color base de la mira." },
+    "cl_crosshairsize":         { "default": "5", "type": "Float",   "description": "Tamano de los brazos de la mira." },
+    "cl_crosshairstyle":        { "default": "2", "type": "Integer", "description": "Estilo de la mira (estatica/dinamica)." },
+    "cl_crosshairgap":          { "default": "1", "type": "Float",   "description": "Separacion central entre brazos de la mira." },
+    "cl_crosshairthickness":    { "default": "0.5", "type": "Float", "description": "Grosor de los brazos de la mira." },
+    "cl_crosshairdot":          { "default": "0", "type": "Bool",    "description": "Muestra un punto central en la mira." },
+    "sensitivity":              { "default": "2.5", "type": "Float", "description": "Sensibilidad general del raton." },
+    "zoom_sensitivity_ratio":   { "default": "1", "type": "Float",   "description": "Ratio de sensibilidad al apuntar con zoom." },
+    "m_rawinput":               { "default": "1", "type": "Bool",    "description": "Usa entrada de raton sin procesar por el SO." },
+    "fps_max":                  { "default": "0", "type": "Integer", "description": "Limite maximo de FPS (0 = ilimitado)." },
+    "cl_radar_scale":           { "default": "0.7", "type": "Float", "description": "Escala del radar." },
+    "cl_radar_always_centered": { "default": "1", "type": "Bool",    "description": "Mantiene el radar centrado en el jugador." },
+    "viewmodel_fov":            { "default": "60", "type": "Integer","description": "Campo de vision del modelo de armas en primera persona." },
+    "viewmodel_offset_x":       { "default": "0", "type": "Float",   "description": "Desplazamiento horizontal del viewmodel." },
+    "voice_enable":             { "default": "1", "type": "Bool",    "description": "Habilita el chat de voz." },
+    "volume":                   { "default": "1", "type": "Float",   "description": "Volumen maestro del juego." },
+    "snd_musicvolume":          { "default": "0", "type": "Float",   "description": "Volumen de la musica del juego." },
+    "rate":                     { "default": "786432", "type": "Integer", "description": "Tasa maxima de bytes/seg que el cliente acepta del servidor." }
+  },
+  "deprecated": [
+    "cl_crosshairusealpha",
+    "mat_queue_mode",
+    "cl_detail_max_sway",
+    "r_drawtracers_firstperson_old"
+  ]
+}

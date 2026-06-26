@@ -1,0 +1,307 @@
+[2026-06-25 20:42:49] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:42:50] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:42:50] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:42:50] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:42:50] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:42:50] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:42:50] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:42:50] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:42:50] [ERROR] Fallo critico: Index was outside the bounds of the array.
+[2026-06-25 20:43:14] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:43:14] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:43:14] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:43:14] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:14] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:43:14] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:43:14] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:14] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:43:15] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:43:15] [ERROR] Fallo critico: The property 'Count' cannot be found on this object. Verify that the property exists.
+[2026-06-25 20:43:25] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:43:25] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:43:25] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:43:25] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:26] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:43:26] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:43:26] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:26] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:43:26] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:43:27] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:43:27] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:43:27] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:43:27] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:43:27] [ERROR] Fallo critico: The property 'Count' cannot be found on this object. Verify that the property exists.
+[2026-06-25 20:43:37] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:43:37] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:43:37] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:43:37] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:37] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:43:37] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:43:37] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:37] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:43:38] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:43:39] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:43:39] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:43:39] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:43:39] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:43:39] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:43:39] [INFO ] Snapshot creado: 20260625-204339 (hash 561d68a1766b...)
+[2026-06-25 20:43:39] [ERROR] Fallo critico: The property 'Count' cannot be found on this object. Verify that the property exists.
+[2026-06-25 20:43:50] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:43:50] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:43:50] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:43:50] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:51] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:43:51] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:43:51] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:43:51] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:43:51] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:43:52] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:43:52] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:43:52] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:43:52] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:43:52] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:43:52] [INFO ] Snapshot creado: 20260625-204352 (hash 561d68a1766b...)
+[2026-06-25 20:43:52] [WARN ] Formato desconocido omitido: autoexec,json,markdown
+[2026-06-25 20:43:53] [INFO ] Reportes generados en .\output\backups\20260625-204352
+[2026-06-25 20:43:53] [INFO ] Backup completado. Salida: .\output\backups\20260625-204352
+[2026-06-25 20:45:26] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:45:26] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:45:26] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:45:26] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:45:26] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:45:26] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:45:26] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:45:26] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:45:27] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:45:28] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:45:28] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:45:28] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:45:28] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:45:28] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:45:28] [INFO ] Snapshot creado: 20260625-204528 (hash 561d68a1766b...)
+[2026-06-25 20:45:28] [INFO ] autoexec.cfg generado: .\output\backups\20260625-204528\export\autoexec.cfg
+[2026-06-25 20:45:28] [INFO ] Exportado JSON: .\output\backups\20260625-204528\export\config.json
+[2026-06-25 20:45:29] [INFO ] Exportado Markdown: .\output\backups\20260625-204528\export\config.md
+[2026-06-25 20:45:29] [INFO ] Reportes generados en .\output\backups\20260625-204528
+[2026-06-25 20:45:29] [INFO ] Backup completado. Salida: .\output\backups\20260625-204528
+[2026-06-25 20:50:41] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:50:41] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:50:41] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:50:41] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:50:41] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:50:41] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:50:41] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:50:42] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:50:42] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:50:43] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:50:43] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:50:43] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:50:43] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:50:43] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:50:43] [INFO ] Snapshot creado: 20260625-205043 (hash 561d68a1766b...)
+[2026-06-25 20:50:43] [INFO ] autoexec.cfg generado: .\output\backups\20260625-205043\export\autoexec.cfg
+[2026-06-25 20:50:44] [INFO ] Exportado JSON: .\output\backups\20260625-205043\export\config.json
+[2026-06-25 20:50:44] [INFO ] Exportado Markdown: .\output\backups\20260625-205043\export\config.md
+[2026-06-25 20:50:44] [INFO ] Reportes generados en .\output\backups\20260625-205043
+[2026-06-25 20:50:44] [INFO ] Backup completado. Salida: .\output\backups\20260625-205043
+[2026-06-25 20:51:39] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:51:39] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:51:39] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:51:39] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:51:39] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:51:39] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:51:39] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:51:39] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:51:39] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:51:40] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:51:40] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:51:40] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:51:40] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:51:40] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:51:40] [INFO ] Snapshot creado: 20260625-205140 (hash 561d68a1766b...)
+[2026-06-25 20:51:41] [INFO ] autoexec.cfg generado: .\output\backups\20260625-205140\export\autoexec.cfg
+[2026-06-25 20:51:41] [INFO ] Exportado JSON: .\output\backups\20260625-205140\export\config.json
+[2026-06-25 20:51:41] [INFO ] Exportado Markdown: .\output\backups\20260625-205140\export\config.md
+[2026-06-25 20:51:41] [INFO ] Reportes generados en .\output\backups\20260625-205140
+[2026-06-25 20:51:41] [INFO ] Backup completado. Salida: .\output\backups\20260625-205140
+[2026-06-25 20:55:53] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 20:55:53] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 20:55:53] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 20:55:53] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:55:53] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 20:55:53] [INFO ] SteamID activo: 1286335383
+[2026-06-25 20:55:53] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 20:55:53] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 20:55:53] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 20:55:54] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 20:55:54] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 20:55:54] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 20:55:54] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 20:55:54] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 20:55:54] [INFO ] Snapshot creado: 20260625-205554 (hash 561d68a1766b...)
+[2026-06-25 20:55:55] [INFO ] autoexec.cfg generado: .\output\backups\20260625-205554\export\autoexec.cfg
+[2026-06-25 20:55:55] [INFO ] Exportado JSON: .\output\backups\20260625-205554\export\config.json
+[2026-06-25 20:55:55] [INFO ] Exportado Markdown: .\output\backups\20260625-205554\export\config.md
+[2026-06-25 20:55:55] [INFO ] Reportes generados en .\output\backups\20260625-205554
+[2026-06-25 20:55:55] [INFO ] Backup completado. Salida: .\output\backups\20260625-205554
+[2026-06-25 21:00:51] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:00:51] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:00:51] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:00:51] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:00:51] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:00:51] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:00:51] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:00:51] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:00:51] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:00:52] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 21:00:52] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:00:52] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:00:52] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 21:00:52] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 21:00:53] [INFO ] Snapshot creado: 20260625-210052 (hash 561d68a1766b...)
+[2026-06-25 21:00:53] [INFO ] autoexec.cfg generado: .\output\backups\20260625-210052\export\autoexec.cfg
+[2026-06-25 21:00:53] [INFO ] Exportado JSON: .\output\backups\20260625-210052\export\config.json
+[2026-06-25 21:00:53] [INFO ] Exportado Markdown: .\output\backups\20260625-210052\export\config.md
+[2026-06-25 21:00:53] [INFO ] Reportes generados en .\output\backups\20260625-210052
+[2026-06-25 21:00:53] [INFO ] Backup completado. Salida: .\output\backups\20260625-210052
+[2026-06-25 21:02:14] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:02:14] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:02:14] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:02:14] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:02:14] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:02:14] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:02:14] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:02:14] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:02:15] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:02:16] [INFO ] Ajustes parseados (con duplicados): 110
+[2026-06-25 21:02:16] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:02:16] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:02:16] [INFO ] GameConfig construido: 128 ajustes en 19 categorias
+[2026-06-25 21:02:16] [INFO ] Validacion: 53 hallazgos (0 errores, 53 avisos). No se elimino nada.
+[2026-06-25 21:02:16] [INFO ] Snapshot creado: 20260625-210216 (hash 561d68a1766b...)
+[2026-06-25 21:02:16] [INFO ] autoexec.cfg generado: .\output\backups\20260625-210216\export\autoexec.cfg
+[2026-06-25 21:02:16] [INFO ] Exportado JSON: .\output\backups\20260625-210216\export\config.json
+[2026-06-25 21:02:16] [INFO ] Exportado Markdown: .\output\backups\20260625-210216\export\config.md
+[2026-06-25 21:02:16] [INFO ] Reportes generados en .\output\backups\20260625-210216
+[2026-06-25 21:02:16] [INFO ] Backup completado. Salida: .\output\backups\20260625-210216
+[2026-06-25 21:04:40] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:04:40] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:04:40] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:04:40] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:04:40] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:04:40] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:04:40] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:04:41] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:04:41] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:04:42] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:04:42] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:04:42] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:04:42] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:04:43] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:04:43] [INFO ] Snapshot creado: 20260625-210443 (hash ea14ccec68f3...)
+[2026-06-25 21:04:43] [INFO ] autoexec.cfg generado: .\output\backups\20260625-210443\export\autoexec.cfg
+[2026-06-25 21:04:43] [INFO ] Exportado JSON: .\output\backups\20260625-210443\export\config.json
+[2026-06-25 21:04:43] [INFO ] Exportado Markdown: .\output\backups\20260625-210443\export\config.md
+[2026-06-25 21:04:44] [INFO ] Reportes generados en .\output\backups\20260625-210443
+[2026-06-25 21:04:44] [INFO ] Backup completado. Salida: .\output\backups\20260625-210443
+[2026-06-25 21:09:53] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:09:53] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:09:53] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:09:54] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:09:54] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:09:54] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:09:54] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:09:54] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:09:54] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:09:55] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:09:55] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:09:55] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:09:55] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:09:56] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:09:56] [INFO ] Snapshot creado: 20260625-210956 (hash ea14ccec68f3...)
+[2026-06-25 21:09:56] [INFO ] autoexec.cfg generado: .\output\backups\20260625-210956\export\autoexec.cfg
+[2026-06-25 21:09:56] [INFO ] Exportado JSON: .\output\backups\20260625-210956\export\config.json
+[2026-06-25 21:09:56] [INFO ] Exportado Markdown: .\output\backups\20260625-210956\export\config.md
+[2026-06-25 21:09:57] [INFO ] Reportes generados en .\output\backups\20260625-210956
+[2026-06-25 21:09:57] [INFO ] Backup completado. Salida: .\output\backups\20260625-210956
+[2026-06-25 21:11:24] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:11:24] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:11:24] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:11:24] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:11:24] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:11:24] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:11:24] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:11:24] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:11:24] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:11:25] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:11:25] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:11:25] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:11:26] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:11:26] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:11:26] [INFO ] Snapshot creado: 20260625-211126 (hash ea14ccec68f3...)
+[2026-06-25 21:11:26] [INFO ] autoexec.cfg generado: .\output\backups\20260625-211126\export\autoexec.cfg
+[2026-06-25 21:11:26] [INFO ] Exportado JSON: .\output\backups\20260625-211126\export\config.json
+[2026-06-25 21:11:27] [INFO ] Exportado Markdown: .\output\backups\20260625-211126\export\config.md
+[2026-06-25 21:11:27] [INFO ] Reportes generados en .\output\backups\20260625-211126
+[2026-06-25 21:11:27] [INFO ] Backup completado. Salida: .\output\backups\20260625-211126
+[2026-06-25 21:12:10] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:12:10] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:12:10] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:12:10] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:12:10] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:12:10] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:12:10] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:12:10] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:12:10] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:12:11] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:12:11] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:12:11] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:12:12] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:12:12] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:12:12] [INFO ] Snapshot creado: 20260625-211212 (hash ea14ccec68f3...)
+[2026-06-25 21:12:12] [INFO ] autoexec.cfg generado: .\output\backups\20260625-211212\export\autoexec.cfg
+[2026-06-25 21:12:12] [INFO ] Exportado JSON: .\output\backups\20260625-211212\export\config.json
+[2026-06-25 21:12:13] [INFO ] Exportado Markdown: .\output\backups\20260625-211212\export\config.md
+[2026-06-25 21:12:13] [INFO ] Reportes generados en .\output\backups\20260625-211212
+[2026-06-25 21:12:13] [INFO ] Backup completado. Salida: .\output\backups\20260625-211212
+[2026-06-25 21:13:21] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:13:21] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:13:21] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:13:21] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:13:21] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:13:21] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:13:21] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:13:21] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:13:21] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:13:22] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:13:23] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:13:23] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:13:23] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:13:23] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:13:23] [INFO ] Snapshot creado: 20260625-211323 (hash ea14ccec68f3...)
+[2026-06-25 21:13:24] [INFO ] autoexec.cfg generado: .\output\backups\20260625-211323\export\autoexec.cfg
+[2026-06-25 21:13:24] [INFO ] Exportado JSON: .\output\backups\20260625-211323\export\config.json
+[2026-06-25 21:13:24] [INFO ] Exportado Markdown: .\output\backups\20260625-211323\export\config.md
+[2026-06-25 21:13:24] [INFO ] Reportes generados en .\output\backups\20260625-211323
+[2026-06-25 21:13:24] [INFO ] Backup completado. Salida: .\output\backups\20260625-211323
+[2026-06-25 21:13:36] [INFO ] === CS2 Configuration Snapshot Engine ===
+[2026-06-25 21:13:36] [INFO ] Steam localizado en: c:\program files (x86)\steam
+[2026-06-25 21:13:36] [INFO ] Bibliotecas Steam detectadas: 3
+[2026-06-25 21:13:37] [WARN ] cfg no estaba en la ruta esperada; usando C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:13:37] [INFO ] CS2 game root: D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive
+[2026-06-25 21:13:37] [INFO ] SteamID activo: 1286335383
+[2026-06-25 21:13:37] [INFO ] cfg local: C:\Program Files (x86)\Steam\userdata\1286335383\730\remote\cfg
+[2026-06-25 21:13:37] [INFO ] Archivos de configuracion descubiertos: 32
+[2026-06-25 21:13:37] [WARN ] Sin parser para cs2_preferred_items.txt; se omite el contenido pero se registra el archivo.
+[2026-06-25 21:13:38] [INFO ] Ajustes parseados (con duplicados): 1573
+[2026-06-25 21:13:38] [INFO ] Reglas de clasificacion cargadas: 48
+[2026-06-25 21:13:38] [INFO ] Catalogo fallback: 18 convars, 4 obsoletas
+[2026-06-25 21:13:38] [INFO ] GameConfig construido: 1575 ajustes en 40 categorias
+[2026-06-25 21:13:39] [INFO ] Validacion: 1313 hallazgos (0 errores, 1199 avisos). No se elimino nada.
+[2026-06-25 21:13:39] [INFO ] Snapshot creado: 20260625-211339 (hash ea14ccec68f3...)
+[2026-06-25 21:13:39] [INFO ] autoexec.cfg generado: .\output\backups\20260625-211339\export\autoexec.cfg
+[2026-06-25 21:13:39] [INFO ] Exportado JSON: .\output\backups\20260625-211339\export\config.json
+[2026-06-25 21:13:39] [INFO ] Exportado Markdown: .\output\backups\20260625-211339\export\config.md
+[2026-06-25 21:13:40] [INFO ] Reportes generados en .\output\backups\20260625-211339
+[2026-06-25 21:13:40] [INFO ] Backup completado. Salida: .\output\backups\20260625-211339
