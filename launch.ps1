@@ -88,7 +88,17 @@ New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
 Write-Host "Ejecutando CS2 Config Engine desde $($repoInfo.RootPath)" -ForegroundColor Green
 Write-Host "La salida se generará en $OutputPath" -ForegroundColor Green
 
-& $runScript -OutputPath $OutputPath -RunTests:$RunTests -SkipDependencyInstall:$SkipDependencyInstall
+$invokeArgs = @{
+    OutputPath = $OutputPath
+}
+if ($RunTests) {
+    $invokeArgs.RunTests = $true
+}
+if ($SkipDependencyInstall) {
+    $invokeArgs.SkipDependencyInstall = $true
+}
+
+& $runScript @invokeArgs
 
 $autoexecPath = Join-Path $OutputPath 'autoexec.latest.cfg'
 $backupPath = Join-Path $OutputPath 'backups'
