@@ -28,6 +28,10 @@ $ordered = @(
     'Parsing/ParserFactory.ps1'
     'Classification/CategoryMap.ps1'
     'Classification/Classifier.ps1'
+    # Catalog va antes de Sync: FallbackCatalog declara un campo [ConvarCatalog]
+    # y las clases de PowerShell resuelven los tipos al parsear el archivo.
+    'Catalog/CvarListParser.ps1'
+    'Catalog/ConvarCatalog.ps1'
     'Sync/SyncEngine.ps1'
     'Validation/Validator.ps1'
     'Export/AutoexecExporter.ps1'

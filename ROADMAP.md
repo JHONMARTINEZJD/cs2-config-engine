@@ -45,6 +45,30 @@ Supuestos de producto tomados en A2 (opcion conservadora, revisables por el duen
    escribir sobre la configuracion real. La puerta se comprueba en el motor, al
    planificar, no solo en el CLI.
 
+Supuestos de producto tomados en A3 (opcion conservadora, revisables por el dueno):
+
+8. **El catalogo generado complementa a `fallbacks.json`; no lo sustituye.**
+   `config/fallbacks.json` sigue siendo la lista CURADA de convars que se inyectan
+   en el autoexec cuando faltan, y `config/convars.json` (generado) aporta SOLO
+   metadatos (default, tipo, descripcion) y no inyecta ninguna entrada. Motivo: el
+   catalogo real tendra miles de entradas e inyectarlas convertiria el autoexec en
+   un listado del motor en lugar de en la configuracion del jugador, y multiplicaria
+   cada snapshot. En los metadatos manda lo curado y el generado rellena huecos. La
+   regla intocable no se mueve: los fallbacks solo se aplican a variables AUSENTES y
+   nunca sobreescriben la configuracion viva.
+9. **Ausencia del volcado no es obsolescencia.** Una convar que no aparezca en el
+   volcado NO se marca obsoleta: el volcado puede estar truncado o ser de otra build,
+   y deducir obsolescencia de una ausencia contradiria que la configuracion viva
+   manda. La lista `deprecated` sigue siendo curada.
+10. **La procedencia se firma con el hash, no con el reloj.** `source.label` lo pone
+    el usuario (`-CatalogLabel`, la build o la fecha) y siempre se guarda el sha256
+    del volcado. NO se usa la fecha de modificacion del archivo: copiarlo la cambia y
+    el catalogo dejaria de ser reproducible desde el mismo contenido. Sin etiqueta se
+    firma con el prefijo del sha256 y se avisa.
+11. **Los concommands van en una seccion aparte.** No tienen valor por defecto y no
+    se pueden escribir como asignacion en un autoexec, asi que nunca pueden colarse
+    como convars. Se conservan porque nada se descarta.
+
 ---
 
 ## Modulo A — Motor de configuracion
@@ -99,13 +123,44 @@ Supuestos de producto tomados en A2 (opcion conservadora, revisables por el duen
       la base de comparacion es el `Inventory.json` del snapshot anterior, cuya ruta
       resuelve `SnapshotManager::GetInventoryPath`. (`18059fa`)
 
+- [x] **A3 (mitad construible) — Importador de volcados de `cvarlist` y catalogo
+      generado.** Clases nuevas en `src/Catalog/`: `CvarListParser` (parser tolerante
+      del volcado, tres hipotesis de formato nombradas y auditables) y
+      `ConvarCatalogBuilder` + `ConvarCatalog` (genera y lee `config/convars.json`,
+      determinista y con la procedencia del volcado dentro). Entrada de CLI
+      `-ImportCvarList` / `-CatalogLabel` / `-CatalogPath`, documentada en el README
+      con los comandos exactos de la consola de CS2. Puente con lo que ya existia:
+      `FallbackCatalog` gana una segunda capa (`HasMetadata`/`GetMetadata`/
+      `InjectableNames`) donde manda lo curado y el generado rellena huecos, sin
+      inyectar nada nuevo. De paso, la inferencia de tipo que estaba duplicada en
+      `CfgParser` y `VcfgParser` pasa a `Setting::InferTypeFromValue()` y la usan los
+      dos parsers y el catalogo, para que el mismo valor no se tipe distinto segun
+      quien lo lea. 53 pruebas nuevas con fixtures sinteticos; las 98 anteriores
+      siguen pasando. (`PENDIENTE_HASH`)
+
 ### Siguiente
 
-- [ ] **A3 — Catalogo de convars generado, no a mano.** 18 fallbacks y 48 regex
-      escritas a mano se quedan viejas en cada actualizacion de Valve. Generar el
-      catalogo desde el juego (`con_logfile cvars.txt; cvarlist; con_logfile ""`) y
-      versionarlo arregla de raiz defaults, tipos y clasificacion. Alto valor:
-      la mitad de los bugs de clasificacion ya cerrados no habrian existido.
+- [ ] **A3 (lo que falta) — cerrar el catalogo con un volcado REAL.** Bloqueado por
+      el dueno, no por el codigo: en este contenedor no hay CS2 y no existe ningun
+      volcado real, asi que el formato de `cvarlist` de CS2 sigue siendo una
+      HIPOTESIS (`source.formatVerified = false` en el catalogo generado). Lo que hace
+      falta, en concreto:
+        1. El archivo `cvars.txt` generado con `con_logfile cvars.txt; cvarlist;
+           con_logfile ""`, y la build del juego para `-CatalogLabel`.
+        2. Ejecutar `-ImportCvarList` y mirar la seccion `unrecognized` del catalogo:
+           cada linea de ahi es una fila que ninguna de las tres hipotesis supo leer.
+           Con eso se ajustan las hipotesis (o se anade una cuarta) y se amplia
+           `CvarListParser::KnownFlags` con las banderas que CS2 imprima de verdad.
+        3. Comprobar `source.shapes` para saber cual de las tres hipotesis acerto, y
+           `looksTruncated` para descartar que el volcado se corto.
+        4. Cuando el formato quede confirmado, poner `formatVerified` a true y
+           decidir con datos si el catalogo puede empezar a alimentar tambien la
+           clasificacion (P00..P49) y la deteccion de convars retiradas, que HOY NO
+           HACE a proposito.
+      Puntos de extension dejados listos y sin fabricar: `CvarListParser::KnownFlags`,
+      `CvarListParser::NoisePatterns` y `MaxFlagsFieldIndex` son datos estaticos
+      ampliables, y cada entrada del catalogo publica en `shape` la hipotesis que
+      encajo para poder auditarlo fila a fila.
 - [ ] **A4 — Perfiles portables.** Exportar e importar un perfil con su hash para
       llevar la config a otra maquina o compartirla. Depende de A1. Con A2 cerrada ya
       tiene la mitad hecha: `Setting::FromHashtable()` da la importacion ajuste por
@@ -166,6 +221,22 @@ PowerShell; no hace falta cambiar de lenguaje.
       "Windows recomendado" como dice el README.
 - [x] ~~`Setting` no tiene inverso de `ToHashtable()`.~~ Resuelto con
       `Setting::FromHashtable()` como prerrequisito de A2 (`179b2b3`).
+- [x] **Un metodo de clase declarado `[string]` no puede devolver `$null`.**
+      PowerShell CONVIERTE lo devuelto al tipo declarado, asi que `return $null` en un
+      metodo `[string]` sale como cadena VACIA. El troceador de `cvarlist` usaba
+      `if ($null -ne $sep)` para decidir si habia separador, daba por bueno uno de
+      longitud cero y el bucle no avanzaba nunca: el parser se colgaba con la entrada
+      mas tonta posible (`abc`). Ahora la ausencia se representa con cadena vacia y se
+      comprueba con `IsNullOrEmpty`. Ojo: con los tipos por referencia (`[hashtable]`,
+      una clase propia, `[string[]]`) `$null` SI viaja como `$null`; el problema es
+      exclusivo de `[string]` y de los tipos de valor.
+- [ ] **El formato de `cvarlist` de CS2 no esta verificado.** Todo lo que asume el
+      parser esta documentado en la cabecera de `src/Catalog/CvarListParser.ps1` y
+      marcado en el catalogo con `source.formatVerified = false`. No es deuda de
+      diseno: es un dato que falta y que solo puede traer el dueno.
+- [ ] **No hay `config/convars.json` en el repositorio, y es deliberado.** Generarlo
+      desde el fixture sintetico y commitearlo meteria convars inventadas en el
+      producto. El motor funciona sin el.
 - [ ] **Una variable local no puede llamarse igual que una propiedad de su clase.**
       Dentro de un metodo de clase de PowerShell, `$name = ...` falla al parsear con
       "Cannot assign property, use '$this.Name'" si la clase tiene una propiedad

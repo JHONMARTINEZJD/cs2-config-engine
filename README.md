@@ -34,13 +34,15 @@ cs2-config-engine/
 ├─ CS2ConfigEngine.ps1            # Punto de entrada (CLI)
 ├─ config/
 │  ├─ classification-rules.json   # Reglas regex de clasificación (P00–P49)
-│  └─ fallbacks.json              # Valores por defecto + convars obsoletas
+│  ├─ fallbacks.json              # Lista curada: defaults a inyectar + obsoletas
+│  └─ convars.json                # Catálogo GENERADO desde un volcado de cvarlist
 ├─ src/
 │  ├─ Bootstrap.ps1               # Carga (dot-source) todas las clases en orden
 │  ├─ Core/                       # Types, Logging, Hashing
 │  ├─ Discovery/                  # Steam, CS2/SteamID y archivos de config
 │  ├─ Parsing/                    # Tokenizer, VDF, VCFG, CFG y factory
 │  ├─ Classification/             # CategoryMap + Classifier
+│  ├─ Catalog/                    # Parser de cvarlist + catálogo de convars
 │  ├─ Sync/                       # SyncEngine + FallbackCatalog
 │  ├─ Validation/                 # Validator
 │  ├─ Export/                     # Autoexec + JSON/MD/YAML/CSV
@@ -158,6 +160,71 @@ jugador queda exactamente como estaba. Lo que se escribe son las copias fieles
 que el snapshot guardó en `raw/`, byte a byte, nunca una reconstrucción de los
 `.vcfg` a partir del inventario.
 
+### Catálogo de convars desde el juego
+
+Los valores por defecto y los tipos no se mantienen a mano: se generan desde el
+propio juego. En la consola de CS2 (consola de desarrollador activada), teclea
+**exactamente** estos tres comandos, en este orden:
+
+```
+con_logfile cvars.txt
+cvarlist
+con_logfile ""
+```
+
+El archivo queda en la carpeta del juego, junto a los `.cfg`:
+
+```
+...\steamapps\common\Counter-Strike Global Offensive\game\csgo\cvars.txt
+```
+
+Después se importa, y **no hace falta tener Steam ni CS2 en la máquina** que lo
+importa: el modo importación no descubre nada ni lee la configuración del jugador.
+
+```powershell
+pwsh ./CS2ConfigEngine.ps1 `
+     -ImportCvarList 'C:\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cvars.txt' `
+     -CatalogLabel 'build 14025'
+```
+
+El resultado es **`config/convars.json`**, versionado en el repositorio, con el
+nombre, el valor por defecto, el tipo inferido, las banderas y la descripción de
+cada convar, los concommands en una sección aparte, y un bloque `source` con la
+procedencia (etiqueta, nombre y `sha256` del volcado, número de líneas y total
+que el propio volcado declara) para poder auditarlo. No lleva marcas de tiempo:
+importar dos veces el mismo volcado produce el mismo archivo byte a byte.
+
+| Parámetro          | Descripción                                                                                  |
+|--------------------|----------------------------------------------------------------------------------------------|
+| `-ImportCvarList`  | Ruta al volcado. Presente ⇒ modo importación: no hace backup ni restauración.                 |
+| `-CatalogLabel`    | Build o fecha del volcado. Se guarda en `source.label`. Sin ella se firma solo con el sha256. |
+| `-CatalogPath`     | Destino del catálogo (por defecto `./config/convars.json`, donde lo busca el motor).          |
+
+Cómo encaja con `fallbacks.json`, y es una decisión deliberada:
+
+- `fallbacks.json` sigue siendo la lista **curada** de convars que se inyectan en
+  el `autoexec.cfg` cuando faltan en la configuración viva. El catálogo generado
+  **no inyecta nada**: tiene miles de entradas y volcarlas convertiría el autoexec
+  en un listado del motor en lugar de en la configuración del jugador.
+- El catálogo generado aporta **solo metadatos** (default, tipo, descripción) y se
+  consulta **después** de la lista curada, que manda en lo que sí define.
+- La regla no cambia: **los fallbacks solo se aplican a variables ausentes y nunca
+  sobreescriben la configuración viva.**
+- Una convar que no aparezca en el volcado **no** se marca obsoleta: el volcado
+  puede estar truncado o ser de otra build. La lista `deprecated` sigue siendo curada.
+
+El catálogo es **opcional**: sin `config/convars.json` el motor funciona igual que
+antes, con la lista curada.
+
+> **El formato de `cvarlist` no está verificado** contra un volcado real de CS2:
+> varía entre builds. El parser prueba tres hipótesis de formato (tabla con `:`,
+> columnas alineadas, campos con un solo espacio), reconoce la columna de banderas
+> por su contenido y no por su posición, y **conserva** toda línea que no sepa leer
+> en la sección `unrecognized` del catálogo, con su número y su texto. Mientras
+> `source.formatVerified` valga `false`, esas columnas son una hipótesis. Si tras
+> importar un volcado real aparecen filas en `unrecognized`, ahí está la lista de
+> trabajo para ajustar las hipótesis.
+
 ---
 
 ## Salidas
@@ -176,7 +243,8 @@ que el snapshot guardó en `raw/`, byte a byte, nunca una reconstrucción de los
 ## Extensibilidad
 
 - **Nuevas categorías**: añade una entrada en `CategoryMap::Definitions`, asígnala a un bloque en `CategoryMap::Blocks` y añade su regla en `config/classification-rules.json`. No requiere tocar el clasificador ni los exportadores. `CategoryMap::AssertComplete()` (y la prueba que lo cubre) falla si una categoría se queda sin bloque, porque entonces desaparecería del `autoexec.cfg`.
-- **Nuevos defaults / obsoletas**: edita `config/fallbacks.json`.
+- **Nuevos defaults / obsoletas**: edita `config/fallbacks.json` (lista curada, la que se inyecta). Para los defaults, tipos y descripciones de todo el motor, regenera `config/convars.json` desde un volcado de `cvarlist` (ver arriba) en lugar de escribirlos a mano.
+- **Banderas de `cvarlist` que el parser no conozca**: amplía `CvarListParser::KnownFlags`. Una bandera desconocida no rompe nada (una columna con varias banderas separadas por comas se reconoce igual), solo afina el caso de una única bandera.
 - **Nuevos formatos de archivo**: implementa un parser con `CanParse()`/`Parse()` y regístralo en `ParserFactory`.
 - **Nuevos exportadores**: añade una clase en `src/Export/` siguiendo el patrón existente.
 
@@ -190,7 +258,7 @@ El diseño sigue principios SOLID (responsabilidad única por clase, abierto/cer
 Invoke-Pester -Path ./tests
 ```
 
-Las pruebas cubren: tokenización (comillas, escapes, comentarios, bloques), parseo VCFG/CFG, tolerancia a archivos malformados, clasificación por categoría, prioridad de config viva, aplicación de fallbacks solo a ausentes, marcado de obsoletas y determinismo de salida.
+Las pruebas cubren: tokenización (comillas, escapes, comentarios, bloques), parseo VCFG/CFG, tolerancia a archivos malformados, clasificación por categoría, prioridad de config viva, aplicación de fallbacks solo a ausentes, marcado de obsoletas, determinismo de salida, el importador de volcados de `cvarlist` (con fixtures **sintéticos**, marcados como tales en `tests/fixtures/`) y el determinismo del `convars.json` generado.
 
 ---
 

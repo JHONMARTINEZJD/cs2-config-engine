@@ -1,0 +1,21 @@
+// FIXTURE SINTETICO. NO es un volcado real de CS2 y no contiene convars reales.
+// Los nombres llevan "fixture" a proposito para que nadie lo confunda con datos
+// del juego. Sirve para ejercitar las tres hipotesis de formato del parser, el
+// ruido esperado y las lineas que no se saben leer.
+-------------- cvar list --------------
+cl_fixture_alpha                        : 1        : , a, cl           : Convar sintetica bien formada
+cl_fixture_beta                         : 0.75     : , a, cl, rep      : Otra bien formada, valor flotante
+sv_fixture_gamma                        : 0        : , sv, rep, cheat  : Bandera cheat presente
+cl_fixture_quoted                       : "dos palabras" : , a, cl     : Valor entrecomillado con espacios
+cl_fixture_sep_in_desc                  : 3        : , a              : Relacion de aspecto : ancho frente a alto
+cl_fixture_desc_quoted                  : 2        : , a              : "Descripcion : entrecomillada"
+fixture_command_dump                    : cmd      : , cl             : Un concommand, sin valor por defecto
+cl_fixture_no_flags                     : 64       :                  : Sin columna de banderas
+cl_fixture_alpha                        : 9        : , a, cl           : Duplicada: gana la primera aparicion
+cl_fixture_columns                        128         a, cl             Fila en columnas alineadas
+sv_fixture_columns_tab	0	sv, rep	Fila separada por tabuladores
+cl_fixture_spaced 1 a, cl Fila con un solo espacio entre campos
+cl_fixture_unknown_flag                 : 5        : , a, zzz_flag_futura : Bandera que este parser no conoce
+Loading resource file scripts/fixture/basura.res
+Se ha desconectado del servidor de prueba.
+12 total convars/concommands

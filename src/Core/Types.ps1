@@ -221,6 +221,31 @@ class Setting {
         return $s
     }
 
+    <#
+        Infiere el SettingType de un valor literal. Vive aqui, como estatico de
+        [Setting], porque deducir el tipo de un valor es asunto del modelo y no
+        de quien lo lee: hasta A3 la MISMA regla estaba duplicada en
+        CfgParser::InferType y VcfgParser::InferType (con una diferencia tonta en
+        el trato del nulo), y el catalogo generado necesitaba una tercera copia.
+        Que sea una sola importa de verdad: el `type` que publica
+        config/convars.json lo consume SyncEngine::ResolveType para los
+        fallbacks, asi que si el catalogo tipara distinto que el parser, el mismo
+        valor entraria como Float leido del disco y como String leido del
+        catalogo, y los conteos por tipo del snapshot dejarian de cuadrar.
+
+        El parametro NO se llama $value a proposito: dentro de un metodo de clase
+        de PowerShell una variable no puede llamarse igual que una propiedad de
+        la clase (aqui $Value), tambien en metodos estaticos.
+    #>
+    static [SettingType] InferTypeFromValue([string] $literal) {
+        if ([string]::IsNullOrEmpty($literal)) { return [SettingType]::String }
+        $v = $literal.Trim()
+        if ($v -eq '0' -or $v -eq '1') { return [SettingType]::Bool }
+        if ($v -match '^-?\d+$')        { return [SettingType]::Integer }
+        if ($v -match '^-?\d*\.\d+$')   { return [SettingType]::Float }
+        return [SettingType]::String
+    }
+
     # Lectura tolerante de un campo, venga de JSON (PSCustomObject) o de una
     # tabla hash. Con Set-StrictMode acceder a una propiedad inexistente es
     # terminante, asi que todo acceso al material serializado pasa por aqui.

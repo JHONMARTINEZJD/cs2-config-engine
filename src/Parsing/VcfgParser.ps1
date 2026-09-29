@@ -77,20 +77,11 @@ class VcfgParser {
 
     hidden [Setting] NewConvar([VdfNode] $node, [DiscoveredFile] $file) {
         $s = [Setting]::new($node.Key, $node.Value)
-        $s.Type = $this.InferType($node.Value)
+        $s.Type = [Setting]::InferTypeFromValue($node.Value)
         $s.Metadata.SourceFile = $file.Path
         $s.Metadata.SourceLine = $node.Line
         $s.Metadata.RawLine    = '"{0}"  "{1}"' -f $node.Key, $node.Value
         $s.Metadata.Hash       = Get-StringHash -Text ("{0}={1}" -f $node.Key, $node.Value)
         return $s
-    }
-
-    hidden [SettingType] InferType([string] $value) {
-        if ($null -eq $value) { return [SettingType]::String }
-        $v = $value.Trim()
-        if ($v -eq '0' -or $v -eq '1') { return [SettingType]::Bool }
-        if ($v -match '^-?\d+$')        { return [SettingType]::Integer }
-        if ($v -match '^-?\d*\.\d+$')   { return [SettingType]::Float }
-        return [SettingType]::String
     }
 }

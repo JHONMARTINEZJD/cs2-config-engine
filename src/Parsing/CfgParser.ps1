@@ -104,7 +104,7 @@ class CfgParser {
         $value = $this.JoinFrom($tokens, 1)
 
         $s = [Setting]::new($name, $value)
-        $s.Type = $this.InferType($value)
+        $s.Type = [Setting]::InferTypeFromValue($value)
         $this.Stamp($s, $file, $line, $raw, ("{0}={1}" -f $name, $value))
         return $s
     }
@@ -114,14 +114,5 @@ class CfgParser {
         $s.Metadata.SourceLine = $line
         $s.Metadata.RawLine    = $raw.Trim()
         $s.Metadata.Hash       = Get-StringHash -Text $hashSeed
-    }
-
-    hidden [SettingType] InferType([string] $value) {
-        if ([string]::IsNullOrEmpty($value)) { return [SettingType]::String }
-        $v = $value.Trim()
-        if ($v -eq '0' -or $v -eq '1') { return [SettingType]::Bool }
-        if ($v -match '^-?\d+$')        { return [SettingType]::Integer }
-        if ($v -match '^-?\d*\.\d+$')   { return [SettingType]::Float }
-        return [SettingType]::String
     }
 }

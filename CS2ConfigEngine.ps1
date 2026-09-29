@@ -35,6 +35,19 @@
     Permiso explicito para sobreescribir los archivos vivos del jugador. Son dos
     parametros distintos a proposito: equivocarse en uno no puede llegar a
     escribir sobre la configuracion real.
+.PARAMETER ImportCvarList
+    Ruta a un volcado de `cvarlist` de la consola de CS2. Presente => el motor NO
+    hace backup ni restore: regenera config/convars.json y termina. No toca Steam
+    ni la configuracion del jugador. En la consola del juego:
+        con_logfile cvars.txt
+        cvarlist
+        con_logfile ""
+.PARAMETER CatalogLabel
+    De donde salio el volcado (build del juego o fecha). Se guarda en el catalogo
+    para poder auditarlo. Sin ella se firma solo con el sha256 del volcado.
+.PARAMETER CatalogPath
+    Destino del catalogo generado. Por defecto ./config/convars.json, que es
+    donde lo busca el motor.
 .EXAMPLE
     pwsh ./CS2ConfigEngine.ps1
 .EXAMPLE
@@ -48,6 +61,9 @@
 .EXAMPLE
     # Restaurar encima de los archivos vivos (backup previo + rollback automatico)
     pwsh ./CS2ConfigEngine.ps1 -Restore latest -Apply -RestoreTarget LiveFiles -AllowLiveFileWrites
+.EXAMPLE
+    # Regenerar el catalogo de convars desde un volcado de cvarlist
+    pwsh ./CS2ConfigEngine.ps1 -ImportCvarList 'C:\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cvars.txt' -CatalogLabel 'build 14025'
 #>
 [CmdletBinding()]
 param(
@@ -62,7 +78,10 @@ param(
     [switch]   $Apply,
     [ValidateSet('Output', 'LiveFiles')]
     [string]   $RestoreTarget = 'Output',
-    [switch]   $AllowLiveFileWrites
+    [switch]   $AllowLiveFileWrites,
+    [string]   $ImportCvarList = '',
+    [string]   $CatalogLabel = '',
+    [string]   $CatalogPath = (Join-Path $PSScriptRoot 'config/convars.json')
 )
 
 Set-StrictMode -Version Latest
@@ -88,6 +107,9 @@ function Invoke-CS2ConfigEngine {
     $configDir = Join-Path $PSScriptRoot 'config'
     $rulesPath = Join-Path $configDir 'classification-rules.json'
     $fbPath    = Join-Path $configDir 'fallbacks.json'
+    # Catalogo generado (A3). Es opcional: si no se ha importado ningun volcado,
+    # el motor se comporta igual que antes con la lista curada.
+    $catPath   = Join-Path $configDir 'convars.json'
 
     try {
         # 1. Descubrimiento
@@ -106,7 +128,7 @@ function Invoke-CS2ConfigEngine {
 
         # 3. Clasificacion + sincronizacion
         $classifier = [Classifier]::new($log, $rulesPath)
-        $fallbacks  = [FallbackCatalog]::new($fbPath, $log)
+        $fallbacks  = [FallbackCatalog]::new($fbPath, $catPath, $log)
         $sync       = [SyncEngine]::new($log, $fallbacks, $classifier)
         $config     = $sync.Build($parsed, $cs2, $steam, $files)
 
@@ -169,7 +191,8 @@ function Invoke-CS2Restore {
         $files = [ConfigFileDiscovery]::new($log).Discover($cs2.CfgSearchRoots)
         $parsed = [ParserFactory]::new($log).ParseAll($files)
         $classifier = [Classifier]::new($log, (Join-Path $configDir 'classification-rules.json'))
-        $fallbacks  = [FallbackCatalog]::new((Join-Path $configDir 'fallbacks.json'), $log)
+        $fallbacks  = [FallbackCatalog]::new((Join-Path $configDir 'fallbacks.json'),
+                                           (Join-Path $configDir 'convars.json'), $log)
         $live = [SyncEngine]::new($log, $fallbacks, $classifier).Build($parsed, $cs2, $steam, $files)
 
         # 5. Plan. No escribe nada.
@@ -192,6 +215,68 @@ function Invoke-CS2Restore {
         $log.Debug($_.ScriptStackTrace)
         throw
     }
+}
+
+<#
+    Modo importacion de catalogo (A3). Independiente del resto: no descubre
+    Steam, no lee la configuracion del jugador y no escribe nada fuera del
+    catalogo, asi que se puede ejecutar en cualquier maquina con el volcado a
+    mano. Solo regenera config/convars.json.
+
+    Que se hace con lo que no se sabe leer: NO se descarta. El catalogo publica
+    cada linea no reconocida con su numero y su texto, y aqui se resumen por
+    consola, porque son la lista de trabajo para ajustar las hipotesis de formato
+    contra el volcado real.
+#>
+function Invoke-CS2CatalogImport {
+    [CmdletBinding()]
+    param(
+        [string] $DumpPath, [string] $CatalogPath, [string] $Label,
+        [string] $OutputPath, [string] $LogLevel
+    )
+
+    if (-not (Test-Path -LiteralPath $OutputPath)) {
+        New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
+    }
+    $log = [Logger]::new([LogLevel]::$LogLevel, (Join-Path $OutputPath 'engine.log'))
+    $log.Info('=== CS2 Configuration Snapshot Engine :: IMPORTAR CATALOGO ===')
+
+    if (-not (Test-Path -LiteralPath $DumpPath)) {
+        throw ("No se encontro el volcado de cvarlist: {0}. Generelo en la consola de CS2 con: " +
+               'con_logfile cvars.txt / cvarlist / con_logfile ""') -f $DumpPath
+    }
+
+    $parsed = [CvarListParser]::new($log).ParseFile($DumpPath)
+    if ($parsed.Entries.Count -eq 0) {
+        # Sin entradas NO se sobreescribe el catalogo existente: un volcado vacio
+        # o ilegible no debe borrar uno bueno.
+        $log.Error('El volcado no produjo ninguna entrada; no se escribe el catalogo.')
+        Write-Host 'No se reconocio ninguna entrada en el volcado. El catalogo anterior se deja intacto.'
+        Write-Host 'Compruebe que el archivo contiene la salida de cvarlist y no solo el eco de los comandos.'
+        return $parsed
+    }
+
+    $builder = [ConvarCatalogBuilder]::new($log)
+    $builder.Write($parsed, $CatalogPath, $Label,
+                   (Split-Path -Leaf $DumpPath), (Get-FileHashSafe -Path $DumpPath))
+
+    $sb = [System.Text.StringBuilder]::new()
+    [void]$sb.AppendLine('Catalogo de convars regenerado.')
+    [void]$sb.AppendLine(("  archivo          : {0}" -f $CatalogPath))
+    [void]$sb.AppendLine(("  convars          : {0}" -f $parsed.ConvarCount()))
+    [void]$sb.AppendLine(("  concommands      : {0}" -f $parsed.CommandCount()))
+    [void]$sb.AppendLine(("  lineas del volcado: {0}" -f $parsed.TotalLines))
+    [void]$sb.AppendLine(("  duplicadas       : {0} (se conserva la primera aparicion)" -f $parsed.CountByReason('duplicate')))
+    [void]$sb.AppendLine(("  no reconocidas   : {0} (conservadas en la seccion 'unrecognized')" -f $parsed.Unrecognized().Count))
+    if ($parsed.DeclaredTotal -ge 0) {
+        [void]$sb.AppendLine(("  total declarado por el volcado: {0}" -f $parsed.DeclaredTotal))
+    }
+    if ($parsed.LooksTruncated()) {
+        [void]$sb.AppendLine('  AVISO: se leyeron menos entradas de las que el volcado declara. Parece truncado.')
+    }
+    [void]$sb.AppendLine('  El formato de cvarlist sigue marcado como NO verificado (source.formatVerified = false).')
+    Write-Host $sb.ToString()
+    return $parsed
 }
 
 function Export-Configurations {
@@ -231,7 +316,11 @@ function Export-Configurations {
 
 # Ejecutar solo si se invoca directamente (no al dot-sourcing para pruebas).
 if ($MyInvocation.InvocationName -ne '.') {
-    if (-not [string]::IsNullOrWhiteSpace($Restore)) {
+    if (-not [string]::IsNullOrWhiteSpace($ImportCvarList)) {
+        Invoke-CS2CatalogImport -DumpPath $ImportCvarList -CatalogPath $CatalogPath `
+            -Label $CatalogLabel -OutputPath $OutputPath -LogLevel $LogLevel | Out-Null
+    }
+    elseif (-not [string]::IsNullOrWhiteSpace($Restore)) {
         Invoke-CS2Restore -SteamPath $SteamPath -SteamId $SteamId -OutputPath $OutputPath `
             -LogLevel $LogLevel -SnapshotId $Restore -Apply:$Apply.IsPresent `
             -RestoreTarget $RestoreTarget -AllowLiveFileWrites:$AllowLiveFileWrites.IsPresent | Out-Null

@@ -10,15 +10,42 @@
       3. Enriquece metadatos (descripcion, default) desde el catalogo.
       4. Agrupa en categorias y ordena de forma determinista para que la misma
          entrada produzca siempre la misma salida.
+
+    Desde A3 el catalogo tiene DOS capas y la distincion es deliberada:
+
+      * La lista CURADA (config/fallbacks.json) decide QUE se inyecta cuando
+        falta. Son pocas y elegidas a mano.
+      * El catalogo GENERADO (config/convars.json, hecho con -ImportCvarList)
+        aporta solo METADATOS y no inyecta nada, porque tiene miles de entradas
+        y volcarlas al autoexec seria publicar el motor, no la configuracion del
+        jugador. Ver la cabecera de Catalog/ConvarCatalog.ps1.
+
+    En los metadatos manda lo curado y el generado rellena huecos. La regla 2 no
+    cambia: ninguna de las dos capas sobreescribe jamas un valor vivo.
 #>
 
 Set-StrictMode -Version Latest
 
 class FallbackCatalog {
-    hidden [hashtable] $Convars       # nameLower -> @{ default; type; description }
-    hidden [hashtable] $Deprecated    # nameLower -> $true
+    hidden [hashtable]     $Convars       # nameLower -> @{ default; type; description }  (curado)
+    hidden [hashtable]     $Deprecated    # nameLower -> $true                            (curado)
+    hidden [ConvarCatalog] $Generated     # catalogo generado; solo metadatos, nunca inyecta
 
+    # Sin catalogo generado: comportamiento identico al anterior a A3.
     FallbackCatalog([string] $path, [Logger] $log) {
+        $this.LoadCurated($path, $log)
+        $this.Generated = [ConvarCatalog]::new('', $log)
+    }
+
+    # Con catalogo generado. Se pasa la ruta y no el objeto para que quien llama
+    # no tenga que saber que hacer cuando el archivo no existe: un catalogo
+    # ausente da un catalogo vacio, no un error.
+    FallbackCatalog([string] $path, [string] $generatedPath, [Logger] $log) {
+        $this.LoadCurated($path, $log)
+        $this.Generated = [ConvarCatalog]::new($generatedPath, $log)
+    }
+
+    hidden [void] LoadCurated([string] $path, [Logger] $log) {
         $this.Convars    = @{}
         $this.Deprecated = @{}
         if (-not (Test-Path -LiteralPath $path)) {
@@ -41,10 +68,48 @@ class FallbackCatalog {
         }
     }
 
-    [bool] Has([string] $name)        { return $this.Convars.ContainsKey($name.ToLowerInvariant()) }
-    [hashtable] Get([string] $name)   { return $this.Convars[$name.ToLowerInvariant()] }
-    [string[]] AllNames()             { return @($this.Convars.Keys) }
-    [bool] IsDeprecated([string] $n)  { return $this.Deprecated.ContainsKey($n.ToLowerInvariant()) }
+    # Nombres que SE INYECTAN cuando faltan: solo los curados. El catalogo
+    # generado queda fuera a proposito (ver la cabecera del archivo).
+    [string[]] InjectableNames() { return @($this.Convars.Keys) }
+
+    [bool] HasMetadata([string] $settingName) {
+        if ([string]::IsNullOrWhiteSpace($settingName)) { return $false }
+        if ($this.Convars.ContainsKey($settingName.ToLowerInvariant())) { return $true }
+        return $this.Generated.Has($settingName)
+    }
+
+    <#
+        Metadatos de una convar: manda lo curado y el catalogo generado rellena
+        solo los campos que lo curado deja vacios. Devuelve $null si no hay nada.
+        Nunca se mezcla con el valor vivo: quien llama decide, y solo rellena
+        huecos.
+    #>
+    [hashtable] GetMetadata([string] $settingName) {
+        if ([string]::IsNullOrWhiteSpace($settingName)) { return $null }
+        $clave = $settingName.ToLowerInvariant()
+        $curado = if ($this.Convars.ContainsKey($clave)) { $this.Convars[$clave] } else { $null }
+        $gen    = $this.Generated.Get($settingName)
+        if ($null -eq $curado) { return $gen }
+        if ($null -eq $gen)    { return $curado }
+
+        $mezcla = @{
+            default     = $curado.default
+            type        = $curado.type
+            description = $curado.description
+        }
+        foreach ($campo in @('default', 'type', 'description')) {
+            if ([string]::IsNullOrWhiteSpace([string]$mezcla[$campo])) { $mezcla[$campo] = $gen[$campo] }
+        }
+        return $mezcla
+    }
+
+    [bool] IsDeprecated([string] $settingName) {
+        if ([string]::IsNullOrWhiteSpace($settingName)) { return $false }
+        return $this.Deprecated.ContainsKey($settingName.ToLowerInvariant())
+    }
+
+    # Entradas del catalogo generado, para los informes y el log del motor.
+    [int] GeneratedCount() { return $this.Generated.Count() }
 }
 
 class SyncEngine {
@@ -83,20 +148,23 @@ class SyncEngine {
             $merged.Add($s)
         }
 
-        # 2. Enriquecer metadatos + marcar obsoletas (sin eliminar).
+        # 2. Enriquecer metadatos + marcar obsoletas (sin eliminar). Los metadatos
+        #    pueden venir de la lista curada o del catalogo generado, y SOLO
+        #    rellenan huecos: un valor vivo no se toca nunca.
         foreach ($s in $merged) {
-            if ($this.Fallbacks.Has($s.Name)) {
-                $meta = $this.Fallbacks.Get($s.Name)
+            $meta = $this.Fallbacks.GetMetadata($s.Name)
+            if ($null -ne $meta) {
                 if (-not $s.Metadata.Description)  { $s.Metadata.Description  = $meta.description }
                 if (-not $s.Metadata.DefaultValue) { $s.Metadata.DefaultValue = $meta.default }
             }
             if ($this.Fallbacks.IsDeprecated($s.Name)) { $s.State = [SettingState]::Obsolete }
         }
 
-        # 3. Fallbacks SOLO para variables ausentes.
-        foreach ($name in $this.Fallbacks.AllNames()) {
+        # 3. Fallbacks SOLO para variables ausentes, y solo los CURADOS: el
+        #    catalogo generado aporta metadatos, no entradas nuevas.
+        foreach ($name in $this.Fallbacks.InjectableNames()) {
             if ($seen.ContainsKey($name)) { continue }
-            $meta = $this.Fallbacks.Get($name)
+            $meta = $this.Fallbacks.GetMetadata($name)
             $fb = [Setting]::new($name, [string]$meta.default)
             $fb.Priority = [SettingPriority]::Fallback
             $fb.State    = [SettingState]::FallbackApplied
