@@ -48,6 +48,23 @@ jobs:
           if ($errores -gt 0) { throw "$errores errores de sintaxis." }
           Write-Host 'Sin errores de sintaxis.'
 
+      - name: Nombres de prueba sin placeholders accidentales
+        shell: pwsh
+        run: |
+          # Pester trata <algo> en el nombre de un Describe, Context o It como
+          # placeholder de datos y lo resuelve como variable, de modo que la
+          # prueba falla con "la variable '$algo' no se pudo obtener" aunque su
+          # cuerpo sea correcto. No hay forma de detectarlo sin ejecutar Pester,
+          # asi que se comprueba aqui.
+          $malos = @(Select-String -Path './tests/*.ps1' -Pattern "(Describe|Context|It)\s+['`"][^'`"]*<[A-Za-z_]")
+          if ($malos.Count -gt 0) {
+            foreach ($m in $malos) {
+              Write-Host "::error file=$($m.Path),line=$($m.LineNumber)::Nombre de prueba con <placeholder>: $($m.Line.Trim())"
+            }
+            throw "$($malos.Count) nombres de prueba contienen <angulos>, que Pester interpreta como placeholder."
+          }
+          Write-Host 'Nombres de prueba correctos.'
+
       # Pester va antes del analisis estatico a proposito: es la senal que
       # importa, y un tropiezo del linter no debe impedir que los tests corran.
       - name: Pruebas Pester

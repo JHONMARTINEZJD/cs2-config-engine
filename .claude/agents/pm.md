@@ -49,6 +49,12 @@ En cada invocacion:
     `[System.Management.Automation.Language.Parser]::ParseFile`, filtrando los
     errores `TypeNotFound`: son esperados porque las clases llegan de archivos
     hermanos via `Bootstrap.ps1`, no del archivo aislado.
+- **Nunca uses `<angulos>` en el nombre de un Describe, Context o It.** Pester
+  trata `<algo>` como placeholder de datos y lo resuelve como variable, asi que
+  el test falla con "la variable '$algo' no se pudo obtener" aunque su cuerpo
+  sea correcto. Ninguna verificacion local lo detecta.
+- El CI instala Pester con `-MinimumVersion 5.5.0`, que hoy resuelve a **6.x**.
+  Cuenta con Pester 6 al escribir pruebas.
 - El motor completo no corre end-to-end en Linux: las rutas usan `\` literal y
   el descubrimiento de Steam es especifico de Windows. Llegar al error
   controlado de `SteamDiscovery` es el maximo esperable aqui; no lo trates como

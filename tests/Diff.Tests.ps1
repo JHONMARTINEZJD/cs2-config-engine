@@ -132,7 +132,10 @@ Describe 'ConfigDiffEngine' {
             $d.Removed[0]['value'] | Should -Be '0.4'
         }
 
-        It 'reporta la baja de un alias por su clave alias::<nombre>' {
+        # Sin <angulos> en el nombre: Pester trata <algo> como placeholder de
+        # datos y lo resuelve como variable, fallando con "la variable '$algo' no
+        # se pudo obtener" aunque el test sea correcto.
+        It 'reporta la baja de un alias por su clave alias::nombre' {
             $cur = New-DiffConfig (@($script:BaseSettings) | Where-Object { $_.Type -ne [SettingType]::Alias })
             $d = $script:Engine.Compare($cur, 'cur', '20260101-100000', $script:BaseInventory)
 
