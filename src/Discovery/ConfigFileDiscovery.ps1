@@ -83,14 +83,22 @@ class ConfigFileDiscovery {
         return 'unknown'
     }
 
-    # Los archivos conocidos van primero y en su orden; el resto, alfabetico.
+    <#
+        Los archivos conocidos van primero y en su orden; el resto, alfabetico.
+
+        Importa mas de lo que parece: de este orden depende cual de dos valores
+        duplicados gana la deduplicacion en SyncEngine, asi que se compara de
+        forma ORDINAL y no con Sort-Object, que cotejaria segun la cultura
+        activa. El indice se rellena a 4 digitos para que 2 no quede antes de 10.
+    #>
     hidden [DiscoveredFile[]] SortByRelevance([System.Collections.Generic.ICollection[DiscoveredFile]] $files) {
         $known = [ConfigFileDiscovery]::KnownNames
-        return ($files | Sort-Object @{
-            Expression = {
-                $idx = [array]::IndexOf($known, $_.Name.ToLowerInvariant())
-                if ($idx -lt 0) { 1000 } else { $idx }
-            }
-        }, Name)
+        $ordenados = Sort-OrdinalBy -Items @($files) -KeySelector {
+            param($f)
+            $idx = [array]::IndexOf($known, $f.Name.ToLowerInvariant())
+            if ($idx -lt 0) { $idx = 1000 }
+            Join-OrdinalKey -Parts @($idx.ToString('D4'), $f.Name)
+        }
+        return [DiscoveredFile[]]$ordenados
     }
 }

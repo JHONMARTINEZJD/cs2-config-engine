@@ -17,6 +17,7 @@ $ordered = @(
     'Core/Types.ps1'
     'Core/Logging.ps1'
     'Core/Hashing.ps1'
+    'Core/Ordering.ps1'
     'Discovery/SteamDiscovery.ps1'
     'Discovery/CS2Discovery.ps1'
     'Discovery/ConfigFileDiscovery.ps1'

@@ -193,9 +193,21 @@ PowerShell; no hace falta cambiar de lenguaje.
       que el hash publicado puede no ser el del ejemplar vigente. El diff ya no depende
       de ese archivo (lee valores, no hashes), pero `Hashes.json` sigue siendo enganoso
       cuando hay duplicados.
-- [ ] `Sort-Object` compara cadenas segun la cultura activa. El diff usa
-      `SortedDictionary` con `StringComparer::Ordinal` para no depender de eso, pero
-      `SyncEngine::GroupIntoCategories` sigue ordenando las categorias y los ajustes
-      dentro de cada una con `Sort-Object`, y de ese orden salen el autoexec y todos
-      los exportadores: podrian no ser byte a byte identicos en una maquina con otra
-      configuracion regional. Sin comprobar todavia.
+- [x] **Determinismo frente a la cultura del sistema.** Estaba confirmado, no era
+      teorico: ejecutando el codigo anterior bajo `da-DK`, `cl_aa_crosshair` y
+      `cl_aardvark_crosshair` saltaban DETRAS de `cl_zz_crosshair` (la colacion danesa
+      coteja "aa" como "a-anillo", despues de la z) y el autoexec salia distinto byte a
+      byte para el mismo config. Se anade `src/Core/Ordering.ps1` (`Sort-OrdinalBy` y
+      `Join-OrdinalKey`), ordenacion ordinal y estable, y se aplica a los cuatro sitios
+      cuyo orden llega a la salida o a una decision: el orden dentro de cada categoria
+      en `SyncEngine` (de ahi salen el autoexec y todos los exportadores), la relevancia
+      de archivos en `ConfigFileDiscovery` (decide que duplicado gana la deduplicacion),
+      la rotacion en `SnapshotManager` (decide que snapshots se borran) y el orden de
+      hallazgos del `Validator`. Verificado: el autoexec sale identico byte a byte en
+      en-US, da-DK, tr-TR y sv-SE. (`e0b1e6d`)
+
+      Aprendido por el camino, y anotado en el brief del pm: las claves compuestas que
+      devuelve `Join-OrdinalKey` **solo** pueden compararse de forma ordinal. Los
+      operadores del lenguaje (`-eq`, `-ceq`) y `Should -Be` son sensibles a la cultura
+      y la colacion IGNORA el separador U+001F, asi que dan por iguales dos claves
+      distintas: `ab<US>c` y `a<US>bc` pasan ambas por "abc".

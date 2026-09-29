@@ -147,10 +147,15 @@ class SyncEngine {
         foreach ($code in ($byCat.Keys | Sort-Object { [CategoryMap]::OrderFor($_) })) {
             $cat = [ConfigCategory]::new($code, [CategoryMap]::NameFor($code), [CategoryMap]::OrderFor($code))
             # Orden determinista dentro de la categoria: tipo, nombre, tecla/valor.
-            $ordered = $byCat[$code] | Sort-Object `
-                @{ Expression = { $_.Type.ToString() } }, `
-                @{ Expression = { $_.Name } }, `
-                @{ Expression = { if ($_.Extra.ContainsKey('Key')) { $_.Extra['Key'] } else { $_.Value } } }
+            # Comparacion ORDINAL, no Sort-Object: Sort-Object cotejaria segun la
+            # cultura activa y de este orden salen el autoexec y todos los
+            # exportadores, asi que en un sistema danes (donde "aa" se cot|eja
+            # despues de la z) el mismo config generaria un archivo distinto.
+            $ordered = Sort-OrdinalBy -Items @($byCat[$code]) -KeySelector {
+                param($s)
+                $tercero = if ($s.Extra.ContainsKey('Key')) { $s.Extra['Key'] } else { $s.Value }
+                Join-OrdinalKey -Parts @($s.Type.ToString(), $s.Name, $tercero)
+            }
             foreach ($s in $ordered) { $cat.Add($s) }
             $cfg.Categories.Add($cat)
         }

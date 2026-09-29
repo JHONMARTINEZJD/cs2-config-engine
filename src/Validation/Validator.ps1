@@ -121,8 +121,9 @@ class Validator {
         $state  = @{}
         $cycles = [System.Collections.Generic.List[string[]]]::new()
 
-        # Orden estable para que el reporte sea determinista.
-        foreach ($name in ($aliases.Keys | Sort-Object)) {
+        # Orden estable y ordinal para que el reporte sea determinista: con
+        # Sort-Object el orden de los hallazgos dependeria de la cultura.
+        foreach ($name in (Sort-OrdinalBy -Items @($aliases.Keys) -KeySelector { param($k) $k })) {
             if ($state.ContainsKey($name)) { continue }
             $this.WalkAliases($name, $aliases, $state, [System.Collections.Generic.List[string]]::new(), $cycles)
         }

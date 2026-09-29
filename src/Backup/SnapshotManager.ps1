@@ -115,8 +115,10 @@ class SnapshotManager {
     }
 
     hidden [void] Rotate() {
-        $dirs = @(Get-ChildItem -LiteralPath $this.BackupRoot -Directory -ErrorAction SilentlyContinue |
-            Sort-Object Name -Descending)
+        # Ordinal y no Sort-Object: esta ordenacion decide QUE snapshots se
+        # borran, asi que no puede depender de la cultura del sistema.
+        $dirs = @(Sort-OrdinalBy -Descending -KeySelector { param($d) $d.Name } -Items @(
+            Get-ChildItem -LiteralPath $this.BackupRoot -Directory -ErrorAction SilentlyContinue))
         if ($dirs.Count -le $this.MaxHistory) { return }
         $toRemove = $dirs | Select-Object -Skip $this.MaxHistory
         foreach ($d in $toRemove) {

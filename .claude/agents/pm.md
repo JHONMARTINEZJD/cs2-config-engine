@@ -70,6 +70,13 @@ En cada invocacion:
   entonces desapareceria del autoexec.
 - Determinismo: la misma entrada produce byte a byte la misma salida. Nada de
   marcas de tiempo en artefactos exportados.
+- **Nunca ordenes con `Sort-Object` algo de cuyo orden dependa la salida o una
+  decision.** Coteja segun la cultura activa: en danes "aa" va despues de la z,
+  asi que el autoexec dejaba de ser identico entre maquinas. Usa
+  `Sort-OrdinalBy` / `Join-OrdinalKey` de `src/Core/Ordering.ps1`. Y compara esas
+  claves compuestas SOLO de forma ordinal: `-eq`, `-ceq` y `Should -Be` son
+  sensibles a la cultura y la colacion ignora el separador U+001F, asi que dan
+  por iguales dos claves distintas.
 - Los patrones de clasificacion se evaluan sobre el nombre de la convar, o sobre
   `bind <comando>` / `<alias> <cuerpo>`. Por eso los prefijos usan
   `(?:^|[\s;])` y no `^`. Nunca introduzcas un catch-all de prefijo amplio
