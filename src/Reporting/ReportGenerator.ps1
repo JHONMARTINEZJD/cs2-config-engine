@@ -11,27 +11,60 @@
       - BackupReport.md        (resumen legible)
       - ConfigDiff.json        (diferencias frente al snapshot anterior)
     Cada reporte es independiente.
+
+    El diff por setting lo calcula ConfigDiffEngine (Reporting/ConfigDiff.ps1);
+    aqui solo se serializa. ConfigDiff.json conserva intacto el nodo de hashes y
+    conteos que ya publicaba y anade `settingDiff` al lado, de modo que cualquier
+    consumidor existente del archivo sigue funcionando.
 #>
 
 Set-StrictMode -Version Latest
 
 class ReportGenerator {
     hidden [Logger] $Log
+
+    <#
+        Tope de filas por tabla de diff en BackupReport.md. El reporte legible no
+        es la fuente de la verdad: la lista completa siempre esta en
+        ConfigDiff.json, asi que se corta para que un cambio masivo (por ejemplo
+        una actualizacion del catalogo de fallbacks) no haga ilegible el informe.
+        Al estar las entradas ya ordenadas, el corte es determinista.
+    #>
+    static [int] $DiffRowLimit = 50
+
     ReportGenerator([Logger] $log) { $this.Log = $log }
 
     [void] GenerateAll([GameConfig] $cfg, [Snapshot] $snap, [DiscoveredFile[]] $files,
                        [System.Collections.Generic.List[ValidationIssue]] $issues,
-                       [object] $prevState) {
+                       [object] $prevState, [string] $prevInventoryPath) {
         $dir = $snap.Path
         $this.WriteManifest($cfg, $snap, $files, (Join-Path $dir 'Manifest.json'))
         $this.WriteInventory($cfg, (Join-Path $dir 'Inventory.json'))
         $this.WriteHashes($cfg, $files, (Join-Path $dir 'Hashes.json'))
         $stats = $this.BuildStatistics($cfg, $issues)
         $this.WriteJson($stats, (Join-Path $dir 'BackupStatistics.json'))
+
+        # Un solo calculo del diff alimenta el JSON y el Markdown, para que no
+        # puedan contradecirse.
+        $prevId = if ($prevState) { [string]$this.PrevProp($prevState, 'id') } else { '' }
+        $diff   = [ConfigDiffEngine]::new($this.Log).Compare($cfg, $snap.Id, $prevId, $prevInventoryPath)
+
         $this.WriteBackupReportJson($cfg, $snap, $stats, $issues, (Join-Path $dir 'BackupReport.json'))
-        $this.WriteBackupReportMd($cfg, $snap, $stats, $issues, (Join-Path $dir 'BackupReport.md'))
-        $this.WriteDiff($cfg, $snap, $prevState, (Join-Path $dir 'ConfigDiff.json'))
+        $this.WriteBackupReportMd($cfg, $snap, $stats, $issues, $diff, (Join-Path $dir 'BackupReport.md'))
+        $this.WriteDiff($snap, $prevState, $diff, (Join-Path $dir 'ConfigDiff.json'))
         $this.Log.Info("Reportes generados en $dir")
+    }
+
+    <#
+        Lectura tolerante de un campo del historial. history.json puede venir de
+        una version anterior del motor o haber quedado a medias, y con
+        Set-StrictMode acceder a una propiedad inexistente seria terminante.
+    #>
+    hidden [object] PrevProp([object] $prevState, [string] $name) {
+        if ($null -eq $prevState) { return $null }
+        $p = $prevState.PSObject.Properties[$name]
+        if ($null -eq $p) { return $null }
+        return $p.Value
     }
 
     hidden [void] WriteJson([object] $obj, [string] $path) {
@@ -130,7 +163,8 @@ class ReportGenerator {
     }
 
     hidden [void] WriteBackupReportMd([GameConfig] $cfg, [Snapshot] $snap, [object] $stats,
-                                      [System.Collections.Generic.List[ValidationIssue]] $issues, [string] $path) {
+                                      [System.Collections.Generic.List[ValidationIssue]] $issues,
+                                      [ConfigDiffResult] $diff, [string] $path) {
         $sb = [System.Text.StringBuilder]::new()
         [void]$sb.AppendLine('# Backup Report')
         [void]$sb.AppendLine('')
@@ -156,6 +190,7 @@ class ReportGenerator {
             if ($cat.Count() -gt 0) { [void]$sb.AppendLine("| $($cat.Code) - $($cat.Name) | $($cat.Count()) |") }
         }
         [void]$sb.AppendLine('')
+        $this.AppendDiffSection($sb, $diff)
         [void]$sb.AppendLine('## Validacion')
         [void]$sb.AppendLine('')
         if ($issues.Count -eq 0) {
@@ -172,19 +207,106 @@ class ReportGenerator {
         [System.IO.File]::WriteAllText($path, ($sb.ToString() -replace "`r`n","`n"), [System.Text.UTF8Encoding]::new($false))
     }
 
-    hidden [void] WriteDiff([GameConfig] $cfg, [Snapshot] $snap, [object] $prevState, [string] $path) {
-        $diff = [ordered]@{
-            previousSnapshot = if ($prevState) { $prevState.id } else { $null }
+    <#
+        Seccion legible del diff. Si no hay base de comparacion lo dice con
+        claridad en lugar de mostrar tablas vacias o deltas inventados.
+    #>
+    hidden [void] AppendDiffSection([System.Text.StringBuilder] $sb, [ConfigDiffResult] $diff) {
+        [void]$sb.AppendLine('## Cambios frente al snapshot anterior')
+        [void]$sb.AppendLine('')
+
+        if (-not $diff.HasBaseline) {
+            if ($diff.PreviousSnapshotId) {
+                [void]$sb.AppendLine("**Sin base de comparacion.** Existe un snapshot anterior (``$($diff.PreviousSnapshotId)``) pero su inventario no se pudo usar: $($diff.BaselineWarning)")
+                [void]$sb.AppendLine('')
+                [void]$sb.AppendLine('No se reportan altas, bajas ni cambios porque no hay con que compararlos. El inventario de este snapshot queda completo y servira de base para el siguiente.')
+            } else {
+                [void]$sb.AppendLine('**Sin base de comparacion.** Este es el primer snapshot registrado: no hay snapshot anterior contra el que comparar, asi que no hay altas, bajas ni cambios que mostrar.')
+            }
+            [void]$sb.AppendLine('')
+            return
+        }
+
+        [void]$sb.AppendLine("- Snapshot anterior: ``$($diff.PreviousSnapshotId)`` ($($diff.PreviousTotal) claves)")
+        [void]$sb.AppendLine("- Snapshot actual: ``$($diff.CurrentSnapshotId)`` ($($diff.CurrentTotal) claves)")
+        [void]$sb.AppendLine("- Anadidas: **$($diff.Added.Count)** | Eliminadas: **$($diff.Removed.Count)** | Cambiadas: **$($diff.Modified.Count)** | Sin cambios: **$($diff.Unchanged)**")
+        [void]$sb.AppendLine('')
+
+        if ($diff.TotalChanges() -eq 0) {
+            [void]$sb.AppendLine('La configuracion es identica a la del snapshot anterior.')
+            [void]$sb.AppendLine('')
+            return
+        }
+
+        if ($diff.Modified.Count -gt 0) {
+            [void]$sb.AppendLine('### Cambiadas')
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine('| Clave | Categoria | Antes | Despues | Campos |')
+            [void]$sb.AppendLine('| --- | --- | --- | --- | --- |')
+            $this.AppendDiffRows($sb, $diff.Modified, {
+                param($e)
+                '| `{0}` | {1} - {2} | `{3}` | `{4}` | {5} |' -f $e['key'], $e['category'], $e['categoryName'],
+                    $e['previousValue'], $e['currentValue'], (@($e['fields']) -join ', ')
+            })
+        }
+
+        foreach ($pair in @(@('Anadidas', $diff.Added), @('Eliminadas', $diff.Removed))) {
+            $title   = [string]$pair[0]
+            $entries = $pair[1]
+            if ($entries.Count -eq 0) { continue }
+            [void]$sb.AppendLine("### $title")
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine('| Clave | Categoria | Tipo | Valor |')
+            [void]$sb.AppendLine('| --- | --- | --- | --- |')
+            $this.AppendDiffRows($sb, $entries, {
+                param($e)
+                '| `{0}` | {1} - {2} | {3} | `{4}` |' -f $e['key'], $e['category'], $e['categoryName'],
+                    $e['type'], $e['value']
+            })
+        }
+    }
+
+    # Emite las filas de una tabla de diff respetando el tope y avisando del corte.
+    hidden [void] AppendDiffRows([System.Text.StringBuilder] $sb,
+                                 [System.Collections.Generic.List[object]] $entries,
+                                 [scriptblock] $formatter) {
+        $limit = [ReportGenerator]::DiffRowLimit
+        $n     = [Math]::Min($limit, $entries.Count)
+        for ($i = 0; $i -lt $n; $i++) {
+            [void]$sb.AppendLine([string](& $formatter $entries[$i]))
+        }
+        if ($entries.Count -gt $limit) {
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine("> Se muestran las primeras $limit de $($entries.Count) entradas. La lista completa esta en ``ConfigDiff.json``.")
+        }
+        [void]$sb.AppendLine('')
+    }
+
+    <#
+        ConfigDiff.json. Las claves de la primera version (previousSnapshot,
+        currentSnapshot, changed, previousHash, currentHash, deltas) se mantienen
+        tal cual para no romper a nadie que ya las lea; `settingDiff` se anade al
+        final con el diff real por setting.
+    #>
+    hidden [void] WriteDiff([Snapshot] $snap, [object] $prevState, [ConfigDiffResult] $diff, [string] $path) {
+        $prevHash   = [string]$this.PrevProp($prevState, 'hash')
+        $prevBind   = [int]$this.PrevProp($prevState, 'bindCount')
+        $prevConvar = [int]$this.PrevProp($prevState, 'convarCount')
+        $prevAlias  = [int]$this.PrevProp($prevState, 'aliasCount')
+
+        $out = [ordered]@{
+            previousSnapshot = if ($prevState) { [string]$this.PrevProp($prevState, 'id') } else { $null }
             currentSnapshot  = $snap.Id
-            changed          = ($null -ne $prevState -and $prevState.hash -ne $snap.Hash)
-            previousHash     = if ($prevState) { $prevState.hash } else { $null }
+            changed          = ($null -ne $prevState -and $prevHash -ne $snap.Hash)
+            previousHash     = if ($prevState) { $prevHash } else { $null }
             currentHash      = $snap.Hash
             deltas           = [ordered]@{
-                bindCount   = if ($prevState) { $snap.BindCount   - [int]$prevState.bindCount }   else { $snap.BindCount }
-                convarCount = if ($prevState) { $snap.ConvarCount - [int]$prevState.convarCount } else { $snap.ConvarCount }
-                aliasCount  = if ($prevState) { $snap.AliasCount  - [int]$prevState.aliasCount }  else { $snap.AliasCount }
+                bindCount   = if ($prevState) { $snap.BindCount   - $prevBind }   else { $snap.BindCount }
+                convarCount = if ($prevState) { $snap.ConvarCount - $prevConvar } else { $snap.ConvarCount }
+                aliasCount  = if ($prevState) { $snap.AliasCount  - $prevAlias }  else { $snap.AliasCount }
             }
+            settingDiff      = $diff.ToHashtable()
         }
-        $this.WriteJson($diff, $path)
+        $this.WriteJson($out, $path)
     }
 }

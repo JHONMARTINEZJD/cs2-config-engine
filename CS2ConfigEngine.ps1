@@ -90,12 +90,15 @@ function Invoke-CS2ConfigEngine {
         $snapMgr = [SnapshotManager]::new($log, (Join-Path $OutputPath 'backups'), $MaxHistory)
         $prev    = $snapMgr.GetPreviousConfigState('')
         $snap    = $snapMgr.Create($config, $files)
+        # El diff por setting se calcula contra el Inventory.json del snapshot
+        # anterior: history.json solo guarda hashes y conteos.
+        $prevInv = if ($prev) { $snapMgr.GetInventoryPath([string]$prev.id) } else { '' }
 
         # 6. Exportacion (cada exportador es independiente)
         Export-Configurations -Config $config -Snapshot $snap -Formats $Formats -OutputPath $OutputPath -Log $log
 
         # 7. Reportes
-        [ReportGenerator]::new($log).GenerateAll($config, $snap, $files, $issues, $prev)
+        [ReportGenerator]::new($log).GenerateAll($config, $snap, $files, $issues, $prev, $prevInv)
 
         $log.Info("Backup completado. Salida: $($snap.Path)")
         return $snap

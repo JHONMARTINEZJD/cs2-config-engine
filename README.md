@@ -141,6 +141,8 @@ pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLe
 - **`snapshot.json`** — modelo completo serializado (ideal para diffs entre capturas).
 - **`report.md`** — reporte humano con resumen por categoría, conteos y estados.
 - **`snapshot.yaml` / `snapshot.csv`** — vistas alternativas para integración o análisis.
+- **`ConfigDiff.json`** — diff semántico **por ajuste** frente al snapshot anterior: añadidas, eliminadas y cambiadas (con valor antes y después), identificadas por la clave estable (`bind::<tecla>`, `alias::<nombre>`, o el nombre de la convar) y agrupadas por categoría. Conserva además los hashes y los deltas de conteos que ya publicaba. La base de comparación es el `Inventory.json` del snapshot anterior; si falta o está corrupto, el diff degrada a "sin base de comparación" con la advertencia correspondiente en lugar de abortar o inventar deltas.
+- **`BackupReport.md`** — el mismo diff en forma legible: resumen de altas/bajas/cambios y tabla de las cambiadas con antes y después.
 - **Backup** con marca de tiempo de los archivos originales antes de cualquier escritura.
 
 ---

@@ -125,6 +125,25 @@ class SnapshotManager {
         }
     }
 
+    <#
+        Ruta del Inventory.json de un snapshot del historial.
+
+        El diff por setting (A1) necesita los settings del snapshot anterior y
+        history.json no los guarda: solo id, hash, tamano y conteos. El material
+        completo esta en el Inventory.json de la carpeta del snapshot, y la
+        distribucion de backups/<id>/ la conoce esta clase, no el reporte.
+
+        Devuelve la ruta calculada SIN comprobar existencia a proposito: quien
+        consume el diff distingue "no hay snapshot anterior" (cadena vacia) de
+        "el snapshot anterior existe pero su inventario falta o esta corrupto"
+        (ruta valida que no se puede leer, por ejemplo porque Rotate() ya borro
+        la carpeta), y solo el segundo caso merece advertencia.
+    #>
+    [string] GetInventoryPath([string] $snapshotId) {
+        if ([string]::IsNullOrWhiteSpace($snapshotId)) { return '' }
+        return (Join-Path (Join-Path $this.BackupRoot $snapshotId) 'Inventory.json')
+    }
+
     # Carga el snapshot anterior (para diff). $null si no hay.
     [object] GetPreviousConfigState([string] $currentId) {
         $historyPath = Join-Path $this.BackupRoot 'history.json'

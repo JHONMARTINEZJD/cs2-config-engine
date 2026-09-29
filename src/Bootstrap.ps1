@@ -32,6 +32,7 @@ $ordered = @(
     'Export/AutoexecExporter.ps1'
     'Export/DataExporters.ps1'
     'Backup/SnapshotManager.ps1'
+    'Reporting/ConfigDiff.ps1'
     'Reporting/ReportGenerator.ps1'
 )
 
