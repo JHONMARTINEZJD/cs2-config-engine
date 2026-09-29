@@ -48,20 +48,8 @@ jobs:
           if ($errores -gt 0) { throw "$errores errores de sintaxis." }
           Write-Host 'Sin errores de sintaxis.'
 
-      - name: Analisis estatico
-        shell: pwsh
-        run: |
-          # Los archivos de clases no parsean en aislamiento (TypeNotFound), asi
-          # que el analizador los descarta y escribe un error de host; eso no es
-          # un hallazgo y no debe tumbar el build. La sintaxis ya se comprobo
-          # arriba, aqui solo interesan los diagnosticos de reglas.
-          $r = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error -ErrorAction SilentlyContinue
-          if ($r) {
-            $r | Format-Table -AutoSize | Out-String | Write-Host
-            throw 'PSScriptAnalyzer encontro errores.'
-          }
-          Write-Host 'Sin errores de analisis estatico.'
-
+      # Pester va antes del analisis estatico a proposito: es la senal que
+      # importa, y un tropiezo del linter no debe impedir que los tests corran.
       - name: Pruebas Pester
         shell: pwsh
         run: |
@@ -72,6 +60,28 @@ jobs:
           $cfg.TestResult.Enabled = $true
           $cfg.TestResult.OutputPath = './output/pester-results.xml'
           Invoke-Pester -Configuration $cfg
+
+      - name: Analisis estatico
+        shell: pwsh
+        run: |
+          # PSScriptAnalyzer devuelve los diagnosticos TypeNotFound aunque se le
+          # pase -Severity Error, porque son errores de parseo y no hallazgos de
+          # regla. Aqui son esperados: las clases llegan de archivos hermanos que
+          # carga Bootstrap.ps1, no del archivo analizado en aislamiento. Se
+          # descartan por nombre de regla; la sintaxis real ya se comprobo arriba.
+          $todos = @(Invoke-ScriptAnalyzer -Path . -Recurse -ErrorAction SilentlyContinue)
+          $bloqueantes = @($todos | Where-Object {
+            $_.RuleName -ne 'TypeNotFound' -and
+            $_.Severity.ToString() -in @('Error', 'ParseError')
+          })
+          if ($bloqueantes.Count -gt 0) {
+            $bloqueantes | Format-Table -AutoSize RuleName, Severity, ScriptName, Line, Message | Out-String | Write-Host
+            foreach ($d in $bloqueantes) {
+              Write-Host "::error file=$($d.ScriptPath),line=$($d.Line)::$($d.RuleName): $($d.Message)"
+            }
+            throw "PSScriptAnalyzer encontro $($bloqueantes.Count) errores."
+          }
+          Write-Host "Sin errores de analisis estatico ($($todos.Count) diagnosticos revisados, ninguno bloqueante)."
 
       - name: Publicar resultados
         if: always()
