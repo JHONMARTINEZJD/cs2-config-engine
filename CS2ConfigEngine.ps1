@@ -22,10 +22,32 @@
     Formatos de exportacion. Por defecto: autoexec, json, markdown, yaml, csv.
 .PARAMETER LogLevel
     Debug | Info | Warn | Error. Por defecto Info.
+.PARAMETER Restore
+    Id de snapshot a restaurar (o 'latest'). Presente => el motor NO hace backup:
+    entra en modo restore. Por defecto SOLO MUESTRA lo que cambiaria.
+.PARAMETER Apply
+    Escribe de verdad. Sin este parametro, -Restore es solo-mostrar.
+.PARAMETER RestoreTarget
+    Output (por defecto) escribe en <OutputPath>/restore/<id>/files y no toca
+    nada del jugador. LiveFiles sobreescribe sus .vcfg/.cfg y exige ademas
+    -AllowLiveFileWrites.
+.PARAMETER AllowLiveFileWrites
+    Permiso explicito para sobreescribir los archivos vivos del jugador. Son dos
+    parametros distintos a proposito: equivocarse en uno no puede llegar a
+    escribir sobre la configuracion real.
 .EXAMPLE
     pwsh ./CS2ConfigEngine.ps1
 .EXAMPLE
     pwsh ./CS2ConfigEngine.ps1 -SteamPath 'D:\Steam' -Formats autoexec,json -LogLevel Debug
+.EXAMPLE
+    # Preview: que pasaria si vuelvo al ultimo snapshot (no escribe nada)
+    pwsh ./CS2ConfigEngine.ps1 -Restore latest
+.EXAMPLE
+    # Restaurar a la carpeta de salida, sin tocar la config del jugador
+    pwsh ./CS2ConfigEngine.ps1 -Restore 20260129-101500 -Apply
+.EXAMPLE
+    # Restaurar encima de los archivos vivos (backup previo + rollback automatico)
+    pwsh ./CS2ConfigEngine.ps1 -Restore latest -Apply -RestoreTarget LiveFiles -AllowLiveFileWrites
 #>
 [CmdletBinding()]
 param(
@@ -35,7 +57,12 @@ param(
     [int]      $MaxHistory = 10,
     [string[]] $Formats = @('autoexec', 'json', 'markdown', 'yaml', 'csv'),
     [ValidateSet('Debug', 'Info', 'Warn', 'Error')]
-    [string]   $LogLevel = 'Info'
+    [string]   $LogLevel = 'Info',
+    [string]   $Restore = '',
+    [switch]   $Apply,
+    [ValidateSet('Output', 'LiveFiles')]
+    [string]   $RestoreTarget = 'Output',
+    [switch]   $AllowLiveFileWrites
 )
 
 Set-StrictMode -Version Latest
@@ -110,6 +137,63 @@ function Invoke-CS2ConfigEngine {
     }
 }
 
+<#
+    Modo restore (A2). Comparte con el backup las cuatro primeras fases
+    (descubrir, parsear, clasificar, sincronizar) porque el preview necesita la
+    configuracion VIVA como base de comparacion; a partir de ahi no crea
+    snapshot ni exporta nada: solo planifica y, si se lo piden, escribe.
+
+    Por defecto es solo-mostrar. Se necesita -Apply para escribir, y ademas
+    -RestoreTarget LiveFiles junto con -AllowLiveFileWrites para tocar los
+    archivos del jugador.
+#>
+function Invoke-CS2Restore {
+    [CmdletBinding()]
+    param(
+        [string] $SteamPath, [string] $SteamId, [string] $OutputPath, [string] $LogLevel,
+        [string] $SnapshotId, [bool] $Apply, [string] $RestoreTarget, [bool] $AllowLiveFileWrites
+    )
+
+    if (-not (Test-Path -LiteralPath $OutputPath)) {
+        New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
+    }
+    $log = [Logger]::new([LogLevel]::$LogLevel, (Join-Path $OutputPath 'engine.log'))
+    $log.Info('=== CS2 Configuration Snapshot Engine :: RESTORE ===')
+
+    $configDir = Join-Path $PSScriptRoot 'config'
+
+    try {
+        # 1-4. Misma tuberia que el backup: hace falta la config viva.
+        $steam = [SteamDiscovery]::new($log).Discover($SteamPath)
+        $cs2   = [CS2Discovery]::new($log).Discover($steam, $SteamId)
+        $files = [ConfigFileDiscovery]::new($log).Discover($cs2.CfgSearchRoots)
+        $parsed = [ParserFactory]::new($log).ParseAll($files)
+        $classifier = [Classifier]::new($log, (Join-Path $configDir 'classification-rules.json'))
+        $fallbacks  = [FallbackCatalog]::new((Join-Path $configDir 'fallbacks.json'), $log)
+        $live = [SyncEngine]::new($log, $fallbacks, $classifier).Build($parsed, $cs2, $steam, $files)
+
+        # 5. Plan. No escribe nada.
+        $engine = [RestoreEngine]::new($log, (Join-Path $OutputPath 'backups'), $OutputPath)
+        $plan = $engine.Plan($SnapshotId, $live, [RestoreTarget]$RestoreTarget, $AllowLiveFileWrites)
+
+        if (-not $Apply) {
+            Write-Host $plan.Render()
+            $log.Info('Restore en modo solo-mostrar: no se escribio nada.')
+            return $plan
+        }
+
+        # 6. Aplicar, con backup previo y rollback atomico.
+        $result = $engine.Apply($plan)
+        Write-Host $result.Render()
+        return $result
+    }
+    catch {
+        $log.Error("Restore fallido: $($_.Exception.Message)")
+        $log.Debug($_.ScriptStackTrace)
+        throw
+    }
+}
+
 function Export-Configurations {
     param(
         [GameConfig] $Config, [Snapshot] $Snapshot,
@@ -147,6 +231,13 @@ function Export-Configurations {
 
 # Ejecutar solo si se invoca directamente (no al dot-sourcing para pruebas).
 if ($MyInvocation.InvocationName -ne '.') {
-    Invoke-CS2ConfigEngine -SteamPath $SteamPath -SteamId $SteamId -OutputPath $OutputPath `
-        -MaxHistory $MaxHistory -Formats $Formats -LogLevel $LogLevel | Out-Null
+    if (-not [string]::IsNullOrWhiteSpace($Restore)) {
+        Invoke-CS2Restore -SteamPath $SteamPath -SteamId $SteamId -OutputPath $OutputPath `
+            -LogLevel $LogLevel -SnapshotId $Restore -Apply:$Apply.IsPresent `
+            -RestoreTarget $RestoreTarget -AllowLiveFileWrites:$AllowLiveFileWrites.IsPresent | Out-Null
+    }
+    else {
+        Invoke-CS2ConfigEngine -SteamPath $SteamPath -SteamId $SteamId -OutputPath $OutputPath `
+            -MaxHistory $MaxHistory -Formats $Formats -LogLevel $LogLevel | Out-Null
+    }
 }

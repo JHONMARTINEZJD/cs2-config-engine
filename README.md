@@ -120,6 +120,15 @@ pwsh ./CS2ConfigEngine.ps1 -SteamPath "D:\Steam" -OutputPath .\out
 
 # Elegir formatos de exportación, historial y nivel de log
 pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLevel Debug
+
+# Volver a un snapshot anterior. Por defecto SOLO MUESTRA lo que cambiaría.
+pwsh ./CS2ConfigEngine.ps1 -Restore latest
+
+# Restaurar de verdad, pero a la carpeta de salida: no toca la config del jugador
+pwsh ./CS2ConfigEngine.ps1 -Restore 20260129-101500 -Apply
+
+# Restaurar encima de los .vcfg/.cfg vivos: backup previo y rollback automático
+pwsh ./CS2ConfigEngine.ps1 -Restore latest -Apply -RestoreTarget LiveFiles -AllowLiveFileWrites
 ```
 
 ### Parámetros principales
@@ -133,6 +142,22 @@ pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLe
 | `-Formats`    | Formatos a exportar: `autoexec`, `json`, `markdown`, `yaml`, `csv`.    |
 | `-LogLevel`   | `Debug`, `Info`, `Warn`, `Error`.                                      |
 
+### Parámetros de restauración
+
+| Parámetro               | Descripción                                                                                           |
+|-------------------------|-------------------------------------------------------------------------------------------------------|
+| `-Restore`              | Id de snapshot (o `latest`). Presente ⇒ modo restauración: no se crea backup nuevo ni se exporta nada. |
+| `-Apply`                | Escribe de verdad. Sin él, `-Restore` solo muestra lo que cambiaría y **no toca el disco**.            |
+| `-RestoreTarget`        | `Output` (por defecto) escribe en `<OutputPath>/restore/<id>/files`; `LiveFiles` sobre los del jugador.|
+| `-AllowLiveFileWrites`  | Permiso explícito, obligatorio para `LiveFiles`. Son dos parámetros a propósito.                       |
+
+Escribir sobre los archivos del jugador exige las dos banderas, copia previa del
+estado actual en `<OutputPath>/restore/<id>/backup-<ts>/` y **rollback atómico**:
+si cualquier escritura falla a mitad, se deshacen todas las anteriores y el
+jugador queda exactamente como estaba. Lo que se escribe son las copias fieles
+que el snapshot guardó en `raw/`, byte a byte, nunca una reconstrucción de los
+`.vcfg` a partir del inventario.
+
 ---
 
 ## Salidas
@@ -144,6 +169,7 @@ pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLe
 - **`ConfigDiff.json`** — diff semántico **por ajuste** frente al snapshot anterior: añadidas, eliminadas y cambiadas (con valor antes y después), identificadas por la clave estable (`bind::<tecla>`, `alias::<nombre>`, o el nombre de la convar) y agrupadas por categoría. Conserva además los hashes y los deltas de conteos que ya publicaba. La base de comparación es el `Inventory.json` del snapshot anterior; si falta o está corrupto, el diff degrada a "sin base de comparación" con la advertencia correspondiente en lugar de abortar o inventar deltas.
 - **`BackupReport.md`** — el mismo diff en forma legible: resumen de altas/bajas/cambios y tabla de las cambiadas con antes y después.
 - **Backup** con marca de tiempo de los archivos originales antes de cualquier escritura.
+- **`restore/<id>/`** — al restaurar: `files/` con lo que se escribiría o escribió, `backup-<ts>/` con el estado previo (la red de seguridad del rollback) y `RestorePlan.json` con el registro de la operación.
 
 ---
 

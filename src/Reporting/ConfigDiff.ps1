@@ -167,6 +167,54 @@ class ConfigDiffEngine {
         $res.Baseline      = 'inventory'
         $res.PreviousTotal = $previous.Count
 
+        $this.Diff($previous, $current, $res)
+
+        $this.Log.Info(('Diff frente a {0}: +{1} / -{2} / ~{3} (sin cambios {4})' -f
+            $res.PreviousSnapshotId, $res.Added.Count, $res.Removed.Count,
+            $res.Modified.Count, $res.Unchanged))
+        return $res
+    }
+
+    <#
+        Diff entre dos [GameConfig] en memoria, en la direccion que pida quien
+        llama.
+
+        Existe para el preview de un restore (A2): ahi la base de comparacion es
+        la config VIVA y el objetivo es el inventario del snapshot que se quiere
+        aplicar, exactamente al contrario que en un backup. No hay logica de
+        comparacion nueva: los dos lados se indexan con el mismo
+        IndexFromConfig() y el resultado lo calcula el mismo Diff() que usa
+        Compare(), de modo que "que cambiaria si aplico este snapshot" y "que
+        cambio desde el ultimo backup" no puedan divergir nunca.
+
+        Baseline queda en 'config' (no 'inventory') para que el consumidor sepa
+        que la base no es un Inventory.json del historial. ConfigDiff.json sigue
+        viendo solo 'inventory' o 'none': este camino no lo escribe.
+    #>
+    [ConfigDiffResult] CompareConfigs([GameConfig] $baseline, [GameConfig] $target,
+                                      [string] $baselineLabel, [string] $targetLabel) {
+        $res = [ConfigDiffResult]::new()
+        $res.PreviousSnapshotId = if ($baselineLabel) { $baselineLabel } else { '' }
+        $res.CurrentSnapshotId  = if ($targetLabel)   { $targetLabel }   else { '' }
+
+        $previous = $this.IndexFromConfig($baseline)
+        $current  = $this.IndexFromConfig($target)
+        $res.PreviousTotal = $previous.Count
+        $res.CurrentTotal  = $current.Count
+        $res.HasBaseline   = $true
+        $res.Baseline      = 'config'
+
+        $this.Diff($previous, $current, $res)
+        return $res
+    }
+
+    <#
+        Nucleo del diff sobre dos indices ya construidos: altas, bajas, cambios
+        y sin-cambios. Unico sitio donde se decide que es un cambio.
+    #>
+    hidden [void] Diff([System.Collections.Specialized.OrderedDictionary] $previous,
+                       [System.Collections.Specialized.OrderedDictionary] $current,
+                       [ConfigDiffResult] $res) {
         $added    = [System.Collections.Generic.List[object]]::new()
         $removed  = [System.Collections.Generic.List[object]]::new()
         $modified = [System.Collections.Generic.List[object]]::new()
@@ -193,11 +241,6 @@ class ConfigDiffEngine {
         foreach ($e in $this.SortEntries($added))    { $res.Added.Add($e) }
         foreach ($e in $this.SortEntries($removed))  { $res.Removed.Add($e) }
         foreach ($e in $this.SortEntries($modified)) { $res.Modified.Add($e) }
-
-        $this.Log.Info(('Diff frente a {0}: +{1} / -{2} / ~{3} (sin cambios {4})' -f
-            $res.PreviousSnapshotId, $res.Added.Count, $res.Removed.Count,
-            $res.Modified.Count, $res.Unchanged))
-        return $res
     }
 
     # ---------------------------------------------------------------- indices
@@ -216,26 +259,35 @@ class ConfigDiffEngine {
         $idx = [ordered]@{}
         foreach ($cat in $cfg.Categories) {
             foreach ($s in $cat.Settings) {
-                $entry = [ordered]@{
-                    key         = $s.Key()
-                    name        = $s.Name
-                    value       = $s.Value
-                    type        = $s.Type.ToString()
-                    state       = $s.State.ToString()
-                    # Manda la categoria que contiene al ajuste, no
-                    # $s.CategoryCode: ese campo vale P48 por defecto en el
-                    # constructor y solo lo rellena SyncEngine, asi que un
-                    # GameConfig armado de otra forma (fixtures, y sobre todo el
-                    # preview de un restore en A2, que se construye desde un
-                    # inventario) reportaria un cambio de categoria fantasma.
-                    category    = $cat.Code
-                    hash        = $s.Metadata.Hash
-                    occurrences = 1
-                }
+                # Manda la categoria que contiene al ajuste, no $s.CategoryCode:
+                # ese campo vale P48 por defecto en el constructor y solo lo
+                # rellena SyncEngine, asi que un GameConfig armado de otra forma
+                # (fixtures, y el preview de un restore, que se construye desde
+                # un inventario) reportaria un cambio de categoria fantasma.
+                $entry = $this.EntryFromSetting($s, $cat.Code)
                 $this.Merge($idx, $entry, ($s.State -eq [SettingState]::Duplicated))
             }
         }
         return $idx
+    }
+
+    <#
+        Fila del indice a partir de un [Setting] ya materializado. La usan los
+        dos origenes posibles (un GameConfig vivo y un Inventory.json
+        rehidratado) para que no puedan describir el mismo ajuste de dos formas
+        distintas.
+    #>
+    hidden [System.Collections.Specialized.OrderedDictionary] EntryFromSetting([Setting] $s, [string] $categoryCode) {
+        return [ordered]@{
+            key         = $s.Key()
+            name        = $s.Name
+            value       = $s.Value
+            type        = $s.Type.ToString()
+            state       = $s.State.ToString()
+            category    = $categoryCode
+            hash        = $s.Metadata.Hash
+            occurrences = 1
+        }
     }
 
     # Inserta o fusiona una entrada en el indice contando repeticiones.
@@ -316,27 +368,16 @@ class ConfigDiffEngine {
     }
 
     <#
-        Rehidrata un setting del inventario en un [Setting] real solo para que la
-        clave la calcule `Setting::Key()` y no una copia divergente de esa regla.
-        Cualquier campo ausente o con basura degrada a un valor neutro; un
-        setting sin nombre se descarta porque no tiene clave posible.
+        Rehidrata un ajuste del inventario con Setting::FromHashtable() y lo
+        reduce a la fila del indice. La rehidratacion vive en [Setting] (y no
+        aqui) desde A2: la forma serializada de un Setting es asunto suyo, el
+        restore necesita el objeto entero y con una sola implementacion la clave
+        la calcula siempre Setting::Key() y no una copia divergente de esa
+        regla. Un ajuste sin nombre se descarta porque no tiene clave posible.
     #>
     hidden [System.Collections.Specialized.OrderedDictionary] EntryFromInventory([object] $s, [string] $fallbackCategory) {
-        $name = [string]$this.Prop($s, 'name', '')
-        if ([string]::IsNullOrWhiteSpace($name)) { return $null }
-        $value = [string]$this.Prop($s, 'value', '')
-
-        $setting = [Setting]::new($name, $value)
-        $setting.Type = $this.ParseType([string]$this.Prop($s, 'type', ''))
-
-        $extra = $this.Prop($s, 'extra', $null)
-        if ($null -ne $extra) {
-            if ($extra -is [System.Collections.IDictionary]) {
-                foreach ($k in $extra.Keys) { $setting.Extra[[string]$k] = [string]$extra[$k] }
-            } else {
-                foreach ($p in $extra.PSObject.Properties) { $setting.Extra[$p.Name] = [string]$p.Value }
-            }
-        }
+        $setting = [Setting]::FromHashtable($s)
+        if ($null -eq $setting) { return $null }
 
         # El bloque de categoria que contiene al ajuste es autoritativo, igual que
         # en IndexFromConfig: el campo 'category' de cada ajuste sale de
@@ -346,30 +387,10 @@ class ConfigDiffEngine {
         # categoria fantasma. Solo se usa el campo del ajuste si el bloque no
         # declara codigo.
         $category = $fallbackCategory
-        if ([string]::IsNullOrWhiteSpace($category)) { $category = [string]$this.Prop($s, 'category', '') }
+        if ([string]::IsNullOrWhiteSpace($category)) { $category = $setting.CategoryCode }
         if ([string]::IsNullOrWhiteSpace($category)) { $category = 'P48' }
 
-        $state = [string]$this.Prop($s, 'state', '')
-        if ([string]::IsNullOrWhiteSpace($state)) { $state = [SettingState]::Unknown.ToString() }
-
-        return [ordered]@{
-            key         = $setting.Key()
-            name        = $name
-            value       = $value
-            type        = $setting.Type.ToString()
-            state       = $state
-            category    = $category
-            hash        = [string]$this.Prop($s, 'hash', '')
-            occurrences = 1
-        }
-    }
-
-    hidden [SettingType] ParseType([string] $declared) {
-        if ([string]::IsNullOrWhiteSpace($declared)) { return [SettingType]::Unknown }
-        foreach ($n in [enum]::GetNames([SettingType])) {
-            if ($n -eq $declared.Trim()) { return [SettingType]$n }
-        }
-        return [SettingType]::Unknown
+        return $this.EntryFromSetting($setting, $category)
     }
 
     # Lectura tolerante de una propiedad, venga de JSON o de una tabla hash.

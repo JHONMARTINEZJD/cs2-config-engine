@@ -33,6 +33,10 @@ $ordered = @(
     'Export/DataExporters.ps1'
     'Backup/SnapshotManager.ps1'
     'Reporting/ConfigDiff.ps1'
+    # RestoreEngine va despues de ConfigDiff.ps1 aunque viva en Backup/: sus
+    # firmas referencian [ConfigDiffResult] y [ConfigDiffEngine], y las clases de
+    # PowerShell resuelven los tipos de sus firmas al parsear el archivo.
+    'Backup/RestoreEngine.ps1'
     'Reporting/ReportGenerator.ps1'
 )
 

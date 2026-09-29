@@ -129,6 +129,123 @@ class Setting {
             extra       = $this.Extra
         }
     }
+
+    <#
+        Inverso de ToHashtable(): rehidrata un [Setting] completo desde el nodo
+        que escribe Inventory.json (o desde cualquier tabla hash con la misma
+        forma). Vive aqui, junto a ToHashtable() y a Key(), porque la forma
+        serializada de un Setting es asunto del Setting: hasta A2 el diff
+        mantenia su propia rehidratacion parcial (solo nombre, valor, tipo y
+        extra) y un restore necesita el objeto entero.
+
+        Acepta indistintamente una [hashtable] y el PSCustomObject que devuelve
+        ConvertFrom-Json, porque el material real llega de un JSON en disco.
+
+        Tolerancia (principio del proyecto: nada se descarta, nada revienta):
+        cualquier campo ausente, nulo o con basura degrada al valor neutro que
+        pondria el constructor, nunca aborta. La UNICA causa de descarte es un
+        nombre vacio: sin nombre no hay Key() posible, asi que el ajuste no
+        podria identificarse ni deduplicarse y se devuelve $null para que quien
+        llama lo omita.
+
+        Determinismo: un capturedAt ausente o ilegible NO se sustituye por la
+        hora actual (eso haria que rehidratar dos veces el mismo inventario
+        diese objetos distintos), sino por DateTime::MinValue.
+
+        Nota deliberada: `category` se rehidrata tal cual viene, pero NO es
+        autoritativa para agrupar. Manda siempre el bloque que contiene al
+        ajuste, porque CategoryCode vale P48 por defecto y solo lo rellena
+        SyncEngine. Quien consume un inventario sobreescribe CategoryCode con el
+        codigo del bloque; ver ConfigDiffEngine::EntryFromInventory y
+        RestoreEngine::ConfigFromInventory.
+    #>
+    static [Setting] FromHashtable([object] $data) {
+        if ($null -eq $data) { return $null }
+
+        $settingName = [string][Setting]::Field($data, 'name', '')
+        if ([string]::IsNullOrWhiteSpace($settingName)) { return $null }
+
+        $s = [Setting]::new($settingName, [string][Setting]::Field($data, 'value', ''))
+        $s.Type     = [SettingType][Setting]::ParseEnumValue([SettingType],
+                          [string][Setting]::Field($data, 'type', ''), [SettingType]::Unknown)
+        $s.Priority = [SettingPriority][Setting]::ParseEnumValue([SettingPriority],
+                          [string][Setting]::Field($data, 'priority', ''), [SettingPriority]::LiveConfig)
+        $s.State    = [SettingState][Setting]::ParseEnumValue([SettingState],
+                          [string][Setting]::Field($data, 'state', ''), [SettingState]::Unknown)
+
+        $category = [string][Setting]::Field($data, 'category', '')
+        if (-not [string]::IsNullOrWhiteSpace($category)) { $s.CategoryCode = $category.Trim() }
+
+        $s.Metadata.SourceFile   = [string][Setting]::Field($data, 'sourceFile',  '')
+        $s.Metadata.RawLine      = [string][Setting]::Field($data, 'rawLine',     '')
+        $s.Metadata.Description  = [string][Setting]::Field($data, 'description', '')
+        $s.Metadata.DefaultValue = [string][Setting]::Field($data, 'default',     '')
+        $s.Metadata.Hash         = [string][Setting]::Field($data, 'hash',        '')
+
+        [int] $line = -1
+        if (-not [int]::TryParse([string][Setting]::Field($data, 'sourceLine', ''),
+                                 [ref] $line)) { $line = -1 }
+        $s.Metadata.SourceLine = $line
+
+        # ConvertFrom-Json ya convierte un ISO-8601 en [datetime]; si llega como
+        # texto se parsea con cultura invariante para no depender de la
+        # configuracion regional de la maquina.
+        $capturedNode = [Setting]::Field($data, 'capturedAt', $null)
+        $s.Metadata.CapturedAt = [datetime]::MinValue
+        if ($capturedNode -is [datetime]) {
+            $s.Metadata.CapturedAt = [datetime]$capturedNode
+        } else {
+            [datetime] $captured = [datetime]::MinValue
+            if ([datetime]::TryParse([string]$capturedNode,
+                                     [System.Globalization.CultureInfo]::InvariantCulture,
+                                     [System.Globalization.DateTimeStyles]::RoundtripKind,
+                                     [ref] $captured)) {
+                $s.Metadata.CapturedAt = $captured
+            }
+        }
+
+        # Extra guarda la tecla de un bind, el cuerpo de un alias, etc. Key()
+        # depende de Extra['Key'], asi que perderlo convertiria cada bind
+        # rehidratado en "bind::<comando>" y todos los binds colisionarian.
+        $extraNode = [Setting]::Field($data, 'extra', $null)
+        if ($null -ne $extraNode) {
+            if ($extraNode -is [System.Collections.IDictionary]) {
+                foreach ($k in $extraNode.Keys) {
+                    if ($null -eq $k) { continue }
+                    $s.Extra[[string]$k] = [string]$extraNode[$k]
+                }
+            } elseif ($extraNode -isnot [string] -and $extraNode -isnot [ValueType]) {
+                foreach ($p in $extraNode.PSObject.Properties) { $s.Extra[$p.Name] = [string]$p.Value }
+            }
+        }
+        return $s
+    }
+
+    # Lectura tolerante de un campo, venga de JSON (PSCustomObject) o de una
+    # tabla hash. Con Set-StrictMode acceder a una propiedad inexistente es
+    # terminante, asi que todo acceso al material serializado pasa por aqui.
+    hidden static [object] Field([object] $obj, [string] $field, [object] $default) {
+        if ($null -eq $obj) { return $default }
+        if ($obj -is [System.Collections.IDictionary]) {
+            if ($obj.Contains($field) -and $null -ne $obj[$field]) { return $obj[$field] }
+            return $default
+        }
+        $p = $obj.PSObject.Properties[$field]
+        if ($null -eq $p -or $null -eq $p.Value) { return $default }
+        return $p.Value
+    }
+
+    # Resuelve el nombre de un miembro de enum por su texto. Fuera del catalogo
+    # de nombres (cadena vacia, numero, valor retirado en otra version) se
+    # devuelve el neutro que pide quien llama en lugar de lanzar.
+    hidden static [object] ParseEnumValue([type] $enumType, [string] $declared, [object] $fallback) {
+        if ([string]::IsNullOrWhiteSpace($declared)) { return $fallback }
+        $wanted = $declared.Trim()
+        foreach ($n in [enum]::GetNames($enumType)) {
+            if ($n -eq $wanted) { return [enum]::Parse($enumType, $n) }
+        }
+        return $fallback
+    }
 }
 
 <#

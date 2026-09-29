@@ -9,7 +9,13 @@ param(
     [ValidateSet('Debug', 'Info', 'Warn', 'Error')]
     [string] $LogLevel = 'Info',
     [switch] $RunTests,
-    [switch] $SkipDependencyInstall
+    [switch] $SkipDependencyInstall,
+    # Modo restore (A2). Vacio = flujo normal de backup.
+    [string] $Restore = '',
+    [switch] $Apply,
+    [ValidateSet('Output', 'LiveFiles')]
+    [string] $RestoreTarget = 'Output',
+    [switch] $AllowLiveFileWrites
 )
 
 Set-StrictMode -Version Latest
@@ -117,6 +123,15 @@ $engineArgs = @{
     MaxHistory = $MaxHistory
     Formats    = $Formats
     LogLevel   = $LogLevel
+}
+
+# Los parametros de restore solo se reenvian si se pidio un restore: asi el
+# camino de backup de siempre no cambia ni un parametro.
+if (-not [string]::IsNullOrWhiteSpace($Restore)) {
+    $engineArgs.Restore             = $Restore
+    $engineArgs.RestoreTarget       = $RestoreTarget
+    $engineArgs.Apply               = $Apply.IsPresent
+    $engineArgs.AllowLiveFileWrites = $AllowLiveFileWrites.IsPresent
 }
 
 & $engineScript @engineArgs
