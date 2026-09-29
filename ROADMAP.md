@@ -136,7 +136,7 @@ Supuestos de producto tomados en A3 (opcion conservadora, revisables por el duen
       `CfgParser` y `VcfgParser` pasa a `Setting::InferTypeFromValue()` y la usan los
       dos parsers y el catalogo, para que el mismo valor no se tipe distinto segun
       quien lo lea. 53 pruebas nuevas con fixtures sinteticos; las 98 anteriores
-      siguen pasando. (`PENDIENTE_HASH`)
+      siguen pasando. (`021adbe`)
 
 ### Siguiente
 
