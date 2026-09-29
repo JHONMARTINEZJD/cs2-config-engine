@@ -204,7 +204,7 @@ PowerShell; no hace falta cambiar de lenguaje.
       de archivos en `ConfigFileDiscovery` (decide que duplicado gana la deduplicacion),
       la rotacion en `SnapshotManager` (decide que snapshots se borran) y el orden de
       hallazgos del `Validator`. Verificado: el autoexec sale identico byte a byte en
-      en-US, da-DK, tr-TR y sv-SE. (`e0b1e6d`)
+      en-US, da-DK, tr-TR y sv-SE. (`adcaeed`)
 
       Aprendido por el camino, y anotado en el brief del pm: las claves compuestas que
       devuelve `Join-OrdinalKey` **solo** pueden compararse de forma ordinal. Los
