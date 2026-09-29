@@ -79,7 +79,7 @@ if (-not (Test-Path -LiteralPath $engineScript)) {
 
 if (-not $SkipDependencyInstall) {
     # Almacenamos explícitamente en una variable descartable para evitar fugas al pipeline
-    $null = Ensure-Dependencies -AllowInstall $true
+    $null = Ensure-Dependencies -AllowInstall
 }
 
 if ($RunTests) {

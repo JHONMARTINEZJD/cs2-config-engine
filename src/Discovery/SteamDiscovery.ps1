@@ -73,8 +73,10 @@ class SteamDiscovery {
 
         # 4. Candidatas comunes en todas las unidades
         $candidates = [System.Collections.Generic.List[string]]::new()
-        foreach ($base in @('Program Files (x86)', 'Program Files')) {
-            $candidates.Add((Join-Path $env:SystemDrive (Join-Path $base 'Steam')))
+        if ($env:SystemDrive) {
+            foreach ($base in @('Program Files (x86)', 'Program Files')) {
+                $candidates.Add((Join-Path $env:SystemDrive (Join-Path $base 'Steam')))
+            }
         }
         try {
             foreach ($drive in [System.IO.DriveInfo]::GetDrives()) {
