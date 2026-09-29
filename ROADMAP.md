@@ -6,6 +6,22 @@ implementada, probada, verificada ejecutando y commiteada.
 
 Rama de trabajo: `claude/zealous-lovelace-htuxyu`
 
+Supuestos de producto tomados en A1 (opcion conservadora, revisables por el dueno):
+
+1. **Que cuenta como "cambiada".** Una clave se reporta como cambiada si se movio
+   cualquiera de `value`, `type`, `category`, `state` u `occurrences`, y la entrada
+   dice en `fields` cual. El hash no entra en la comparacion porque se deriva de
+   nombre+valor y seria redundante; se reporta, pero no decide. Motivo: recategorizar
+   un bind sin cambiar su comando es informacion real y ocultarla contradiria el
+   principio de que nada se pierde.
+2. **Totales por clave, no por fila.** `previousTotal`/`currentTotal` cuentan claves
+   distintas. Los duplicados conservados no inflan los totales; su numero viaja en
+   `occurrences` de cada entrada y un cambio en ese numero se reporta como cambio.
+3. **Tope de filas en el Markdown.** `BackupReport.md` muestra como maximo 50 filas
+   por tabla (`ReportGenerator::DiffRowLimit`) y avisa del corte. La lista completa
+   siempre esta en `ConfigDiff.json`, que es la fuente de la verdad; el corte es
+   determinista porque las entradas ya vienen ordenadas.
+
 ---
 
 ## Modulo A — Motor de configuracion
@@ -38,20 +54,25 @@ Rama de trabajo: `claude/zealous-lovelace-htuxyu`
 - [x] **Higiene.** Codigo muerto de `CfgParser` reconectado, `ConfigModule` eliminado,
       `run.ps1` migrado a la API de Pester 5, `.gitignore`, CI en `windows-latest`,
       fuera `tmp_debug.ps1` y `output/pester-results.xml`. (`d1b59f3`)
+- [x] **A1 — Diff semantico entre snapshots.** `ConfigDiff.json` ya reporta altas, bajas
+      y cambios **por ajuste** con valor antes y despues, identificados por
+      `Setting::Key()` (`bind::<tecla>`, `alias::<nombre>`, nombre de convar) y
+      agrupados por categoria, mas un resumen legible con tabla de cambiadas en
+      `BackupReport.md`. Clase nueva `ConfigDiffEngine` en `src/Reporting/ConfigDiff.ps1`;
+      la base de comparacion es el `Inventory.json` del snapshot anterior, cuya ruta
+      resuelve `SnapshotManager::GetInventoryPath`. (`18059fa`)
 
 ### Siguiente
 
-- [ ] **A1 — Diff semantico entre snapshots.** `ConfigDiff.json` solo compara hashes y
-      conteos. Hace falta diff por setting: anadidas, eliminadas y cambiadas con valor
-      antes y despues, agrupadas por categoria. Los hashes por setting ya existen, asi
-      que es casi gratis. **Es la feature que justifica llamar a esto un motor de
-      sincronizacion.** Sin dependencias, puramente aditivo.
 - [ ] **A2 — `Restore` / `Apply` con rollback.** Hoy el flujo es unidireccional:
       leer y exportar. Falta el camino de vuelta desde un snapshot.
       Supuesto conservador mientras el dueno no diga otra cosa: por defecto se escribe
       en la carpeta de salida y **nunca** sobre los `.vcfg` vivos; escribir sobre
       archivos del jugador exige un parametro explicito, backup previo y rollback
-      atomico si algo falla a mitad. Depende de A1 para poder mostrar que cambiaria.
+      atomico si algo falla a mitad. A1 ya esta cerrada, asi que el "que cambiaria"
+      se puede construir reutilizando `ConfigDiffEngine`: un Apply es el mismo diff
+      calculado al reves (inventario del snapshot como objetivo, config viva como
+      base), de modo que el preview no necesita codigo nuevo de comparacion.
 - [ ] **A3 — Catalogo de convars generado, no a mano.** 18 fallbacks y 48 regex
       escritas a mano se quedan viejas en cada actualizacion de Valve. Generar el
       catalogo desde el juego (`con_logfile cvars.txt; cvarlist; con_logfile ""`) y
@@ -111,3 +132,19 @@ PowerShell; no hace falta cambiar de lenguaje.
 - [ ] Sin `LICENSE`.
 - [ ] El motor es Windows-only en la practica (rutas con `\` literal), no solo
       "Windows recomendado" como dice el README.
+- [ ] `Setting` no tiene inverso de `ToHashtable()`. El diff rehidrata un `Setting`
+      desde el inventario dentro de `ConfigDiffEngine` solo para que la clave la
+      calcule `Setting::Key()` y no una copia divergente de esa regla. A2 va a
+      necesitar la rehidratacion completa (valor, estado, metadatos) para aplicar un
+      snapshot: cuando llegue, conviene promoverla a `Setting::FromHashtable()` con la
+      misma tolerancia y que el diff la consuma.
+- [ ] `ReportGenerator::WriteHashes` colapsa duplicados por clave y el ultimo gana, asi
+      que el hash publicado puede no ser el del ejemplar vigente. El diff ya no depende
+      de ese archivo (lee valores, no hashes), pero `Hashes.json` sigue siendo enganoso
+      cuando hay duplicados.
+- [ ] `Sort-Object` compara cadenas segun la cultura activa. El diff usa
+      `SortedDictionary` con `StringComparer::Ordinal` para no depender de eso, pero
+      `SyncEngine::GroupIntoCategories` sigue ordenando las categorias y los ajustes
+      dentro de cada una con `Sort-Object`, y de ese orden salen el autoexec y todos
+      los exportadores: podrian no ser byte a byte identicos en una maquina con otra
+      configuracion regional. Sin comprobar todavia.
