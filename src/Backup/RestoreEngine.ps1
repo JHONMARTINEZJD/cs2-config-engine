@@ -357,6 +357,7 @@ class RestoreEngine {
             $live, $snapCfg, 'config viva', "snapshot $resolved")
 
         $this.PlanFiles($plan)
+        $this.WarnAboutUncoveredFiles($plan, $live)
         $this.Log.Info(("Plan de restore $resolved -> $($target): $($plan.ValueChanges().Count) cambios de valor, " +
                         "$($plan.WriteCount()) archivos a escribir."))
         return $plan
@@ -396,7 +397,20 @@ class RestoreEngine {
             }
             if ([string]::IsNullOrWhiteSpace($declaredName)) { continue }
 
-            $copy = $this.NextFreeCopy($rawFiles, $claimed, $declaredName)
+            # Los manifiestos nuevos dicen con que nombre quedo la copia; los
+            # anteriores no lo anotaban, asi que se reconstruye por orden.
+            $rawName = [string]$this.NodeField($entry, 'rawName', '')
+            $copy = $null
+            if ($rawName -and $rawFiles.ContainsKey($rawName) -and -not $claimed.Contains($rawName)) {
+                $copy = $rawFiles[$rawName]
+            } elseif ($rawName) {
+                $plan.Warnings.Add(
+                    "El manifiesto dice que la copia de '$declaredName' es '$rawName', pero no esta disponible en raw/; " +
+                    'se buscara por orden.')
+            }
+            if ($null -eq $copy) {
+                $copy = $this.NextFreeCopy($rawFiles, $claimed, $declaredName)
+            }
             if ($null -eq $copy) {
                 $plan.Warnings.Add("El manifiesto declara '$declaredName' pero el snapshot no guarda su copia en raw/: se omite.")
                 continue
@@ -458,6 +472,42 @@ class RestoreEngine {
             return @()
         }
         return @($files)
+    }
+
+    <#
+        Avisa de la brecha entre lo que el preview promete y lo que la escritura
+        puede cumplir.
+
+        El preview es semantico: compara el inventario completo del snapshot con
+        la configuracion viva. Pero lo que se escribe son archivos. Si la config
+        viva tiene ajustes en archivos que el snapshot no guardo, esos ajustes
+        SOBREVIVEN a la escritura aunque el preview los haya contado como bajas,
+        porque nadie va a tocar el archivo donde viven. Callarlo seria prometer
+        un estado que no se alcanza.
+
+        Solo aplica al destino LiveFiles: escribir en la carpeta de salida no
+        pretende dejar la configuracion del jugador en ningun estado.
+    #>
+    hidden [void] WarnAboutUncoveredFiles([RestorePlan] $plan, [GameConfig] $live) {
+        if ($plan.Target -ne [RestoreTarget]::LiveFiles) { return }
+        if ($plan.Diff.Removed.Count -eq 0) { return }
+
+        $cubiertos = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+        foreach ($f in $plan.Files) {
+            if ($f.OriginalPath) { [void]$cubiertos.Add($f.OriginalPath) }
+        }
+
+        $fuera = [System.Collections.Generic.List[string]]::new()
+        foreach ($ruta in $live.SourceFiles) {
+            if ($ruta -and -not $cubiertos.Contains($ruta)) { $fuera.Add((Split-Path -Leaf $ruta)) }
+        }
+        if ($fuera.Count -eq 0) { return }
+
+        $nombres = (Sort-OrdinalBy -Items @($fuera) -KeySelector { param($n) $n }) -join ', '
+        $plan.Warnings.Add(
+            ("La configuracion viva tiene ajustes en archivos que este snapshot no guardo ($nombres). " +
+             "El restore no los toca, asi que esos ajustes seguiran ahi aunque el preview cuente " +
+             "$($plan.Diff.Removed.Count) baja(s): el estado final no sera identico al del snapshot."))
     }
 
     # Siguiente copia libre para un nombre declarado, replicando el sufijo `_N`
@@ -523,6 +573,22 @@ class RestoreEngine {
         if ($plan.Target -eq [RestoreTarget]::LiveFiles -and -not $plan.LiveWritesAllowed) {
             throw 'Este plan no tiene permiso para escribir sobre los archivos vivos del jugador.'
         }
+        # El estado se calculo al planificar. Si el destino cambio entre el plan y
+        # el apply, un archivo marcado 'identical' ya no lo es, y saltarselo
+        # dejaria el destino distinto del snapshot informando de lo contrario. Se
+        # reevalua aqui, que cuesta un hash y elimina la ventana.
+        foreach ($f in $plan.Files) {
+            if ($f.Status -ne 'identical') { continue }
+            $ahora = $this.StatusFor($f.SourcePath, $f.TargetPath)
+            if ($ahora -ne 'identical') {
+                $f.Status = $ahora
+                $plan.Warnings.Add(
+                    ("'$($f.TargetPath)' coincidia con el snapshot al planificar y ya no; se escribira igualmente " +
+                     'para dejar el destino en el estado del snapshot.'))
+                $this.Log.Warn("Restore: el destino '$($f.TargetPath)' cambio entre el plan y la escritura.")
+            }
+        }
+
         $pending = @($plan.Files | Where-Object { $_.Status -ne 'identical' })
         if ($pending.Count -eq 0) {
             $this.Log.Info('Restore: nada que escribir, el destino ya coincide con el snapshot.')

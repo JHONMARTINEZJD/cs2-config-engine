@@ -172,13 +172,21 @@ PowerShell; no hace falta cambiar de lenguaje.
       `Name`, tambien en metodos estaticos, donde no hay `$this`. Por eso
       `FromHashtable` usa `$settingName` y `$extraNode`. No esta documentado en
       ningun sitio obvio y cuesta un ciclo cada vez.
-- [ ] **El emparejamiento entre `Manifest.json` y `raw/` es implicito.**
-      `SnapshotManager::Create` desambigua colisiones de nombre con `_1`, `_2`... y no
-      deja constancia de que copia corresponde a que archivo del manifiesto; el
-      restore lo reconstruye recorriendo el manifiesto en orden y verificando el hash
-      declarado. Funciona y detecta el desajuste, pero lo limpio seria que `Create`
-      anotase el nombre real de la copia en el manifiesto (`rawName`). Cambio pequeno
-      y compatible: los snapshots viejos seguirian resolviendose por orden.
+- [x] **El emparejamiento entre `Manifest.json` y `raw/` ya es explicito.** `Create`
+      anota en el snapshot con que nombre quedo cada copia (`RawNames`) y el manifiesto
+      lo publica como `rawName`; el restore lo usa y solo reconstruye por orden si el
+      manifiesto es antiguo y no lo trae. Verificado con el caso que lo motivaba: dos
+      `config.cfg` en carpetas distintas, guardados como `config.cfg` y `config_1.cfg`,
+      vuelven cada uno a SU archivo.
+- [x] **El restore avisa de los ajustes que sobreviven.** Si la configuracion viva tiene
+      ajustes en archivos que el snapshot no guardo, el preview los cuenta como bajas
+      pero la escritura no los toca, asi que el estado final no es el del snapshot. Ahora
+      se avisa, y solo en el destino LiveFiles, que es el unico que pretende dejar la
+      config del jugador en un estado concreto.
+- [x] **`Apply` reevalua el estado de cada destino.** El estado se calculaba al
+      planificar, asi que un destino modificado entre el plan y la escritura se saltaba
+      por 'identical' y el motor informaba de que ya coincidia con el snapshot cuando no
+      era cierto. Salio al escribir la prueba del emparejamiento.
 - [ ] **El preview de un restore es semantico sobre el inventario completo**, mientras
       que lo que se escribe son los archivos del snapshot. Si la config viva tiene
       ajustes en archivos que el snapshot no incluye, esos ajustes sobreviven a la

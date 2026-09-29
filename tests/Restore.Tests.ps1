@@ -421,3 +421,105 @@ Describe 'RestoreEngine' {
         }
     }
 }
+
+Describe 'Emparejamiento explicito entre el manifiesto y raw/' {
+    BeforeAll {
+        # Dos archivos con el MISMO nombre en carpetas distintas: UniquePath
+        # desambigua la segunda copia con el sufijo _1, y sin rawName el restore
+        # tenia que reconstruir el emparejamiento por orden de recorrido.
+        function New-ColisionScenario {
+            $base = Join-Path $TestDrive ('col_' + [guid]::NewGuid().ToString('N').Substring(0, 8))
+            $live = Join-Path $base 'live'
+            $out  = Join-Path $base 'output'
+            $d1 = Join-Path $live 'a'
+            $d2 = Join-Path $live 'b'
+            New-Item -ItemType Directory -Path $d1, $d2 -Force | Out-Null
+
+            $f1 = Join-Path $d1 'config.cfg'
+            $f2 = Join-Path $d2 'config.cfg'
+            Set-Content -LiteralPath $f1 -Value '// primero'  -NoNewline
+            Set-Content -LiteralPath $f2 -Value '// segundo' -NoNewline
+
+            $archivos = foreach ($ruta in @($f1, $f2)) {
+                $d = [DiscoveredFile]::new()
+                $d.Path = $ruta
+                $d.Name = Split-Path -Leaf $ruta
+                $d.Kind = 'cfg'
+                $d.Size = (Get-Item -LiteralPath $ruta).Length
+                $d.Hash = Get-FileHashSafe -Path $ruta
+                $d
+            }
+
+            $cfg = [GameConfig]::new()
+            $cat = [ConfigCategory]::new('P14', 'Sensitivity', 0)
+            $s = [Setting]::new('sensitivity', '2.5')
+            $s.Type = [SettingType]::Float
+            $cat.Add($s)
+            $cfg.Categories.Add($cat)
+            foreach ($a in $archivos) { $cfg.SourceFiles.Add($a.Path) }
+
+            $mgr  = [SnapshotManager]::new($script:Log, (Join-Path $out 'backups'), 10)
+            $snap = $mgr.Create($cfg, @($archivos))
+            [ReportGenerator]::new($script:Log).GenerateAll(
+                $cfg, $snap, @($archivos),
+                [System.Collections.Generic.List[ValidationIssue]]::new(), $null, '')
+
+            return [pscustomobject]@{
+                Live = $cfg; Snap = $snap; F1 = $f1; F2 = $f2; Out = $out
+                Engine = [RestoreEngine]::new($script:Log, (Join-Path $out 'backups'), $out)
+            }
+        }
+    }
+
+    It 'anota en el manifiesto con que nombre quedo cada copia' {
+        $sc = New-ColisionScenario
+        $man = Get-Content -LiteralPath (Join-Path $sc.Snap.Path 'Manifest.json') -Raw | ConvertFrom-Json
+        $raws = @($man.files | ForEach-Object { $_.rawName })
+        @($raws | Where-Object { $_ }).Count | Should -Be 2
+        # Ordenado ordinalmente: Sort-Object es sensible a la cultura y su
+        # colacion ignora el guion bajo, asi que pondria config_1.cfg primero.
+        (Sort-OrdinalBy -Items $raws -KeySelector { param($n) $n }) -join ',' |
+            Should -Be 'config.cfg,config_1.cfg'
+    }
+
+    It 'devuelve cada copia a su archivo original pese a compartir nombre' {
+        $sc = New-ColisionScenario
+        $plan = $sc.Engine.Plan($sc.Snap.Id, $sc.Live, [RestoreTarget]::LiveFiles, $true)
+
+        # Al planificar los destinos coincidian con el snapshot, asi que quedaron
+        # marcados 'identical'. Ensuciarlos despues comprueba tambien que Apply
+        # reevalua ese estado en vez de fiarse del plan y no escribir nada.
+        Set-Content -LiteralPath $sc.F1 -Value '// sucio uno' -NoNewline
+        Set-Content -LiteralPath $sc.F2 -Value '// sucio dos' -NoNewline
+        $sc.Engine.Apply($plan)
+
+        (Get-Content -LiteralPath $sc.F1 -Raw).Trim() | Should -Be '// primero'
+        (Get-Content -LiteralPath $sc.F2 -Raw).Trim() | Should -Be '// segundo'
+    }
+}
+
+Describe 'Aviso de ajustes que sobreviven al restore' {
+    It 'avisa cuando la config viva tiene archivos que el snapshot no guardo' {
+        # El preview es semantico sobre el inventario, pero lo que se escribe son
+        # archivos: un ajuste que viva en un archivo ajeno al snapshot sobrevive a
+        # la escritura aunque el preview lo cuente como baja. Callarlo prometeria
+        # un estado que no se alcanza.
+        $sc = New-RestoreScenario -Name 'nocubierto'
+        $sc.Live.SourceFiles.Add((Join-Path $TestDrive 'nocubierto/ajeno.cfg'))
+
+        $extra = [Setting]::new('cl_de_un_archivo_ajeno', '1')
+        $extra.Type = [SettingType]::Bool
+        $sc.Live.Categories[0].Add($extra)
+
+        $plan = $sc.Engine.Plan($sc.SnapId, $sc.Live, [RestoreTarget]::LiveFiles, $true)
+        @($plan.Warnings | Where-Object { $_ -match 'ajeno\.cfg' }).Count | Should -BeGreaterThan 0
+    }
+
+    It 'no avisa cuando se escribe en la carpeta de salida' {
+        # Ese destino no pretende dejar la config del jugador en ningun estado.
+        $sc = New-RestoreScenario -Name 'nocubierto2'
+        $sc.Live.SourceFiles.Add((Join-Path $TestDrive 'nocubierto2/ajeno.cfg'))
+        $plan = $sc.Engine.Plan($sc.SnapId, $sc.Live, [RestoreTarget]::Output, $false)
+        @($plan.Warnings | Where-Object { $_ -match 'ajeno\.cfg' }).Count | Should -Be 0
+    }
+}

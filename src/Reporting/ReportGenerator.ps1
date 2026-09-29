@@ -80,8 +80,15 @@ class ReportGenerator {
             steamPath  = $cfg.SteamPath
             cs2Path    = $cfg.CS2Path
             cfgPath    = $cfg.CfgPath
+            # rawName hace explicito con que nombre quedo la copia en raw/, que
+            # UniquePath pudo haber desambiguado con un sufijo `_N`. Sin el, el
+            # restore reconstruye el emparejamiento por orden, que es implicito.
             files      = @($files | ForEach-Object {
-                [ordered]@{ name = $_.Name; path = $_.Path; kind = $_.Kind; size = $_.Size; hash = $_.Hash }
+                $rawName = if ($snap.RawNames.Contains($_.Path)) { [string]$snap.RawNames[$_.Path] } else { '' }
+                [ordered]@{
+                    name = $_.Name; path = $_.Path; kind = $_.Kind
+                    size = $_.Size; hash = $_.Hash; rawName = $rawName
+                }
             })
         }
         $this.WriteJson($manifest, $path)

@@ -19,6 +19,20 @@ class Snapshot {
     [int]      $BindCount
     [int]      $ConvarCount
     [int]      $AliasCount
+
+    <#
+        Ruta original -> nombre real de su copia dentro de raw/.
+
+        Se anota explicitamente porque UniquePath desambigua las colisiones de
+        nombre con sufijos `_N`, y sin este mapa el restore tiene que reconstruir
+        el emparejamiento por orden de recorrido del manifiesto. Funciona, pero es
+        implicito y se rompe en silencio si el orden cambia.
+    #>
+    [System.Collections.Specialized.OrderedDictionary] $RawNames
+
+    Snapshot() {
+        $this.RawNames = [ordered]@{}
+    }
 }
 
 class SnapshotManager {
@@ -41,17 +55,21 @@ class SnapshotManager {
         $rawDir = Join-Path $dir 'raw'
         New-Item -ItemType Directory -Path $rawDir -Force | Out-Null
 
-        # Copia fiel de los archivos vivos originales.
+        # Copia fiel de los archivos vivos originales, anotando con que nombre
+        # quedo cada una para que el restore no tenga que adivinarlo.
         $totalSize = 0
+        $rawNames  = [ordered]@{}
         foreach ($f in $sourceFiles) {
             if (-not (Test-Path -LiteralPath $f.Path)) { continue }
             $dest = Join-Path $rawDir $f.Name
             $dest = $this.UniquePath($dest)
             Copy-Item -LiteralPath $f.Path -Destination $dest -Force
+            $rawNames[$f.Path] = [System.IO.Path]::GetFileName($dest)
             $totalSize += $f.Size
         }
 
         $snap = [Snapshot]::new()
+        $snap.RawNames = $rawNames
         $snap.Id          = $id
         $snap.Path        = $dir
         $snap.Timestamp   = [datetime]::Now
