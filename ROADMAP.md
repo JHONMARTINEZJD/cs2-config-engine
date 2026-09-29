@@ -22,6 +22,29 @@ Supuestos de producto tomados en A1 (opcion conservadora, revisables por el duen
    siempre esta en `ConfigDiff.json`, que es la fuente de la verdad; el corte es
    determinista porque las entradas ya vienen ordenadas.
 
+Supuestos de producto tomados en A2 (opcion conservadora, revisables por el dueno):
+
+4. **Un restore escribe copias fieles, no archivos regenerados.** Se escriben los
+   archivos que el snapshot guardo en `raw/`, byte a byte, y NO una reconstruccion
+   de los `.vcfg` desde `Inventory.json`. No existe un escritor de `.vcfg` y
+   fabricar uno a ciegas para sobreescribir archivos del jugador seria la decision
+   arriesgada. Consecuencia conocida: un snapshot sin `raw/` (rotado, copiado a
+   medias) se puede previsualizar pero no aplicar, y se dice con un aviso. El dia
+   que exista un escritor de `.vcfg` (o si el dueno prefiere aplicar ajuste por
+   ajuste) esto se puede ampliar sin tocar el preview.
+5. **Sin `Manifest.json` no se escribe nada.** El destino de cada archivo sale del
+   manifiesto del snapshot. Adivinar donde vive un `.vcfg` es exactamente la
+   suposicion que no se hace sobre archivos del jugador.
+6. **La copia de seguridad del restore ES el backup previo exigido**, no un
+   snapshot nuevo: `<salida>/restore/<id>/backup-<ts>/` guarda el contenido
+   anterior de cada destino tocado y se conserva despues de aplicar. Tomar un
+   snapshot completo antes de restaurar acoplaria el restore al descubrimiento y
+   al historial, y rotaria snapshots utiles.
+7. **Dos banderas, no una.** `-RestoreTarget LiveFiles` y `-AllowLiveFileWrites`
+   son parametros distintos a proposito: equivocarse en uno no puede llegar a
+   escribir sobre la configuracion real. La puerta se comprueba en el motor, al
+   planificar, no solo en el CLI.
+
 ---
 
 ## Modulo A — Motor de configuracion
@@ -54,6 +77,20 @@ Supuestos de producto tomados en A1 (opcion conservadora, revisables por el duen
 - [x] **Higiene.** Codigo muerto de `CfgParser` reconectado, `ConfigModule` eliminado,
       `run.ps1` migrado a la API de Pester 5, `.gitignore`, CI en `windows-latest`,
       fuera `tmp_debug.ps1` y `output/pester-results.xml`. (`d1b59f3`)
+- [x] **Prerrequisito de A2 — `Setting::FromHashtable()`.** Inverso completo de
+      `ToHashtable()` (valor, tipo, prioridad, estado, categoria, `Extra` y metadatos),
+      con la misma tolerancia que tenia la rehidratacion parcial del diff. `ConfigDiffEngine`
+      la consume y su `ParseType` local desaparece; ahora los dos origenes posibles de una
+      fila del indice (config viva e inventario) pasan por `EntryFromSetting`. (`179b2b3`)
+- [x] **A2 — `Restore` / `Apply` con rollback.** Clase nueva `RestoreEngine`
+      (`src/Backup/RestoreEngine.ps1`, cargada despues de `Reporting/ConfigDiff.ps1`
+      porque sus firmas referencian `[ConfigDiffEngine]`). Modo por defecto solo-mostrar;
+      destino por defecto la carpeta de salida; escribir sobre los `.vcfg`/`.cfg` del
+      jugador exige `-RestoreTarget LiveFiles` **y** `-AllowLiveFileWrites`, backup previo
+      en `<salida>/restore/<id>/backup-<ts>/` y rollback atomico en tres fases. El preview
+      es el diff de A1 al reves via `ConfigDiffEngine::CompareConfigs`, filtrado a los
+      cambios de `value` en la presentacion. Superficie del CLI: `-Restore <id|latest>`,
+      `-Apply`, `-RestoreTarget`, `-AllowLiveFileWrites`. (`179b2b3`)
 - [x] **A1 — Diff semantico entre snapshots.** `ConfigDiff.json` ya reporta altas, bajas
       y cambios **por ajuste** con valor antes y despues, identificados por
       `Setting::Key()` (`bind::<tecla>`, `alias::<nombre>`, nombre de convar) y
@@ -64,24 +101,19 @@ Supuestos de producto tomados en A1 (opcion conservadora, revisables por el duen
 
 ### Siguiente
 
-- [ ] **A2 — `Restore` / `Apply` con rollback.** Hoy el flujo es unidireccional:
-      leer y exportar. Falta el camino de vuelta desde un snapshot.
-      Supuesto conservador mientras el dueno no diga otra cosa: por defecto se escribe
-      en la carpeta de salida y **nunca** sobre los `.vcfg` vivos; escribir sobre
-      archivos del jugador exige un parametro explicito, backup previo y rollback
-      atomico si algo falla a mitad. A1 ya esta cerrada, asi que el "que cambiaria"
-      se puede construir reutilizando `ConfigDiffEngine`: un Apply es el mismo diff
-      calculado al reves (inventario del snapshot como objetivo, config viva como
-      base), de modo que el preview no necesita codigo nuevo de comparacion.
 - [ ] **A3 — Catalogo de convars generado, no a mano.** 18 fallbacks y 48 regex
       escritas a mano se quedan viejas en cada actualizacion de Valve. Generar el
       catalogo desde el juego (`con_logfile cvars.txt; cvarlist; con_logfile ""`) y
       versionarlo arregla de raiz defaults, tipos y clasificacion. Alto valor:
       la mitad de los bugs de clasificacion ya cerrados no habrian existido.
 - [ ] **A4 — Perfiles portables.** Exportar e importar un perfil con su hash para
-      llevar la config a otra maquina o compartirla. Depende de A1.
+      llevar la config a otra maquina o compartirla. Depende de A1. Con A2 cerrada ya
+      tiene la mitad hecha: `Setting::FromHashtable()` da la importacion ajuste por
+      ajuste y `RestoreEngine` da el preview y el rollback. Lo que falta de verdad es
+      un escritor de `.vcfg` (o decidir que un perfil se aplica siempre via
+      `autoexec.cfg`, que es la opcion sin riesgo).
 - [ ] **A5 — Empaquetar como modulo PowerShell** (`.psd1` + `.psm1`) en lugar de
-      dot-sourcear 19 archivos. Da `Import-Module`, version semantica y distribucion
+      dot-sourcear los 21 archivos de `src` uno a uno. Da `Import-Module`, version semantica y distribucion
       sin el `iex` contra una rama sin verificar.
 
 ## Modulo B — Lista publica de servidores
@@ -132,12 +164,31 @@ PowerShell; no hace falta cambiar de lenguaje.
 - [ ] Sin `LICENSE`.
 - [ ] El motor es Windows-only en la practica (rutas con `\` literal), no solo
       "Windows recomendado" como dice el README.
-- [ ] `Setting` no tiene inverso de `ToHashtable()`. El diff rehidrata un `Setting`
-      desde el inventario dentro de `ConfigDiffEngine` solo para que la clave la
-      calcule `Setting::Key()` y no una copia divergente de esa regla. A2 va a
-      necesitar la rehidratacion completa (valor, estado, metadatos) para aplicar un
-      snapshot: cuando llegue, conviene promoverla a `Setting::FromHashtable()` con la
-      misma tolerancia y que el diff la consuma.
+- [x] ~~`Setting` no tiene inverso de `ToHashtable()`.~~ Resuelto con
+      `Setting::FromHashtable()` como prerrequisito de A2 (`179b2b3`).
+- [ ] **Una variable local no puede llamarse igual que una propiedad de su clase.**
+      Dentro de un metodo de clase de PowerShell, `$name = ...` falla al parsear con
+      "Cannot assign property, use '$this.Name'" si la clase tiene una propiedad
+      `Name`, tambien en metodos estaticos, donde no hay `$this`. Por eso
+      `FromHashtable` usa `$settingName` y `$extraNode`. No esta documentado en
+      ningun sitio obvio y cuesta un ciclo cada vez.
+- [ ] **El emparejamiento entre `Manifest.json` y `raw/` es implicito.**
+      `SnapshotManager::Create` desambigua colisiones de nombre con `_1`, `_2`... y no
+      deja constancia de que copia corresponde a que archivo del manifiesto; el
+      restore lo reconstruye recorriendo el manifiesto en orden y verificando el hash
+      declarado. Funciona y detecta el desajuste, pero lo limpio seria que `Create`
+      anotase el nombre real de la copia en el manifiesto (`rawName`). Cambio pequeno
+      y compatible: los snapshots viejos seguirian resolviendose por orden.
+- [ ] **El preview de un restore es semantico sobre el inventario completo**, mientras
+      que lo que se escribe son los archivos del snapshot. Si la config viva tiene
+      ajustes en archivos que el snapshot no incluye, esos ajustes sobreviven a la
+      escritura aunque el preview los cuente como bajas. Hoy no se avisa. Cuando haya
+      un caso real que lo justifique, comparar las rutas del manifiesto con las
+      fuentes de la config viva y avisar de las no cubiertas.
+- [ ] `RestorePlan::ToHashtable` publica rutas absolutas del jugador en
+      `RestorePlan.json`. Es deliberado (es un registro local de la operacion y esas
+      rutas son el dato util), pero conviene recordarlo antes de que alguien pegue ese
+      archivo en un issue publico.
 - [ ] `ReportGenerator::WriteHashes` colapsa duplicados por clave y el ultimo gana, asi
       que el hash publicado puede no ser el del ejemplar vigente. El diff ya no depende
       de ese archivo (lee valores, no hashes), pero `Hashes.json` sigue siendo enganoso
