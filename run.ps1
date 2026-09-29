@@ -86,7 +86,21 @@ if ($RunTests) {
     $testsPath = Join-Path $PSScriptRoot 'tests'
     if (Test-Path -LiteralPath $testsPath) {
         Write-Host 'Ejecutando pruebas Pester...' -ForegroundColor Cyan
-        Invoke-Pester -Script $testsPath -OutputFile (Join-Path $PSScriptRoot 'output/pester-results.xml') -OutputFormat NUnitXml
+
+        # La carpeta de salida puede no existir todavia: Pester no la crea y
+        # fallaria al escribir el informe.
+        $resultsDir = Join-Path $PSScriptRoot 'output'
+        if (-not (Test-Path -LiteralPath $resultsDir)) {
+            New-Item -ItemType Directory -Path $resultsDir -Force | Out-Null
+        }
+
+        # API de Pester 5: -Script/-OutputFile/-OutputFormat son de Pester 4.
+        $pesterConfig = New-PesterConfiguration
+        $pesterConfig.Run.Path              = $testsPath
+        $pesterConfig.TestResult.Enabled    = $true
+        $pesterConfig.TestResult.OutputPath = Join-Path $resultsDir 'pester-results.xml'
+        $pesterConfig.TestResult.OutputFormat = 'NUnitXml'
+        Invoke-Pester -Configuration $pesterConfig
     }
     else {
         Write-Warning 'No existe la carpeta de pruebas en este proyecto.'

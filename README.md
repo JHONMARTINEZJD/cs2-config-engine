@@ -10,7 +10,7 @@ Motor profesional en **PowerShell** para descubrir, parsear, clasificar, validar
 
 - **Descubrimiento automático** de Steam, bibliotecas, instalación de CS2, SteamID activo (multi-cuenta) y el árbol `userdata\<SteamID>\730\local\cfg`, sin asumir rutas literales.
 - **Parser robusto propio** (tokenizer carácter a carácter, no regex ingenuas) para los formatos `.vcfg`/`.vdf` (VDF anidado) y `.cfg` (comandos de consola). Soporta comillas con escapes, comentarios `//` y `/* */`, y bloques `{ }`.
-- **Clasificación granular** en 50 categorías (`P00`–`P49`) mediante reglas regex externas y ampliables.
+- **Clasificación granular** en 50 categorías (`P00`–`P49`) mediante reglas regex externas y ampliables. Lo que no encaja en ninguna regla no se pierde: va a `P49` si tiene forma de convar válida, o a `P48` si no.
 - **Motor de sincronización determinista**: deduplicación con prioridad de config viva, marcado de duplicados/obsoletos, enriquecimiento de metadatos y aplicación de fallbacks solo a ausentes.
 - **Validación** de tipos, valores y consistencia con reporte de problemas.
 - **Exportadores** múltiples: `autoexec.cfg`, JSON, Markdown, YAML y CSV.
@@ -104,6 +104,14 @@ Si tu rama por defecto cambia en el futuro, sustituye `master` por la rama corre
 
 Esto descarga el proyecto, lo ejecuta localmente y deja el backup y el nuevo autoexec en la carpeta de salida indicada o, si no se indica, en `~/Downloads/CS2ConfigEngine`.
 
+> Nota de seguridad: el launcher descarga y ejecuta el contenido de una rama sin
+> verificar su integridad. Quien tenga permiso de escritura en esa rama controla
+> lo que se ejecuta en tu maquina. Si no eres el dueno del repositorio, clona y
+> revisa antes de ejecutar.
+
+### Mas ejemplos
+
+```powershell
 # Indicar un SteamID concreto (multi-cuenta) y carpeta de salida
 pwsh ./CS2ConfigEngine.ps1 -SteamId 123456789 -OutputPath .\out
 
@@ -129,7 +137,7 @@ pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLe
 
 ## Salidas
 
-- **`autoexec.cfg`** — configuración regenerada, agrupada por categoría y lista para `exec`.
+- **`autoexec.cfg`** — configuración regenerada, agrupada por bloques y lista para `exec`. Nada se descarta: los duplicados, las convars obsoletas, las inválidas y las claves no reconocidas se escriben **comentadas** con el motivo al final de la línea, de modo que se conserva la trazabilidad sin que la consola de CS2 devuelva errores al ejecutar el archivo.
 - **`snapshot.json`** — modelo completo serializado (ideal para diffs entre capturas).
 - **`report.md`** — reporte humano con resumen por categoría, conteos y estados.
 - **`snapshot.yaml` / `snapshot.csv`** — vistas alternativas para integración o análisis.
@@ -139,7 +147,7 @@ pwsh ./CS2ConfigEngine.ps1 -Formats autoexec,json,markdown -MaxHistory 20 -LogLe
 
 ## Extensibilidad
 
-- **Nuevas categorías**: añade una entrada en `src/Classification/CategoryMap.ps1` y una regla en `config/classification-rules.json`. No requiere tocar el clasificador.
+- **Nuevas categorías**: añade una entrada en `CategoryMap::Definitions`, asígnala a un bloque en `CategoryMap::Blocks` y añade su regla en `config/classification-rules.json`. No requiere tocar el clasificador ni los exportadores. `CategoryMap::AssertComplete()` (y la prueba que lo cubre) falla si una categoría se queda sin bloque, porque entonces desaparecería del `autoexec.cfg`.
 - **Nuevos defaults / obsoletas**: edita `config/fallbacks.json`.
 - **Nuevos formatos de archivo**: implementa un parser con `CanParse()`/`Parse()` y regístralo en `ParserFactory`.
 - **Nuevos exportadores**: añade una clase en `src/Export/` siguiendo el patrón existente.

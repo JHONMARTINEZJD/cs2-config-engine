@@ -23,7 +23,11 @@ class ConfigFileDiscovery {
     hidden [Logger] $Log
 
     # Extensiones consideradas configuracion. Ampliable.
-    static [string[]] $Extensions = @('.vcfg', '.cfg', '.vdf', '.txt')
+    # .txt queda fuera a proposito: bajo 730\local no hay configuracion de
+    # consola en .txt, solo notas y volcados, y sus claves acababan emitidas
+    # como comandos en el autoexec. Un .txt concreto se puede incorporar
+    # anadiendolo a $KnownNames.
+    static [string[]] $Extensions = @('.vcfg', '.cfg', '.vdf')
 
     # Nombres prioritarios conocidos (orden de relevancia para el merge).
     static [string[]] $KnownNames = @(

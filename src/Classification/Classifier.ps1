@@ -63,8 +63,12 @@ class Classifier {
             if ($rule.Pattern.IsMatch($subject)) { return $rule.Category }
         }
 
-        # Sin coincidencia: distinguir "desconocido actual" vs "posible futuro".
-        if ($s.Name -match '^[a-z0-9_]+$') { return 'P49' }  # parece convar valida -> futuro
+        # Sin coincidencia: distinguir "posible convar futura" de "basura".
+        # -cmatch (sensible a mayusculas) es intencionado: las convars de CS2 son
+        # siempre minusculas, asi que una clave como "JugadorNombre" venida de un
+        # .vdf que no es config de consola debe caer en P48 y no emitirse activa
+        # al autoexec. Con -match, que ignora mayusculas, pasaba por valida.
+        if ($s.Name -cmatch '^[a-z0-9_]+$') { return 'P49' }  # parece convar valida -> futuro
         return 'P48'
     }
 }

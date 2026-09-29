@@ -102,31 +102,74 @@ class Validator {
         }
     }
 
+    <#
+        Detecta ciclos reales en el grafo de alias mediante DFS con pila de
+        recursion (blanco / gris / negro).
+
+        La version anterior usaba un unico conjunto "visitado" por raiz, asi que
+        un grafo en diamante SIN ciclos (top -> a, b -> base) se reportaba como
+        circular: 'base' se alcanzaba dos veces por caminos distintos. Un ciclo
+        solo existe cuando se vuelve a un nodo que esta en el camino actual.
+    #>
     hidden [void] CheckCircularAliases([Setting[]] $all, [System.Collections.Generic.List[ValidationIssue]] $issues) {
         $aliases = @{}
         foreach ($s in $all) {
             if ($s.Type -eq [SettingType]::Alias) { $aliases[$s.Name.ToLowerInvariant()] = $s }
         }
-        foreach ($name in $aliases.Keys) {
-            $visited = [System.Collections.Generic.HashSet[string]]::new()
-            $stack   = [System.Collections.Generic.Stack[string]]::new()
-            $stack.Push($name)
-            $circular = $false
-            while ($stack.Count -gt 0) {
-                $cur = $stack.Pop()
-                if (-not $visited.Add($cur)) { $circular = $true; break }
-                if (-not $aliases.ContainsKey($cur)) { continue }
-                $body = [string]$aliases[$cur].Extra['Body']
-                foreach ($tok in ($body -split '\s*;\s*|\s+')) {
-                    $t = $tok.ToLowerInvariant().Trim()
-                    if ($aliases.ContainsKey($t)) { $stack.Push($t) }
-                }
+
+        # '' = sin visitar, 'open' = en el camino actual, 'closed' = ya resuelto.
+        $state  = @{}
+        $cycles = [System.Collections.Generic.List[string[]]]::new()
+
+        # Orden estable para que el reporte sea determinista.
+        foreach ($name in ($aliases.Keys | Sort-Object)) {
+            if ($state.ContainsKey($name)) { continue }
+            $this.WalkAliases($name, $aliases, $state, [System.Collections.Generic.List[string]]::new(), $cycles)
+        }
+
+        foreach ($cycle in $cycles) {
+            $head = $cycle[0]
+            $this.Add($issues, [IssueSeverity]::Error, 'CIRCULAR_ALIAS', $aliases[$head],
+                "Alias circular detectado: $($cycle -join ' -> ').")
+        }
+    }
+
+    # Recorre el grafo desde $name acumulando el camino; registra cada ciclo una vez.
+    hidden [void] WalkAliases([string] $name, [hashtable] $aliases, [hashtable] $state,
+                              [System.Collections.Generic.List[string]] $path,
+                              [System.Collections.Generic.List[string[]]] $cycles) {
+        $state[$name] = 'open'
+        $path.Add($name)
+
+        foreach ($ref in $this.AliasReferences($aliases[$name], $aliases)) {
+            if (-not $state.ContainsKey($ref)) {
+                $this.WalkAliases($ref, $aliases, $state, $path, $cycles)
             }
-            if ($circular) {
-                $this.Add($issues, [IssueSeverity]::Error, 'CIRCULAR_ALIAS', $aliases[$name],
-                    "Alias circular detectado a partir de '$name'.")
+            elseif ($state[$ref] -eq 'open') {
+                # Cierre de ciclo: recorta el camino desde donde aparece $ref.
+                $start = $path.IndexOf($ref)
+                $loop  = [System.Collections.Generic.List[string]]::new()
+                for ($i = $start; $i -lt $path.Count; $i++) { $loop.Add($path[$i]) }
+                $loop.Add($ref)
+                $cycles.Add($loop.ToArray())
             }
         }
+
+        $path.RemoveAt($path.Count - 1)
+        $state[$name] = 'closed'
+    }
+
+    # Alias referenciados en el cuerpo de un alias (ignora comandos normales).
+    hidden [string[]] AliasReferences([Setting] $alias, [hashtable] $aliases) {
+        $body = if ($alias.Extra.ContainsKey('Body')) { [string]$alias.Extra['Body'] } else { [string]$alias.Value }
+        if ([string]::IsNullOrWhiteSpace($body)) { return @() }
+
+        $refs = [System.Collections.Generic.List[string]]::new()
+        foreach ($tok in ($body -split '\s*;\s*|\s+')) {
+            $t = $tok.Trim().ToLowerInvariant()
+            if ($t -and $aliases.ContainsKey($t) -and -not $refs.Contains($t)) { $refs.Add($t) }
+        }
+        return $refs.ToArray()
     }
 
     hidden [void] CheckUnknown([Setting[]] $all, [System.Collections.Generic.List[ValidationIssue]] $issues) {

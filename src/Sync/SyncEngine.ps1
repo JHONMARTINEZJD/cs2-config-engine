@@ -100,7 +100,7 @@ class SyncEngine {
             $fb = [Setting]::new($name, [string]$meta.default)
             $fb.Priority = [SettingPriority]::Fallback
             $fb.State    = [SettingState]::FallbackApplied
-            $fb.Type     = [SettingType]::Unknown
+            $fb.Type     = $this.ResolveType([string]$meta.type)
             $fb.Metadata.Description  = $meta.description
             $fb.Metadata.DefaultValue = $meta.default
             $fb.Metadata.SourceFile   = '(fallback catalog)'
@@ -118,6 +118,21 @@ class SyncEngine {
 
         $this.Log.Info("GameConfig construido: $($cfg.TotalSettings()) ajustes en $($cfg.Categories.Count) categorias")
         return $cfg
+    }
+
+    <#
+        Traduce el campo "type" de fallbacks.json a SettingType. Antes los
+        fallbacks se inyectaban siempre como Unknown, tirando el tipo que el
+        catalogo ya declaraba y contaminando los conteos por tipo del snapshot.
+        Un tipo ausente o desconocido degrada a Unknown sin fallar.
+    #>
+    hidden [SettingType] ResolveType([string] $declared) {
+        if ([string]::IsNullOrWhiteSpace($declared)) { return [SettingType]::Unknown }
+        foreach ($name in [enum]::GetNames([SettingType])) {
+            if ($name -eq $declared.Trim()) { return [SettingType]$name }
+        }
+        $this.Log.Debug("Tipo de fallback no reconocido: '$declared'")
+        return [SettingType]::Unknown
     }
 
     hidden [void] GroupIntoCategories([GameConfig] $cfg, [System.Collections.Generic.List[Setting]] $settings) {

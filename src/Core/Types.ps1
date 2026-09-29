@@ -5,10 +5,12 @@
     Define las clases que componen el modelo interno jerarquico:
 
         GameConfig
-          -> Module
-            -> Category
-              -> Setting
-                -> SettingMetadata
+          -> ConfigCategory (P00..P49)
+            -> Setting
+              -> SettingMetadata
+
+    El agrupamiento de categorias en bloques de alto nivel vive en CategoryMap,
+    no como una capa de objetos intermedia.
 
     Cada nivel es independiente y serializable. Las clases NO contienen logica
     de IO ni de parseo; solo representan datos y operaciones triviales sobre
@@ -150,21 +152,6 @@ class ConfigCategory {
     }
 
     [int] Count() { return $this.Settings.Count }
-}
-
-<#
-    Modulo de alto nivel que agrupa categorias relacionadas.
-#>
-class ConfigModule {
-    [string] $Name
-    [int]    $Order
-    [System.Collections.Generic.List[ConfigCategory]] $Categories
-
-    ConfigModule([string] $name, [int] $order) {
-        $this.Name       = $name
-        $this.Order      = $order
-        $this.Categories = [System.Collections.Generic.List[ConfigCategory]]::new()
-    }
 }
 
 <#

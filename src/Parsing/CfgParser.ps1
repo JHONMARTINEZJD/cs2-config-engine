@@ -5,7 +5,6 @@
     Usa el Tokenizer para dividir cada linea logica en argumentos respetando
     comillas y comentarios. Reconoce:
       - bind / bind_osx        -> Bind
-      - +/-analog / bind con eje-> AnalogBind (heuristica)
       - alias                  -> Alias
       - cualquier otro "cmd arg" -> Convar
     Tolerante: comandos desconocidos se conservan como Convar/Unknown.
@@ -31,52 +30,19 @@ class CfgParser {
         }
 
         for ($i = 0; $i -lt $lines.Count; $i++) {
-            $raw = $lines[$i]
+            $raw    = $lines[$i]
             $lineNo = $i + 1
-            $args = $this.SplitArgs($raw)
-            if ($args.Count -eq 0) { continue }
+            $tokens = $this.SplitArgs($raw)
+            if ($tokens.Length -eq 0) { continue }
 
-            $cmd = $args[0]
-            $cmdLower = $cmd.ToLowerInvariant()
-
-            $setting = $null
-            if ($cmdLower -match '^bind(_osx)?$') {
-                if ($args.Length -ge 2) {
-                    $key = [string]$args[1]
-                    $parts = [System.Collections.Generic.List[string]]::new()
-                    for ($j = 2; $j -lt $args.Length; $j++) { $parts.Add([string]$args[$j]) }
-                    $command = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
-                    $setting = [Setting]::new('bind', $command)
-                    $setting.Type = [SettingType]::Bind
-                    $setting.Extra['Key'] = $key
-                    $setting.Extra['Command'] = $command
-                }
-            } elseif ($cmdLower -match '^alias$') {
-                if ($args.Length -ge 2) {
-                    $name = [string]$args[1]
-                    $parts = [System.Collections.Generic.List[string]]::new()
-                    for ($j = 2; $j -lt $args.Length; $j++) { $parts.Add([string]$args[$j]) }
-                    $body = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
-                    $setting = [Setting]::new($name, $body)
-                    $setting.Type = [SettingType]::Alias
-                    $setting.Extra['Body'] = $body
-                }
-            } else {
-                $name = [string]$args[0]
-                $parts = [System.Collections.Generic.List[string]]::new()
-                for ($j = 1; $j -lt $args.Length; $j++) { $parts.Add([string]$args[$j]) }
-                $value = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
-                $setting = [Setting]::new($name, $value)
-                $setting.Type = $this.InferType($value)
+            $cmd = $tokens[0].ToLowerInvariant()
+            $setting = switch -Regex ($cmd) {
+                '^bind(_osx)?$' { $this.NewBind($tokens,  $file, $lineNo, $raw) }
+                '^alias$'       { $this.NewAlias($tokens, $file, $lineNo, $raw) }
+                default         { $this.NewConvar($tokens, $file, $lineNo, $raw) }
             }
 
-            if ($null -ne $setting) {
-                $setting.Metadata.SourceFile = $file.Path
-                $setting.Metadata.SourceLine = $lineNo
-                $setting.Metadata.RawLine = $raw.Trim()
-                $setting.Metadata.Hash = Get-StringHash -Text ("{0}={1}" -f $setting.Name, $setting.Value)
-                $settings.Add($setting)
-            }
+            if ($null -ne $setting) { $settings.Add($setting) }
         }
         $log.Debug("$($file.Name): $($settings.Count) ajustes extraidos")
         return $settings
@@ -87,57 +53,60 @@ class CfgParser {
         if ([string]::IsNullOrWhiteSpace($line)) { return @() }
         $lexer  = [Tokenizer]::new($line)
         $tokens = $lexer.Tokenize()
-        $args   = [System.Collections.Generic.List[string]]::new()
+        $parts  = [System.Collections.Generic.List[string]]::new()
         foreach ($t in $tokens) {
-            if ($t.Kind -eq [TokenKind]::String) { $args.Add($t.Text) }
+            if ($t.Kind -eq [TokenKind]::String) { $parts.Add($t.Text) }
             # Se ignoran comentarios y llaves a nivel de linea de comando.
         }
-        return $args.ToArray()
+        return $parts.ToArray()
     }
 
-    hidden [Setting] NewBind([string[]] $args, [DiscoveredFile] $file, [int] $line, [string] $raw) {
-        if ($null -eq $args -or $args.Length -lt 2) { return $this.NewConvar($args, $file, $line, $raw) }
-
-        $key = [string]$args[1]
+    # Une los argumentos desde $from en adelante en un solo valor.
+    hidden [string] JoinFrom([string[]] $tokens, [int] $from) {
+        if ($null -eq $tokens -or $from -ge $tokens.Length) { return '' }
         $parts = [System.Collections.Generic.List[string]]::new()
-        for ($i = 2; $i -lt $args.Length; $i++) { $parts.Add([string]$args[$i]) }
-        $command = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
+        for ($i = $from; $i -lt $tokens.Length; $i++) { $parts.Add([string]$tokens[$i]) }
+        return ($parts -join ' ')
+    }
+
+    hidden [Setting] NewBind([string[]] $tokens, [DiscoveredFile] $file, [int] $line, [string] $raw) {
+        # "bind" sin tecla no es un bind: se conserva como comando suelto.
+        if ($tokens.Length -lt 2) { return $this.NewConvar($tokens, $file, $line, $raw) }
+
+        $key     = [string]$tokens[1]
+        $command = $this.JoinFrom($tokens, 2)
 
         $s = [Setting]::new('bind', $command)
         $s.Type = [SettingType]::Bind
         $s.Extra['Key']     = $key
         $s.Extra['Command'] = $command
         $this.Stamp($s, $file, $line, $raw, ("bind:{0}={1}" -f $key, $command))
-        return [Setting]$s
+        return $s
     }
 
-    hidden [Setting] NewAlias([string[]] $args, [DiscoveredFile] $file, [int] $line, [string] $raw) {
-        if ($null -eq $args -or $args.Length -lt 2) { return $this.NewConvar($args, $file, $line, $raw) }
+    hidden [Setting] NewAlias([string[]] $tokens, [DiscoveredFile] $file, [int] $line, [string] $raw) {
+        if ($tokens.Length -lt 2) { return $this.NewConvar($tokens, $file, $line, $raw) }
 
-        $name = [string]$args[1]
-        $parts = [System.Collections.Generic.List[string]]::new()
-        for ($i = 2; $i -lt $args.Length; $i++) { $parts.Add([string]$args[$i]) }
-        $body = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
+        $name = [string]$tokens[1]
+        $body = $this.JoinFrom($tokens, 2)
 
         $s = [Setting]::new($name, $body)
         $s.Type = [SettingType]::Alias
         $s.Extra['Body'] = $body
         $this.Stamp($s, $file, $line, $raw, ("alias:{0}={1}" -f $name, $body))
-        return [Setting]$s
+        return $s
     }
 
-    hidden [Setting] NewConvar([string[]] $args, [DiscoveredFile] $file, [int] $line, [string] $raw) {
-        if ($null -eq $args -or $args.Length -eq 0) { return $null }
+    hidden [Setting] NewConvar([string[]] $tokens, [DiscoveredFile] $file, [int] $line, [string] $raw) {
+        if ($null -eq $tokens -or $tokens.Length -eq 0) { return $null }
 
-        $name = [string]$args[0]
-        $parts = [System.Collections.Generic.List[string]]::new()
-        for ($i = 1; $i -lt $args.Length; $i++) { $parts.Add([string]$args[$i]) }
-        $value = if ($parts.Count -gt 0) { $parts -join ' ' } else { '' }
+        $name  = [string]$tokens[0]
+        $value = $this.JoinFrom($tokens, 1)
 
         $s = [Setting]::new($name, $value)
         $s.Type = $this.InferType($value)
         $this.Stamp($s, $file, $line, $raw, ("{0}={1}" -f $name, $value))
-        return [Setting]$s
+        return $s
     }
 
     hidden [void] Stamp([Setting] $s, [DiscoveredFile] $file, [int] $line, [string] $raw, [string] $hashSeed) {

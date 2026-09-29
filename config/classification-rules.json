@@ -1,54 +1,246 @@
 {
   "$schema": "internal://cs2-config-engine/classification-rules",
-  "description": "Reglas de clasificacion por patron de nombre de convar/comando. Se evaluan en orden; gana la primera coincidencia. Patrones en sintaxis .NET regex, insensibles a mayusculas. Anada reglas sin tocar el codigo.",
+  "description": "Reglas de clasificacion por patron de nombre de convar/comando. Se evaluan en orden; gana la primera coincidencia. Patrones en sintaxis .NET regex, insensibles a mayusculas. El sujeto es el nombre de la convar, o 'bind <comando>' / '<alias> <cuerpo>' para binds y alias, por eso los patrones de prefijo usan (?:^|[\\s;]) en lugar de ^. Lo que no coincide con ninguna regla NO se descarta: va a P49 si tiene forma de convar valida, o a P48 si no. Anada reglas sin tocar el codigo.",
   "rules": [
-    { "category": "P22", "pattern": "^(buy$|buymenu|^slot\\d+_buy)" },
-    { "category": "P21", "pattern": "(grenade|molotov|incgrenade|flashbang|smokegrenade|hegrenade|decoy|^use weapon_(flash|smoke|hegrenade|molotov|incgrenade|decoy))" },
-    { "category": "P20", "pattern": "(reload|cl_autoreload)" },
-    { "category": "P19", "pattern": "(\\+attack|\\+attack2|\\+lookatweapon|drop|cl_silencer|\\+zoom|weapon_)" },
-    { "category": "P18", "pattern": "(slot[0-9]+|invnext|invprev|lastinv|switchhands|cl_quickswitch)" },
-    { "category": "P25", "pattern": "(cl_crosshair_dynamic|cl_crosshairstyle.*dynamic|cl_crosshair_t)" },
-    { "category": "P24", "pattern": "(crosshair|cl_crosshair)" },
-    { "category": "P26", "pattern": "(viewmodel)" },
-    { "category": "P27", "pattern": "(cl_bob|bob_)" },
-    { "category": "P29", "pattern": "(radar|cl_radar|cl_hud_radar)" },
-    { "category": "P30", "pattern": "(cl_teamid|cl_show_team|team_)" },
-    { "category": "P31", "pattern": "(messagemode|chat|cl_mute)" },
-    { "category": "P32", "pattern": "(radio|cl_radio)" },
-    { "category": "P33", "pattern": "(voice|\\+voicerecord|cl_mute_enemy_team)" },
-    { "category": "P35", "pattern": "(snd_music|music)" },
-    { "category": "P36", "pattern": "(mvp)" },
-    { "category": "P34", "pattern": "(snd_|volume|dsp_|audio|speaker)" },
-    { "category": "P28", "pattern": "(hud|cl_hud|safezonex|safezoney)" },
-    { "category": "P37", "pattern": "(spec_|spectator|observer)" },
-    { "category": "P38", "pattern": "(demo_|demoui|playdemo)" },
-    { "category": "P39", "pattern": "(tv_|gotv)" },
-    { "category": "P40", "pattern": "(sv_cheats|sv_infinite|mp_|bot_|sv_grenade|practice)" },
-    { "category": "P14", "pattern": "(sensitivity|zoom_sensitivity|m_yaw|m_pitch)" },
-    { "category": "P11", "pattern": "(m_raw|m_customaccel|m_mouse|mouse)" },
-    { "category": "P12", "pattern": "(key|kbd|keyboard)" },
-    { "category": "P13", "pattern": "(joy_|joystick|controller|gamepad|xinput)" },
-    { "category": "P16", "pattern": "(\\+jump|cl_autojump)" },
-    { "category": "P17", "pattern": "(\\+duck|crouch)" },
-    { "category": "P15", "pattern": "(\\+forward|\\+back|\\+left|\\+right|\\+moveleft|\\+moveright|\\+speed|\\+walk|cl_sidespeed|cl_forwardspeed)" },
-    { "category": "P10", "pattern": "(input|\\+use|bind)" },
-    { "category": "P23", "pattern": "(cash|money|economy|mp_startmoney)" },
-    { "category": "P07", "pattern": "(reflex|nvidia)" },
-    { "category": "P08", "pattern": "(amd|radeon|fsr)" },
-    { "category": "P06", "pattern": "(hdr)" },
-    { "category": "P09", "pattern": "(fps_max|frame|fps_pacing|engine_low_latency)" },
-    { "category": "P05", "pattern": "(monitor|refresh)" },
-    { "category": "P04", "pattern": "(display|fullscreen|windowed|aspectratio|resolution|defaultres)" },
-    { "category": "P03", "pattern": "(mat_|video|setting\\.gpu|csm_|shadow)" },
-    { "category": "P02", "pattern": "(r_|render)" },
-    { "category": "P01", "pattern": "(source2|engine|host_|sv_engine)" },
-    { "category": "P41", "pattern": "(net_|rate$|cl_cmdrate|cl_updaterate|cl_interp|mm_|sv_minrate|sv_maxrate)" },
-    { "category": "P42", "pattern": "(telemetry|cl_telemetry|stats)" },
-    { "category": "P43", "pattern": "(perf|cl_showfps|fps$|cl_detail)" },
-    { "category": "P45", "pattern": "(con_|console|toggleconsole|developer$)" },
-    { "category": "P46", "pattern": "(debug|cl_debug|r_drawvgui)" },
-    { "category": "P44", "pattern": "(cl_|sv_|developer|hud_)" },
-    { "category": "P47", "pattern": "(experimental|beta|_test$|_temp$)" },
-    { "category": "P00", "pattern": "(setting\\.|cfg_|name$|password|cl_clanid|steam)" }
+    {
+      "category": "P22",
+      "pattern": "(buymenu|buy_menu|(?:^|[\\s;])buy(?:$|[\\s;]))",
+      "description": "Compra: menu y binds de compra"
+    },
+    {
+      "category": "P21",
+      "pattern": "(grenade|molotov|incgrenade|flashbang|smokegrenade|hegrenade|decoy)",
+      "description": "Granadas y utilidad"
+    },
+    {
+      "category": "P20",
+      "pattern": "(reload|cl_autoreload)",
+      "description": "Recarga"
+    },
+    {
+      "category": "P18",
+      "pattern": "(slot\\d+|invnext|invprev|lastinv|switchhands|cl_quickswitch|cl_prefer_lefthanded)",
+      "description": "Cambio de arma"
+    },
+    {
+      "category": "P19",
+      "pattern": "(\\+attack|\\+lookatweapon|\\+zoom|cl_silencer|weapon_|(?:^|[\\s;])drop(?:$|[\\s;]))",
+      "description": "Acciones de arma"
+    },
+    {
+      "category": "P23",
+      "pattern": "(cash|money|economy|mp_startmoney|cl_use_opens_buy_menu)",
+      "description": "Economia"
+    },
+    {
+      "category": "P25",
+      "pattern": "(cl_crosshair_dynamic|cl_crosshair_t|cl_crosshair_recoil|cl_crosshairstyle)",
+      "description": "Crosshair dinamica"
+    },
+    {
+      "category": "P24",
+      "pattern": "(crosshair)",
+      "description": "Crosshair"
+    },
+    {
+      "category": "P26",
+      "pattern": "(viewmodel|cl_righthand)",
+      "description": "Viewmodel"
+    },
+    {
+      "category": "P27",
+      "pattern": "(cl_bob|bob_|cl_bobcycle|cl_bobamt)",
+      "description": "Bob del viewmodel"
+    },
+    {
+      "category": "P29",
+      "pattern": "(radar)",
+      "description": "Radar"
+    },
+    {
+      "category": "P30",
+      "pattern": "(cl_teamid|cl_teammate|cl_show_team|(?:^|[\\s;])team_)",
+      "description": "UI de equipo"
+    },
+    {
+      "category": "P31",
+      "pattern": "(messagemode|cl_chat|cl_mute|(?:^|[\\s;])chat)",
+      "description": "Chat"
+    },
+    {
+      "category": "P32",
+      "pattern": "(radio)",
+      "description": "Radio"
+    },
+    {
+      "category": "P33",
+      "pattern": "(voice|\\+voicerecord)",
+      "description": "Voz"
+    },
+    {
+      "category": "P35",
+      "pattern": "(snd_music|music)",
+      "description": "Musica"
+    },
+    {
+      "category": "P36",
+      "pattern": "(mvp)",
+      "description": "MVP"
+    },
+    {
+      "category": "P34",
+      "pattern": "(snd_|volume|dsp_|audio|speaker|(?:^|[\\s;])sound)",
+      "description": "Audio"
+    },
+    {
+      "category": "P28",
+      "pattern": "(hud|safezone)",
+      "description": "HUD"
+    },
+    {
+      "category": "P37",
+      "pattern": "(spec_|spectator|observer)",
+      "description": "Espectador"
+    },
+    {
+      "category": "P38",
+      "pattern": "(demo_|demoui|playdemo|(?:^|[\\s;])demo(?:$|[\\s;]))",
+      "description": "Demos"
+    },
+    {
+      "category": "P39",
+      "pattern": "(gotv|(?:^|[\\s;])tv_)",
+      "description": "GOTV"
+    },
+    {
+      "category": "P40",
+      "pattern": "(sv_cheats|sv_infinite|sv_grenade|sv_showimpacts|sv_falldamage|practice|(?:^|[\\s;])mp_|(?:^|[\\s;])bot_)",
+      "description": "Practica y servidor local"
+    },
+    {
+      "category": "P13",
+      "pattern": "(joy_|joystick|controller|gamepad|xinput)",
+      "description": "Mando"
+    },
+    {
+      "category": "P14",
+      "pattern": "(sensitivity|m_yaw|m_pitch)",
+      "description": "Sensibilidad"
+    },
+    {
+      "category": "P11",
+      "pattern": "(m_raw|m_customaccel|m_mouse|m_forward|m_side|(?:^|[\\s;])mouse)",
+      "description": "Raton"
+    },
+    {
+      "category": "P12",
+      "pattern": "(kbd|keyboard|key_|(?:^|[\\s;])key(?:$|[\\s;]))",
+      "description": "Teclado"
+    },
+    {
+      "category": "P16",
+      "pattern": "(\\+jump|cl_autojump|jumpthrow)",
+      "description": "Salto"
+    },
+    {
+      "category": "P17",
+      "pattern": "(\\+duck|crouch)",
+      "description": "Agacharse"
+    },
+    {
+      "category": "P15",
+      "pattern": "(\\+forward|\\+back|\\+left|\\+right|\\+moveleft|\\+moveright|\\+speed|\\+walk|cl_sidespeed|cl_forwardspeed|cl_backspeed)",
+      "description": "Movimiento"
+    },
+    {
+      "category": "P07",
+      "pattern": "(reflex|nvidia|nvapi)",
+      "description": "NVIDIA Reflex"
+    },
+    {
+      "category": "P08",
+      "pattern": "(radeon|fsr|(?:^|[\\s;])amd)",
+      "description": "AMD"
+    },
+    {
+      "category": "P06",
+      "pattern": "((?:^|[\\s;])hdr|_hdr)",
+      "description": "HDR"
+    },
+    {
+      "category": "P09",
+      "pattern": "(fps_max|fps_pacing|frame|low_latency|engine_low_latency)",
+      "description": "Frame pacing"
+    },
+    {
+      "category": "P05",
+      "pattern": "(monitor|refresh)",
+      "description": "Monitor"
+    },
+    {
+      "category": "P04",
+      "pattern": "(display|fullscreen|windowed|aspectratio|resolution|defaultres|vid_)",
+      "description": "Display"
+    },
+    {
+      "category": "P03",
+      "pattern": "(mat_|video|setting\\.gpu|csm_|shadow|texture|aniso|msaa)",
+      "description": "Video"
+    },
+    {
+      "category": "P02",
+      "pattern": "(render|(?:^|[\\s;])r_)",
+      "description": "Render"
+    },
+    {
+      "category": "P01",
+      "pattern": "(source2|host_|sv_engine|(?:^|[\\s;])engine|_engine)",
+      "description": "Motor Source 2"
+    },
+    {
+      "category": "P41",
+      "pattern": "(net_|cl_cmdrate|cl_updaterate|cl_interp|cl_lagcomp|cl_predict|sv_minrate|sv_maxrate|sv_maxupdaterate|(?:^|[\\s;])mm_|(?:^|[\\s;])rate(?:$|[\\s;]))",
+      "description": "Red"
+    },
+    {
+      "category": "P42",
+      "pattern": "(telemetry|(?:^|[\\s;])stats)",
+      "description": "Telemetria"
+    },
+    {
+      "category": "P43",
+      "pattern": "(cl_showfps|cl_detail|(?:^|[\\s;])perf|fps(?:$|[\\s;]))",
+      "description": "Rendimiento"
+    },
+    {
+      "category": "P45",
+      "pattern": "(con_|console|toggleconsole|(?:^|[\\s;])developer(?:$|[\\s;]))",
+      "description": "Consola"
+    },
+    {
+      "category": "P46",
+      "pattern": "(debug|r_drawvgui|showtextmsg)",
+      "description": "Debug"
+    },
+    {
+      "category": "P44",
+      "pattern": "(cl_showpos|cl_entityreport|cl_drawshadowtexture|sv_showlag|sv_showbullet|(?:^|[\\s;])dev_)",
+      "description": "Desarrollo"
+    },
+    {
+      "category": "P47",
+      "pattern": "(experimental|_test(?:$|[\\s;])|_temp(?:$|[\\s;])|(?:^|[\\s;])beta)",
+      "description": "Experimental"
+    },
+    {
+      "category": "P00",
+      "pattern": "(setting\\.|cfg_|password|cl_clanid|steam|player_|(?:^|[\\s;])name(?:$|[\\s;]))",
+      "description": "Sistema y cuenta"
+    },
+    {
+      "category": "P10",
+      "pattern": "((?:^|[\\s;])bind(?:$|[\\s;])|cl_input|(?:^|[\\s;])input|\\+use)",
+      "description": "Input generico"
+    }
   ]
 }

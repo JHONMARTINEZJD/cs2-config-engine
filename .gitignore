@@ -1,0 +1,15 @@
+# Salidas del motor: snapshots, exportaciones, reportes y logs.
+output/
+*.log
+
+# Resultados de pruebas (artefactos de ejecucion, no de codigo).
+pester-results.xml
+testResults.xml
+
+# Temporales del sistema y del editor.
+.vs/
+.vscode/
+*.tmp
+*.swp
+Thumbs.db
+desktop.ini
