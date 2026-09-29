@@ -222,7 +222,13 @@ class ConfigDiffEngine {
                     value       = $s.Value
                     type        = $s.Type.ToString()
                     state       = $s.State.ToString()
-                    category    = $s.CategoryCode
+                    # Manda la categoria que contiene al ajuste, no
+                    # $s.CategoryCode: ese campo vale P48 por defecto en el
+                    # constructor y solo lo rellena SyncEngine, asi que un
+                    # GameConfig armado de otra forma (fixtures, y sobre todo el
+                    # preview de un restore en A2, que se construye desde un
+                    # inventario) reportaria un cambio de categoria fantasma.
+                    category    = $cat.Code
                     hash        = $s.Metadata.Hash
                     occurrences = 1
                 }
@@ -332,8 +338,15 @@ class ConfigDiffEngine {
             }
         }
 
-        $category = [string]$this.Prop($s, 'category', '')
-        if ([string]::IsNullOrWhiteSpace($category)) { $category = $fallbackCategory }
+        # El bloque de categoria que contiene al ajuste es autoritativo, igual que
+        # en IndexFromConfig: el campo 'category' de cada ajuste sale de
+        # Setting::CategoryCode, que vale P48 por defecto y solo rellena
+        # SyncEngine, asi que un inventario escrito desde un GameConfig armado de
+        # otra forma discreparia de su propio agrupamiento y generaria cambios de
+        # categoria fantasma. Solo se usa el campo del ajuste si el bloque no
+        # declara codigo.
+        $category = $fallbackCategory
+        if ([string]::IsNullOrWhiteSpace($category)) { $category = [string]$this.Prop($s, 'category', '') }
         if ([string]::IsNullOrWhiteSpace($category)) { $category = 'P48' }
 
         $state = [string]$this.Prop($s, 'state', '')

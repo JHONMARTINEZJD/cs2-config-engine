@@ -449,3 +449,36 @@ Describe 'SnapshotManager: ruta del inventario anterior' {
         $script:Mgr.GetInventoryPath('20260101-100000') | Should -Be $expected
     }
 }
+
+Describe 'ConfigDiffEngine: la categoria viene del contenedor' {
+    It 'no reporta cambio de categoria fantasma cuando Setting.CategoryCode no se relleno' {
+        # Setting::CategoryCode vale P48 por defecto y solo lo rellena SyncEngine.
+        # Un GameConfig armado de otra forma (fixtures, o el preview de un restore
+        # construido desde un inventario) llevaba a reportar un cambio de categoria
+        # que nunca ocurrio, y a contaminar 'fields' de los cambios reales.
+        $anterior = [GameConfig]::new()
+        $catAnt = [ConfigCategory]::new('P24', 'Crosshair', 0)
+        $sAnt = [Setting]::new('cl_crosshairgap', '-1')
+        $sAnt.Type = [SettingType]::Float
+        $catAnt.Add($sAnt)          # CategoryCode se queda en P48 a proposito
+        $anterior.Categories.Add($catAnt)
+
+        $invPath = Join-Path $TestDrive 'huerfano/Inventory.json'
+        $null = Save-DiffInventory -Cfg $anterior -Path $invPath
+
+        # Mismo estado exacto: no debe haber ningun cambio.
+        $actual = [GameConfig]::new()
+        $catAct = [ConfigCategory]::new('P24', 'Crosshair', 0)
+        $sAct = [Setting]::new('cl_crosshairgap', '-1')
+        $sAct.Type = [SettingType]::Float
+        $catAct.Add($sAct)
+        $actual.Categories.Add($catAct)
+
+        $d = [ConfigDiffEngine]::new($script:Log).Compare($actual, 'cur', 'prev', $invPath)
+        $d.Baseline           | Should -Be 'inventory'
+        $d.Modified.Count     | Should -Be 0
+        $d.Added.Count        | Should -Be 0
+        $d.Removed.Count      | Should -Be 0
+        $d.Unchanged          | Should -Be 1
+    }
+}
